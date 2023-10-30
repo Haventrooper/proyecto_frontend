@@ -7,7 +7,9 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers:[ TdserviceService ]
+
 })
 export class LoginComponent {
 
@@ -15,15 +17,20 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
     private td_service: TdserviceService, 
-    private router: Router
 
   ) {
     this.form = this.formBuilder.group({
       user: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  login(){
+    this.td_service.login(this.form.get('user')?.value,this.form.get('password')?.value).subscribe(response => {
+      let thing: any = response;
+			localStorage.setItem("token", thing["token"]);
+		})
   }
 }
 

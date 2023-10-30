@@ -1,18 +1,19 @@
 
 <p  class="bg-primary">login works!</p>
 
-<div class="flex flex-wrap align-items-center justify-content-center">
+<div class="text-center flex flex-column flex align-items-center justify-content-center">
     <p-card [style]="{width: 'width'}" styleClass="styleClass">
-        <div class="text-center">
+        <div>
             <form [formGroup]="form">
                 <h1>Iniciar sesión</h1>
     
             <p-header>
-                <input formControlName="user" type="text" class="form-control" placeholder="Usuario" required>
+                <input placeholder="Usuario" type="text" pInputText formControlName="user"/>
+
             </p-header>
-                <input formControlName="password" type="password" class="form-control" placeholder="Contraseña" required>
+                <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
             <p-footer>
-                <button type="submit">Logearse</button>
+                <p-button (click)="login()" label="Iniciar sesión"></p-button>
             </p-footer>
             </form>
 
