@@ -7,7 +7,6 @@ import { LoginComponent } from '../pages/login/login.component';
 import { PageNotFoundComponent } from '../pages/page-not-found/page-not-found.component';
 
 
-
 @NgModule({
   declarations: [],
   imports: [
