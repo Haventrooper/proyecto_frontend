@@ -1,0 +1,9 @@
+<p>home works!</p>
+<h1></h1>
+<p-button icon="pi pi-iconName" label="obtener perros" (click)="obtenerPerros()"></p-button>
+
+<ul>
+    <li *ngFor="let perro of perros">
+      {{ perro.nombre }} - {{ perro.nombre_raza }}
+    </li>
+  </ul>

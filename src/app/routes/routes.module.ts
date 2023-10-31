@@ -5,6 +5,7 @@ import { RoutesRoutingModule } from './routes-routing.module';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '../pages/login/login.component';
 import { PageNotFoundComponent } from '../pages/page-not-found/page-not-found.component';
+import { HomeComponent } from '../pages/home/home.component';
 
 
 @NgModule({
@@ -20,12 +21,16 @@ import { PageNotFoundComponent } from '../pages/page-not-found/page-not-found.co
       },
       {
         path: 'login', 
-        component: LoginComponent
+        component: LoginComponent,
       },
+      // {
+      //   path: '**', 
+      //   component: PageNotFoundComponent,
+      // },
       {
-        path: '**', 
-        component: PageNotFoundComponent
-      },
+        path: 'home',
+        component: HomeComponent,
+      }
     ]),
   ]
 })

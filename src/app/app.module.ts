@@ -20,6 +20,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 import { RoutesModule } from './routes/routes.module';
+import { HomeComponent } from './pages/home/home.component';
+import { TdserviceService } from './services/tdservice.service';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { RoutesModule } from './routes/routes.module';
     PageNotFoundComponent,
     HeaderComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
