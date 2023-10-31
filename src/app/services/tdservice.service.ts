@@ -19,21 +19,20 @@ export class TdserviceService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.url}/perrosUsuario`, { headers: headers });
   }
+
+  getUsuario(token: string) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/usuario`, { headers: headers });
+  }
+
+  getNombreUsuario(token: string) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/nombreUsuario`, { headers: headers });
+  }
   
 
   login(user: string, password: string){
     return this.http.get(this.url + `/login?nombre=${user}&contrasena=${password}`);
   }
 
-  auth(){
-    const token = localStorage.getItem('token');
-    
-    const headers = new HttpHeaders({
-      'Authorization': `${token}`
-    });
-
-    this.http.get(this.url + '/perrosUsuario', { headers }).subscribe((data) => {
-
-    });
-  }
 }

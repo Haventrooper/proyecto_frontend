@@ -12,8 +12,14 @@ import { Token } from '@angular/compiler';
 })
 export class HomeComponent {
   perros: any;
+  nombreUsuario: any;
 
-  constructor(private td_service: TdserviceService) {}
+  constructor(private td_service: TdserviceService,
+    private router: Router) {}
+
+  ngOnInit(): void {
+    this.getNombreUsuario()
+  }
 
   obtenerPerros(): void {
     // Obtener el token del Local Storage
@@ -29,5 +35,23 @@ export class HomeComponent {
       // Manejar el caso en que no se encuentra un token en el Local Storage
       console.error('Token no encontrado en el Local Storage');
     }
+  }
+  getNombreUsuario(): void{
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      // Hacer la solicitud GET utilizando el servicio
+      this.td_service.getNombreUsuario(token).subscribe((data: any) => {
+        // Asignar la respuesta a la variable nombreusuario
+        this.nombreUsuario = data;
+      });
+    } else {
+      // Manejar el caso en que no se encuentra un token en el Local Storage
+      console.error('Token no encontrado en el Local Storage');
+    }  
+  }
+
+  perfilUsuario(){
+    this.router.navigateByUrl('/perfil');
   }
 }

@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '../pages/login/login.component';
 import { PageNotFoundComponent } from '../pages/page-not-found/page-not-found.component';
 import { HomeComponent } from '../pages/home/home.component';
+import { PerfilComponent } from '../pages/perfil/perfil.component';
 
 
 @NgModule({
@@ -30,6 +31,10 @@ import { HomeComponent } from '../pages/home/home.component';
       {
         path: 'home',
         component: HomeComponent,
+      },
+      {
+        path: 'perfil',
+        component: PerfilComponent,
       }
     ]),
   ]

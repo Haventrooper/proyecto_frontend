@@ -22,6 +22,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { RoutesModule } from './routes/routes.module';
 import { HomeComponent } from './pages/home/home.component';
 import { TdserviceService } from './services/tdservice.service';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { TdserviceService } from './services/tdservice.service';
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    HomeComponent
+    HomeComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,
