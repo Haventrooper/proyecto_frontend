@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TdserviceService } from 'src/app/services/tdservice.service';
 
 @Component({
   selector: 'app-signup',
@@ -8,34 +9,44 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./signup.component.scss']
 })
 
-
-
 export class SignupComponent {
 
   registro: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private router: Router) {
-    // Inicializa tu formulario aquí
+              private router: Router,
+              private td_service: TdserviceService) {
+
     this.registro = this.fb.group({
-      nombre: ['', Validators.required], // Campo "nombre" con validación requerida
-      apellido: ['', [Validators.required, Validators.email]], // Campo "correo" con validación requerida y de correo electrónico
-      email: ['', [Validators.required, Validators.email]], // Campo "correo" con validación requerida y de correo electrónico
-      contrasena: ['', [Validators.required, Validators.email]], // Campo "correo" con validación requerida y de correo electrónico
-      fecha_nacimiento: ['', [Validators.required, Validators.email]], // Campo "correo" con validación requerida y de correo electrónico
-      // Agrega más campos según tus necesidades
+      tema: ['', Validators.required],
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      email: ['', Validators.required],
+      contrasena: ['', Validators.required],
+      fecha_creacion: ['', Validators.required],
+      fecha_nacimiento: ['', Validators.required],
+      sin_perro: ['', Validators.required],
     });
 
   }
 
   ngOnInit(): void {
-  }
-  
-  onSubmit() {
-    if (this.registro.valid) {
-      // Envía los datos del formulario al servidor o realiza otras acciones aquí
-      console.log(this.registro.value);
-    }
-  }    
 
+  }
+
+  registrar() {
+
+    const datosRegistro = this.registro.value;
+
+    this.td_service.signUp(datosRegistro).subscribe(
+      (response) => {
+        console.log('Usuario registrado con éxito', response);
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Error al registrar el usuario', error);
+        alert("Error de registro, verifica credenciales")
+      }
+    );
+  }
 }

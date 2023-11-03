@@ -11,6 +11,16 @@ export class TdserviceService {
 
   url = 'http://localhost:3000'
 
+
+  login(user: string, password: string){
+    return this.http.get(this.url + `/login?nombre=${user}&contrasena=${password}`);
+  }
+  
+  signUp(datosRegistro: Array<string>) {
+    let header = new HttpHeaders().set('Content-Type', 'application/json')
+    return this.http.post(`${this.url}/signup`, datosRegistro, {headers:header});
+  }
+
   sendPerros(json:Array<string>, token: string){
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
     return this.http.post(`${this.url}/perrosUsuario`, json, {headers:headers})
@@ -30,12 +40,6 @@ export class TdserviceService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.url}/nombreUsuario`, { headers: headers });
   }
-  
-
-  login(user: string, password: string){
-    return this.http.get(this.url + `/login?nombre=${user}&contrasena=${password}`);
-  }
-
 
   getActividades(token: string){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

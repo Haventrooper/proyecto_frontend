@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',
