@@ -43,5 +43,9 @@ export class LoginComponent {
       }
 		})
   }
+
+  paginaRegistro(){
+    this.router.navigateByUrl('/signup');
+  }
 }
 

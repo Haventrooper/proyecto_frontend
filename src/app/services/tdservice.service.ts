@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,4 +36,14 @@ export class TdserviceService {
     return this.http.get(this.url + `/login?nombre=${user}&contrasena=${password}`);
   }
 
+
+  getActividades(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/actividades`, { headers: headers });
+  }
+
+  getActividadPorId(id: number, token:string) {
+    const url = `${this.url}/getActividad/${id}`;
+    return this.http.get(url);
+  }
 }

@@ -7,6 +7,7 @@ import { LoginComponent } from '../pages/login/login.component';
 import { PageNotFoundComponent } from '../pages/page-not-found/page-not-found.component';
 import { HomeComponent } from '../pages/home/home.component';
 import { PerfilComponent } from '../pages/perfil/perfil.component';
+import { SignupComponent } from '../pages/signup/signup.component';
 
 
 @NgModule({
@@ -35,6 +36,10 @@ import { PerfilComponent } from '../pages/perfil/perfil.component';
       {
         path: 'perfil',
         component: PerfilComponent,
+      },
+      {
+        path: 'signup',
+        component: SignupComponent
       }
     ]),
   ]
