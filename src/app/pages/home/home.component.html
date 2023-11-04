@@ -4,25 +4,30 @@
 
 <p-button icon="pi pi-iconName" label="Cerrar Sesión" (click)="logout()"></p-button>
 
-<h2>Perros de {{username?.nombre}}</h2>
-<ul>
-    <li *ngFor="let perro of perros">
-      {{ perro.nombre }} - {{ perro.nombre_raza }}
-    </li>
-  </ul>
-
 <h2>Actividades disponibles</h2>
 
 <ul>
   <li *ngFor="let actividad of actividades">
-    <h2>Trucos:</h2>
     <ng-container *ngIf="actividad.id_categoria === 1">
+      <h2>Trucos:</h2>
+      <div (click)="seleccionarActividad(actividad)">
+        {{ actividad.nombre }} - {{ actividad.descripcion }}
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="actividad.id_categoria === 2">
+      <h2>Juegos:</h2>
+      <div (click)="seleccionarActividad(actividad)">
+        {{ actividad.nombre }} - {{ actividad.descripcion }}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="actividad.id_categoria === 3">
+      <h2>Ejercicios:</h2>
       <div (click)="seleccionarActividad(actividad)">
         {{ actividad.nombre }} - {{ actividad.descripcion }}
       </div>
     </ng-container>
   </li>
-
 </ul>
 
 <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true">
@@ -36,3 +41,16 @@
     <!-- Agrega más detalles según la estructura de tu actividad -->
   </div>
 </p-dialog>
+
+<h2>Categorías</h2>
+
+<ul>
+  <li *ngFor="let categoria of categorias">
+    <ng-container>
+      <div>
+        {{ categoria.nombre }} - {{ categoria.descripcion }}
+      </div>
+    </ng-container>
+  </li>
+
+</ul>

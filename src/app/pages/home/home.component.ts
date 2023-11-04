@@ -13,7 +13,8 @@ export class HomeComponent {
   actividad: any;
   actividades: any;
   selectedActividad: any;
-  displayModal: boolean = false
+  displayModal: boolean = false;
+  categorias: any;
 
   constructor(private td_service: TdserviceService,
     private router: Router) {}
@@ -22,6 +23,7 @@ export class HomeComponent {
     this.getNombreUsuario()
     this.obtenerPerros();
     this.obtenerActividades();
+    this.obtenerCategorias();
   }
 
   logout(){
@@ -98,4 +100,17 @@ export class HomeComponent {
     this.selectedActividad = actividad;
     this.displayModal = true;
   } 
+
+  obtenerCategorias(){
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Hacer la solicitud GET utilizando el servicio
+      this.td_service.getCategorias(token).subscribe((data) => {
+        // Asignar la respuesta a la variable actividades
+        this.categorias = data;
+      });
+    } else {
+      // Manejar el caso en que no se encuentra un token en el Local Storage
+      console.error('Token no encontrado en el Local Storage');
+    }   }
 }

@@ -56,4 +56,9 @@ export class TdserviceService {
     const url = `${this.url}/getActividad/${id}`;
     return this.http.get(url);
   }
+
+  getCategorias(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/categorias`, { headers: headers });
+  }
 }
