@@ -18,19 +18,19 @@ export class HeaderComponent {
   ngOnInit() { 
     this.menu = [ 
       { 
-        label: 'HTML', 
-        items: [ 
-          { 
-            label: 'HTML 1'
-          }, 
-          { 
-            label: 'HTML 2'
-          } 
-        ] 
+        label: 'Iniciar sesión',  
       }, 
       { 
-        label: 'Angular', 
-  
+        label: 'Registrarse', 
+      } 
+    ]; 
+  } 
+}
+
+
+/*
+Ejemplo de como añadir sub menus
+
         items: [ 
           { 
             label: 'Angular 1'
@@ -39,7 +39,4 @@ export class HeaderComponent {
             label: 'Angular 2'
           } 
         ] 
-      } 
-    ]; 
-  } 
-}
+*/
