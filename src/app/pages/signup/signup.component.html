@@ -1,45 +1,32 @@
-<p>signup works!</p>
-<h1>formulario de registro</h1>
-
 <div class="flex flex-column align-content-center">
     <form [formGroup]="registro">
         <div class="p-2">
-            <input type="text" placeholder="tema" pInputText formControlName="email" />
-    
+            <input type="text" placeholder="Tema" pInputText formControlName="id_tema" />
         </div>
         <div class="p-2">
             <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
-    
         </div>
         <div class="p-2">
             <input type="text" placeholder="Apellido" pInputText formControlName="apellido" />
-    
         </div>
         <div class="p-2">
             <input type="text" placeholder="Email" pInputText formControlName="email" />
-    
         </div>
-        
         <div class="p-2">
             <input type="text" placeholder="Contraseña" pInputText formControlName="contrasena" />
-    
         </div>
         <div class="p-2">
             <input type="text" placeholder="fecha de creacion" pInputText formControlName="fecha_creacion" />
-    
         </div>
         <div class="p-2">
             <input type="text" placeholder="fecha de nacimiento" pInputText formControlName="fecha_nacimiento" />
-    
         </div>
         <div class="p-2">
             <input type="text" placeholder="sin perro" pInputText formControlName="sin_perro" />
-    
         </div>
-
         <div>
             <p-button (click)="registrar()" label="Registrarse"></p-button>
         </div>
     </form>
-    
 </div>
+

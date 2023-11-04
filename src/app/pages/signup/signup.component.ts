@@ -18,7 +18,7 @@ export class SignupComponent {
               private td_service: TdserviceService) {
 
     this.registro = this.fb.group({
-      tema: ['', Validators.required],
+      id_tema: ['', Validators.required],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', Validators.required],
@@ -34,10 +34,10 @@ export class SignupComponent {
 
   }
 
+  
   registrar() {
-
     const datosRegistro = this.registro.value;
-
+  
     this.td_service.signUp(datosRegistro).subscribe(
       (response) => {
         console.log('Usuario registrado con éxito', response);
@@ -45,7 +45,7 @@ export class SignupComponent {
       },
       (error) => {
         console.error('Error al registrar el usuario', error);
-        alert("Error de registro, verifica credenciales")
+        alert("Error de registro, verifica credenciales");
       }
     );
   }
