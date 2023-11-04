@@ -4,6 +4,26 @@
 
 <p-button icon="pi pi-iconName" label="Cerrar Sesión" (click)="logout()"></p-button>
 
+
+<ul>
+  <li *ngFor="let perro of perros">
+    <a [routerLink]="['/perfilperro', perro.id_perro]">
+      {{ perro.nombre }}
+    </a>
+  </li>
+</ul>
+<ul>
+  <li *ngFor="let perro of perros" (click)="obtenerPerroPorId(perro.id_perro)">
+    {{ perro.nombre }}
+  </li>
+</ul>
+<ul>
+  <li *ngFor="let perro of perros">
+    <a [routerLink]="['/perfilperro', perro.idPerro]">{{ perro.nombre }}</a>
+  </li>
+</ul>
+
+
 <h2>Actividades disponibles</h2>
 
 <ul>

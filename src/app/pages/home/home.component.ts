@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
   perros: any;
+  perro: any;
   username: any;
   actividad: any;
   actividades: any;
@@ -133,4 +134,23 @@ export class HomeComponent {
   mostrarPasos(idActividad: number) {
     this.obtenerPasos(idActividad);
   }
+
+  obtenerPerroPorId(idPerro: number){
+    const token = localStorage.getItem('token');
+    if (token) {
+    this.td_service.getPerroPorId(idPerro, token).subscribe(
+      (data: any) => {
+          const perroSeleccionado = data[0];
+          console.log('Información del perro seleccionado:', perroSeleccionado);
+          // Aquí puedes asignar los datos a las variables de tu componente
+      },
+      (error) => {
+        console.error('Error al obtener la información del perro', error);
+        // Maneja el error de la solicitud
+      });
+    }else{
+      console.error('Token no encontrado');
+    }
+  }
+  
 }
