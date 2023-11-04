@@ -15,6 +15,7 @@ export class HomeComponent {
   selectedActividad: any;
   displayModal: boolean = false;
   categorias: any;
+  pasos: any;
 
   constructor(private td_service: TdserviceService,
     private router: Router) {}
@@ -112,5 +113,24 @@ export class HomeComponent {
     } else {
       // Manejar el caso en que no se encuentra un token en el Local Storage
       console.error('Token no encontrado en el Local Storage');
-    }   }
+    }   
+  }
+
+  obtenerPasos(idActividad: number){
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      // Hacer la solicitud GET utilizando el servicio
+      this.td_service.getPasos(idActividad, token).subscribe((data) => {
+        // Asignar la respuesta a la variable actividades
+        this.pasos = data;
+      });
+    } else {
+      // Manejar el caso en que no se encuentra un token en el Local Storage
+      console.error('Token no encontrado en el Local Storage');
+    } 
+  }
+  mostrarPasos(idActividad: number) {
+    this.obtenerPasos(idActividad);
+  }
 }

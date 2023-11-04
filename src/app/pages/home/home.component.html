@@ -39,6 +39,14 @@
     <p>Progreso: {{ selectedActividad.progreso }}</p>
     <p>Contador: {{ selectedActividad.contador }}</p>
     <!-- Agrega más detalles según la estructura de tu actividad -->
+    <div>
+      <p-button icon="pi pi-iconName" label="Ver guía" (click)="mostrarPasos(selectedActividad.id_actividad)"></p-button>
+      <div *ngFor="let paso of pasos">
+          <li>
+            {{ paso.titulo }} - {{ paso.nombre }} - {{ paso.descripcion }}
+          </li>
+        </div>
+    </div>
   </div>
 </p-dialog>
 

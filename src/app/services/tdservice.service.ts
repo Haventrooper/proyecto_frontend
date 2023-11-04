@@ -53,12 +53,20 @@ export class TdserviceService {
   }
 
   getActividadPorId(id: number, token:string) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.url}/getActividad/${id}`;
-    return this.http.get(url);
+    return this.http.get(url, { headers: headers });
   }
 
   getCategorias(token: string){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.url}/categorias`, { headers: headers });
+  }
+
+  getPasos(id: number, token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `${this.url}/getPasos/${id}`;
+    return this.http.get(url, { headers: headers })
+
   }
 }
