@@ -17,6 +17,7 @@ export class HomeComponent {
   displayModal: boolean = false;
   categorias: any;
   pasos: any;
+  sugerencias: any;
 
   constructor(private td_service: TdserviceService,
     private router: Router) {}
@@ -26,6 +27,7 @@ export class HomeComponent {
     this.obtenerPerros();
     this.obtenerActividades();
     this.obtenerCategorias();
+    this.obtenerSugerencias();
   }
 
   logout(){
@@ -152,4 +154,23 @@ export class HomeComponent {
       console.error('Token no encontrado');
     }
   }
+  
+  obtenerSugerencias(){
+    const token = localStorage.getItem('token');
+    if(token){
+    this.td_service.getSugerencias(token).subscribe(
+      (data: any) => {
+          this.sugerencias = data;
+          console.log('Información del perro seleccionado:', this.sugerencias);
+          // Aquí puedes asignar los datos a las variables de tu componente
+      },
+      (error) => {
+        console.error('Error al obtener la información de la sugerencia', error);
+        // Maneja el error de la solicitud
+      });
+    }else{
+      console.error('Token no encontrado');
+    }
+  }
+  
 }
