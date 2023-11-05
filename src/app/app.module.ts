@@ -22,6 +22,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PerfilperroComponent } from './pages/perfilperro/perfilperro.component';
+import { CategoriasComponent } from './pages/categorias/categorias.component';
 
 
 
@@ -36,7 +37,8 @@ import { PerfilperroComponent } from './pages/perfilperro/perfilperro.component'
     SidebarComponent,
     HomeComponent,
     PerfilComponent,
-    PerfilperroComponent
+    PerfilperroComponent,
+    CategoriasComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,37 @@
+<div class="mt-8 mb-8">
+    <p>categorias works!</p>
+    <div>
+        <h2>Actividades de la categoría</h2>
+        <ul>
+          <li *ngFor="let actividad of actividades" (click)="seleccionarActividad(actividad)">
+            {{ actividad.nombre }} - {{ actividad.descripcion }}
+            
+          </li>
+        </ul>
+        <div>
+            <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true">
+                <div *ngIf="selectedActividad">
+                  <h2>Nombre: {{ selectedActividad.nombre }}</h2>
+                  <p>Description: {{ selectedActividad.descripcion }}</p>
+                  <p>Fecha de creación: {{ selectedActividad.fecha_creacion }}</p>
+                  <p>Calificación: {{ selectedActividad.calificacion }}</p>
+                  <p>Progreso: {{ selectedActividad.progreso }}</p>
+                  <p>Contador: {{ selectedActividad.contador }}</p>
+                  <!-- Agrega más detalles según la estructura de tu actividad -->
+                  <div>
+                    <p-button icon="pi pi-iconName" label="Ver guía" (click)="mostrarPasos(selectedActividad.id_actividad)"></p-button>
+                    <div *ngFor="let paso of pasos">
+                        <li>
+                          {{ paso.titulo }} - {{ paso.nombre }} - {{ paso.descripcion }}
+                        </li>
+                      </div>
+                  </div>
+                </div>
+              </p-dialog>
+          </div>
+        </div>
+        
+
+      
+</div>
+

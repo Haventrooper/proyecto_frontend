@@ -152,5 +152,4 @@ export class HomeComponent {
       console.error('Token no encontrado');
     }
   }
-  
 }

@@ -9,6 +9,7 @@ import { HomeComponent } from '../pages/home/home.component';
 import { PerfilComponent } from '../pages/perfil/perfil.component';
 import { SignupComponent } from '../pages/signup/signup.component';
 import { PerfilperroComponent } from '../pages/perfilperro/perfilperro.component';
+import { CategoriasComponent } from '../pages/categorias/categorias.component';
 
 
 @NgModule({
@@ -45,7 +46,9 @@ import { PerfilperroComponent } from '../pages/perfilperro/perfilperro.component
       {
         path: 'perfilperro/:id_perro',
         component: PerfilperroComponent
-      }
+      },
+      { path: 'categorias/:idCategoria',
+       component: CategoriasComponent },
     ]),
   ]
 })

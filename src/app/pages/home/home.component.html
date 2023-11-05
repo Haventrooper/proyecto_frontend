@@ -1,84 +1,90 @@
-<h1>Bienvenid@ {{username?.nombre}}!!!</h1>
+<div class="mt-8 mb-8">
+  <h1>Bienvenid@ {{username?.nombre}}!!!</h1>
 
-<p-button icon="pi pi-iconName" label="Perfil" (click)="perfilUsuario()"></p-button>
-
-<p-button icon="pi pi-iconName" label="Cerrar Sesión" (click)="logout()"></p-button>
-
-
-<ul>
-  <li *ngFor="let perro of perros">
-    <a [routerLink]="['/perfilperro', perro.id_perro]">
-      {{ perro.nombre }}
-    </a>
-  </li>
-</ul>
-<ul>
-  <li *ngFor="let perro of perros" (click)="obtenerPerroPorId(perro.id_perro)">
-    {{ perro.nombre }}
-  </li>
-</ul>
-<ul>
-  <li *ngFor="let perro of perros">
-    <a [routerLink]="['/perfilperro', perro.idPerro]">{{ perro.nombre }}</a>
-  </li>
-</ul>
-
-
-<h2>Actividades disponibles</h2>
-
-<ul>
-  <li *ngFor="let actividad of actividades">
-    <ng-container *ngIf="actividad.id_categoria === 1">
-      <h2>Trucos:</h2>
-      <div (click)="seleccionarActividad(actividad)">
-        {{ actividad.nombre }} - {{ actividad.descripcion }}
+  <div>
+    <p-button icon="pi pi-iconName" label="Perfil" (click)="perfilUsuario()"></p-button>
+  
+    <p-button icon="pi pi-iconName" label="Cerrar Sesión" (click)="logout()"></p-button>
+    
+  </div>
+  
+  
+  <div>
+    <h1>Perro seleccionado</h1>
+    <div *ngFor="let perro of perros; let first = first">
+      <div *ngIf="first">
+        <p-button icon="pi pi-iconName" label="{{perro.nombre}}" [routerLink]="['/perfilperro', perro.id_perro]"></p-button>
       </div>
-    </ng-container>
-
-    <ng-container *ngIf="actividad.id_categoria === 2">
-      <h2>Juegos:</h2>
-      <div (click)="seleccionarActividad(actividad)">
-        {{ actividad.nombre }} - {{ actividad.descripcion }}
-      </div>
-    </ng-container>
-    <ng-container *ngIf="actividad.id_categoria === 3">
-      <h2>Ejercicios:</h2>
-      <div (click)="seleccionarActividad(actividad)">
-        {{ actividad.nombre }} - {{ actividad.descripcion }}
-      </div>
-    </ng-container>
-  </li>
-</ul>
-
-<p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true">
-  <div *ngIf="selectedActividad">
-    <h2>Nombre: {{ selectedActividad.nombre }}</h2>
-    <p>Description: {{ selectedActividad.descripcion }}</p>
-    <p>Fecha de creación: {{ selectedActividad.fecha_creacion }}</p>
-    <p>Calificación: {{ selectedActividad.calificacion }}</p>
-    <p>Progreso: {{ selectedActividad.progreso }}</p>
-    <p>Contador: {{ selectedActividad.contador }}</p>
-    <!-- Agrega más detalles según la estructura de tu actividad -->
-    <div>
-      <p-button icon="pi pi-iconName" label="Ver guía" (click)="mostrarPasos(selectedActividad.id_actividad)"></p-button>
-      <div *ngFor="let paso of pasos">
-          <li>
-            {{ paso.titulo }} - {{ paso.nombre }} - {{ paso.descripcion }}
-          </li>
-        </div>
     </div>
   </div>
-</p-dialog>
-
-<h2>Categorías</h2>
-
-<ul>
-  <li *ngFor="let categoria of categorias">
-    <ng-container>
+  
+    
+    
+  
+  <h2>Actividades disponibles</h2>
+  
+  <ul>
+    <li *ngFor="let actividad of actividades">
+      <ng-container *ngIf="actividad.id_categoria === 1">
+        <h2>Trucos:</h2>
+        <div (click)="seleccionarActividad(actividad)">
+          {{ actividad.nombre }} - {{ actividad.descripcion }}
+        </div>
+      </ng-container>
+  
+      <ng-container *ngIf="actividad.id_categoria === 2">
+        <h2>Juegos:</h2>
+        <div (click)="seleccionarActividad(actividad)">
+          {{ actividad.nombre }} - {{ actividad.descripcion }}
+        </div>
+      </ng-container>
+      <ng-container *ngIf="actividad.id_categoria === 3">
+        <h2>Ejercicios:</h2>
+        <div (click)="seleccionarActividad(actividad)">
+          {{ actividad.nombre }} - {{ actividad.descripcion }}
+        </div>
+      </ng-container>
+    </li>
+  </ul>
+  
+  <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true">
+    <div *ngIf="selectedActividad">
+      <h2>Nombre: {{ selectedActividad.nombre }}</h2>
+      <p>Description: {{ selectedActividad.descripcion }}</p>
+      <p>Fecha de creación: {{ selectedActividad.fecha_creacion }}</p>
+      <p>Calificación: {{ selectedActividad.calificacion }}</p>
+      <p>Progreso: {{ selectedActividad.progreso }}</p>
+      <p>Contador: {{ selectedActividad.contador }}</p>
+      <!-- Agrega más detalles según la estructura de tu actividad -->
       <div>
-        {{ categoria.nombre }} - {{ categoria.descripcion }}
+        <p-button icon="pi pi-iconName" label="Ver guía" (click)="mostrarPasos(selectedActividad.id_actividad)"></p-button>
+        <div *ngFor="let paso of pasos">
+            <li>
+              {{ paso.titulo }} - {{ paso.nombre }} - {{ paso.descripcion }}
+            </li>
+          </div>
       </div>
-    </ng-container>
-  </li>
+    </div>
+  </p-dialog>
+  
+  <h2>Categorías</h2>
+  <ul>
+    <li *ngFor="let categoria of categorias">
+      <div>
+        <a [routerLink]="['/categorias', categoria.id_categoria]">
+          {{ categoria.nombre }} - {{ categoria.descripcion }}
+        </a>
+      </div>
+    </li>
+  </ul>
 
-</ul>
+  <div>
+    <h1>Sugerencias por perro:</h1>
+    <ul>
+      <li></li>
+    </ul>
+  </div>
+  
+</div>
+
+

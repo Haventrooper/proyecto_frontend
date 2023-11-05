@@ -71,4 +71,8 @@ export class TdserviceService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.url}/perro/${id}`, { headers: headers });
   }
+  getActividadesPorCategoria(id: number, token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/actividadesPorCategoria/${id}`, { headers: headers });
+  }
 }

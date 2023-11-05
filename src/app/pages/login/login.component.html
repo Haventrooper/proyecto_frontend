@@ -1,29 +1,29 @@
-
-<p  class="bg-primary">login works!</p>
-
-<div class="text-center flex flex-column flex align-items-center justify-content-center">
-    <p-card [style]="{width: 'width'}" styleClass="styleClass">
-        <div>
-            <form [formGroup]="form">
-                <h1>Iniciar sesión</h1>
+<div class="mt-8 mb-8">
+    <div class="text-center flex flex-column flex align-items-center justify-content-center">
+        <p-card [style]="{width: 'width'}" styleClass="styleClass">
+            <div>
+                <form [formGroup]="form">
+                    <h1>Iniciar sesión</h1>
+        
+                <p-header>
+                    <input placeholder="Usuario" type="text" pInputText formControlName="user"/>
     
-            <p-header>
-                <input placeholder="Usuario" type="text" pInputText formControlName="user"/>
-
-            </p-header>
-                <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
-            <p-footer>
-                <p-button (click)="login()" label="Iniciar sesión"></p-button>
-                <p-button (click)="paginaRegistro()" icon="pi pi-iconName" label="Registrarse"></p-button>
-
-            </p-footer>
-            </form>
-
-        </div>
+                </p-header>
+                    <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
+                <p-footer>
+                    <p-button (click)="login()" label="Iniciar sesión"></p-button>
+                    <p-button (click)="paginaRegistro()" icon="pi pi-iconName" label="Registrarse"></p-button>
+    
+                </p-footer>
+                </form>
+    
+            </div>
+            
+    
+        </p-card>
+    
+    
+    </div>
         
 
-    </p-card>
-
-
 </div>
-    
