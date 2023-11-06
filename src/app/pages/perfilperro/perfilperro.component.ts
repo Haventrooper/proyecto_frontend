@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';  // Asegúrate de importar DatePipe correctamente
 
 
 
@@ -22,24 +22,24 @@ export class PerfilperroComponent implements OnInit {
               private formBuilder: FormBuilder,
               private datePipe: DatePipe)
               {
+                this.route.params.subscribe(params => {
+                  const idPerro = params['id_perro'];
+                  if (idPerro) {
+                    this.obtenerDatosDelPerro(idPerro);
+                    this.obtenerActividadPerro(idPerro);
+                  } else {
+                    console.error('idPerro es undefined');
+                  }
+                });
                 this.formulario = this.formBuilder.group({
                   nombre: ['', Validators.required],
                   fecha_nacimiento: ['', Validators.required],
-                  id_raza: ['', [Validators.required, Validators.email]],
+                  id_raza: ['', [Validators.required]],
                   genero: ['', Validators.required]
                 });
               }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const idPerro = params['id_perro'];
-      if (idPerro) {
-        this.obtenerDatosDelPerro(idPerro);
-        this.obtenerActividadPerro(idPerro);
-      } else {
-        console.error('idPerro es undefined');
-      }
-    });
   }
 
   obtenerDatosDelPerro(idPerro: number) {
@@ -48,11 +48,14 @@ export class PerfilperroComponent implements OnInit {
     if (token) {
       this.td_service.getPerroPorId(idPerro, token).subscribe((data) => {
         this.perro = data; // Asigna los datos del perro a la variable perro
+        console.log('Datos del perro cargados:', this.perro);
+
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
     }
   }
+
   obtenerActividadPerro(idPerro: number){
     const token = localStorage.getItem('token');
     if (token) {
@@ -65,8 +68,8 @@ export class PerfilperroComponent implements OnInit {
   }
 
   modificarPerro() {
-    if (this.formulario.valid) {
-      const idPerro = this.perro.id_perro  /* Obtén el ID del perro que deseas modificar */;
+    if (this.formulario.valid && this.perro && this.perro.length > 0) {
+      const idPerro = this.perro[0].id_perro;
       const datosActualizados = this.formulario.value;
       const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
       datosActualizados.fecha_nacimiento = this.datePipe.transform(datosActualizados.fecha_nacimiento, 'yyyy-MM-dd');
