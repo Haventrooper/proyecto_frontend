@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TdserviceService } from 'src/app/services/tdservice.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-perfilperro',
@@ -10,9 +14,21 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 export class PerfilperroComponent implements OnInit {
   perro: any; // Aquí guardarás los datos del perro
   actividades: any
+  formulario: FormGroup;
+
 
   constructor(private route: ActivatedRoute, 
-              private td_service: TdserviceService) {}
+              private td_service: TdserviceService,
+              private formBuilder: FormBuilder,
+              private datePipe: DatePipe)
+              {
+                this.formulario = this.formBuilder.group({
+                  nombre: ['', Validators.required],
+                  fecha_nacimiento: ['', Validators.required],
+                  id_raza: ['', [Validators.required, Validators.email]],
+                  genero: ['', Validators.required]
+                });
+              }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -45,6 +61,30 @@ export class PerfilperroComponent implements OnInit {
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
+    }
+  }
+
+  modificarPerro() {
+    if (this.formulario.valid) {
+      const idPerro = this.perro.id_perro  /* Obtén el ID del perro que deseas modificar */;
+      const datosActualizados = this.formulario.value;
+      const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
+      datosActualizados.fecha_nacimiento = this.datePipe.transform(datosActualizados.fecha_nacimiento, 'yyyy-MM-dd');
+
+      if(token){
+        this.td_service.putModificarPerro(idPerro, datosActualizados, token).subscribe(
+          (response) => {
+            console.log('El perro se ha modificado correctamente', response);
+            // Realiza acciones adicionales después de la modificación
+          },
+          (error) => {
+            console.error('Error al modificar el perro', error);
+            // Maneja errores si es necesario
+          }
+        );
+      }else{
+        console.error('Token no encontrado en el Local Storage');
+      }    
     }
   }
 }

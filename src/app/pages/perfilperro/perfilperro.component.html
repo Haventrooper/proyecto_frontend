@@ -19,4 +19,27 @@
     <h1>Mostrar las actividades recientes con progreso en %</h1>
     <h2>Opcion de eliminar perrito desde perfil</h2>
 
+    <form [formGroup]="formulario" (submit)="modificarPerro()">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" formControlName="nombre" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+          <input type="date" formControlName="fecha_nacimiento" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="id_raza">ID de Raza:</label>
+          <input type="number" formControlName="id_raza" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Género:</label>
+          <select formControlName="genero" class="form-control" required>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Modificar Perro</button>
+      </form>
+      
 </div>

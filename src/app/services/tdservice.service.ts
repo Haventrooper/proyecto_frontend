@@ -114,4 +114,17 @@ export class TdserviceService {
     // Realiza la solicitud PUT con los datos actualizados en el cuerpo de la solicitud
     return this.http.put(`${this.url}/modificarUsuario`, datosActualizados, httpOptions);
   }
+
+  putModificarPerro(idPerro: number, datosActualizados: any, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    // Realiza la solicitud PUT con los datos actualizados en el cuerpo de la solicitud
+    return this.http.put(`${this.url}/modificarPerro/${idPerro}`, datosActualizados, httpOptions);
+  }
+
 }

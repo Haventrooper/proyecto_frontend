@@ -3,7 +3,7 @@
         <div *ngFor="let perro of perros">
             <p-card>
                 {{perro.nombre}}
-                <p-button label="Ver perro" ></p-button>
+                <p-button label="Ver perro" [routerLink]="['/perfilperro', perro.id_perro]"></p-button>
             </p-card>
         </div>
     </div>
