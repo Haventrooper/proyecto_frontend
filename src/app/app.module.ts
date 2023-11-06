@@ -10,6 +10,8 @@ import { MenubarModule } from 'primeng/menubar';
 import { DialogModule } from 'primeng/dialog';
 import { RoutesModule } from './routes/routes.module';
 import { AppRoutingModule } from './app-routing.module';
+import { DatePipe } from '@angular/common';
+
 
 
 import { AppComponent } from './app.component';
@@ -56,7 +58,7 @@ import { PerrosComponent } from './pages/perros/perros.component';
     DialogModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

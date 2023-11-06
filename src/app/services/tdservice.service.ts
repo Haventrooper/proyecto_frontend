@@ -101,4 +101,17 @@ export class TdserviceService {
     const body = {idPerro, idActividad};
     return this.http.post(`${this.url}/guardarActividad/${idPerro}/${idActividad}`, body, httpOptions);
   }
+
+  //PUT
+  putModificarUsuario(datosActualizados: any, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+        
+    // Realiza la solicitud PUT con los datos actualizados en el cuerpo de la solicitud
+    return this.http.put(`${this.url}/modificarUsuario`, datosActualizados, httpOptions);
+  }
 }

@@ -5,7 +5,31 @@
     <li>{{usuario?.nombre}}</li>
     <li>{{usuario?.apellido}}</li>
     <li>{{usuario?.email}}</li>
-    <li>{{usuario?.fecha_creacion}}</li>
+    <li>{{usuario?.fecha_nacimiento}}</li>
     </ul>
+
+    <div class="container">
+        <h2>Modificar Datos de Usuario</h2>
+        <form [formGroup]="formulario">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" formControlName="nombre" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" formControlName="apellido" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+            <input type="date" id="fecha_nacimiento" formControlName="fecha_nacimiento" class="form-control">
+          </div>
+          <button (click)="guardarCambios()" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+      </div>
+      
 </div>
 

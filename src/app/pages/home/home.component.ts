@@ -29,6 +29,7 @@ export class HomeComponent {
     this.obtenerActividades();
     this.obtenerCategorias();
     this.obtenerSugerencias();
+
   }
 
   logout(){
