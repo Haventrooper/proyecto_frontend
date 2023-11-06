@@ -65,6 +65,11 @@ export class TdserviceService {
     return this.http.get(`${this.url}/sugerencias`, { headers: headers });
   }
 
+  getActividadesPerro(id: number, token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/actividadPerro/${id}`, { headers: headers });
+  }
+
   //Post
 
   signUp(datosRegistro: any): Observable<any>{
@@ -84,5 +89,16 @@ export class TdserviceService {
       })
     };
     return this.http.post(`${this.url}/registroPerro`, datosRegistro, httpOptions);
+  }
+
+  postActividadPerro(idPerro: number, idActividad: number, token: string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    const body = {idPerro, idActividad};
+    return this.http.post(`${this.url}/guardarActividad/${idPerro}/${idActividad}`, body, httpOptions);
   }
 }

@@ -1,9 +1,13 @@
 <div class="mt-8 mb-8">
-    <div *ngFor="let perro of perros">
-        <ul>
-            <li>{{perro.nombre}}</li>
-        </ul>
+    <div class="flex">
+        <div *ngFor="let perro of perros">
+            <p-card>
+                {{perro.nombre}}
+                <p-button label="Cambiar perro"></p-button>
+            </p-card>
+        </div>
     </div>
+    
     <h1>Añadir más perritos, registro de perrito</h1>
     <div>
         <p-button icon="pi pi-iconName" label="Registrar un nuevo perro" (click)="abrirModal()"></p-button>
@@ -25,7 +29,6 @@
                     <input type="text" placeholder="Sexo" pInputText formControlName="genero" />
                 </div>
                 <p-button icon="pi pi-iconName" label="Registrar" (click)="registrarPerro()"></p-button>
-
             </form>
         </p-dialog>
     </div>

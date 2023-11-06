@@ -11,6 +11,11 @@
     
     <h2>Modificar datos de perrito</h2>
     <h1>Mostrar las actividades guardadas para el perrito</h1>
+    <div *ngFor="let actividad of actividades">
+        <div>
+            {{actividad.nombre}} - {{actividad.descripcion}}
+        </div>
+    </div>
     <h1>Mostrar las actividades recientes con progreso en %</h1>
     <h2>Opcion de eliminar perrito desde perfil</h2>
 

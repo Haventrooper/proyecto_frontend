@@ -9,14 +9,17 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 })
 export class PerfilperroComponent implements OnInit {
   perro: any; // Aquí guardarás los datos del perro
+  actividades: any
 
-  constructor(private route: ActivatedRoute, private td_service: TdserviceService) {}
+  constructor(private route: ActivatedRoute, 
+              private td_service: TdserviceService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       const idPerro = params['id_perro'];
       if (idPerro) {
         this.obtenerDatosDelPerro(idPerro);
+        this.obtenerActividadPerro(idPerro);
       } else {
         console.error('idPerro es undefined');
       }
@@ -29,6 +32,16 @@ export class PerfilperroComponent implements OnInit {
     if (token) {
       this.td_service.getPerroPorId(idPerro, token).subscribe((data) => {
         this.perro = data; // Asigna los datos del perro a la variable perro
+      });
+    } else {
+      console.error('Token no encontrado en el Local Storage');
+    }
+  }
+  obtenerActividadPerro(idPerro: number){
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.td_service.getActividadesPerro(idPerro, token).subscribe((data) => {
+        this.actividades = data;
       });
     } else {
       console.error('Token no encontrado en el Local Storage');

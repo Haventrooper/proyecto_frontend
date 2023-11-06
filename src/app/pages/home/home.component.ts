@@ -20,7 +20,8 @@ export class HomeComponent {
   sugerencias: any;
 
   constructor(private td_service: TdserviceService,
-    private router: Router) {}
+    private router: Router) {
+    }
 
   ngOnInit(): void {
     this.getNombreUsuario()
@@ -45,6 +46,7 @@ export class HomeComponent {
       this.td_service.getPerros(token).subscribe((data) => {
         // Asignar la respuesta a la variable perros
         this.perros = data;
+        console.log(this.perros)
       });
     } else {
       // Manejar el caso en que no se encuentra un token en el Local Storage
@@ -169,6 +171,30 @@ export class HomeComponent {
         // Maneja el error de la solicitud
       });
     }else{
+      console.error('Token no encontrado');
+    }
+  }
+
+  
+  //REQUIERE DE ATENCION PROBLEMA DE TOKEN 401
+  guardarActividadPerro() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const idPerro = this.perros[0].id_perro; // Reemplaza 1 con el ID de tu perro
+      const idActividad = this.selectedActividad.id_actividad; // Reemplaza 3 con el ID de tu actividad
+  
+      this.td_service.postActividadPerro(idPerro, idActividad, token).subscribe(
+        (data: any) => {
+          console.log('La actividad se ha guardado correctamente', data);
+          // Realiza acciones adicionales después de guardar la actividad
+        },
+        (error) => {
+          console.error('Error al guardar la actividad', error);
+          // Maneja errores si es necesario
+        }
+      );
+    } else {
       console.error('Token no encontrado');
     }
   }

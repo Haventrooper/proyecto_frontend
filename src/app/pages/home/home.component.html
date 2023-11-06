@@ -58,6 +58,7 @@
       <p>Contador: {{ selectedActividad.contador }}</p>
       <div>
         <p-button icon="pi pi-iconName" label="Ver guía" (click)="mostrarPasos(selectedActividad.id_actividad)"></p-button>
+        <p-button icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
         <ul *ngFor="let paso of pasos">
           <li>
             {{ paso.titulo }} - {{ paso.nombre }} - {{ paso.descripcion }}
