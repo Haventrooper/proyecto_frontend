@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+
+  @Input() perroSeleccionado: any;
+  perroSeleccionadoId: any;
+
+  
   perros: any;
   perro: any;
   username: any;
@@ -106,7 +111,7 @@ export class HomeComponent {
   seleccionarActividad(actividad: any) {
     this.selectedActividad = actividad;
     this.displayModal = true;
-  } 
+  }
 
   obtenerCategorias(){
     const token = localStorage.getItem('token');
@@ -176,14 +181,19 @@ export class HomeComponent {
     }
   }
 
+  selectedPerroId: number | null = null;
+
+  seleccionarPerro(perroId: number) {
+    this.selectedPerroId = perroId;
+  }
   
   //REQUIERE DE ATENCION PROBLEMA DE TOKEN 401
   guardarActividadPerro() {
     const token = localStorage.getItem('token');
-
-    if (token) {
-      const idPerro = this.perros[0].id_perro; // Reemplaza 1 con el ID de tu perro
-      const idActividad = this.selectedActividad.id_actividad; // Reemplaza 3 con el ID de tu actividad
+  
+    if (token && this.selectedPerroId !== null) {
+      const idPerro = this.selectedPerroId; // Usar el ID del perro seleccionado
+      const idActividad = this.selectedActividad.id_actividad; // Reemplaza con el ID de tu actividad
   
       this.td_service.postActividadPerro(idPerro, idActividad, token).subscribe(
         (data: any) => {
@@ -193,11 +203,9 @@ export class HomeComponent {
         (error) => {
           console.error('Error al guardar la actividad', error);
           // Maneja errores si es necesario
-        }
-      );
+        });
     } else {
-      console.error('Token no encontrado');
+      console.error('Token no encontrado o perro no seleccionado');
     }
   }
-  
 }

@@ -7,12 +7,20 @@
     <p-button icon="pi pi-iconName" label="Cerrar Sesión" (click)="logout()"></p-button>
   </div>
 
-  <h2>Perro seleccionado</h2>
-  <div *ngFor="let perro of perros; let first = first">
-    <div *ngIf="first">
-      <p-button icon="pi pi-iconName" label="{{perro.nombre}}" [routerLink]="['/perfilperro', perro.id_perro]"></p-button>
+  <h2>Ultimo perro modificado</h2>
+  <div class="flex align-items-center justify-content-start">
+    <div *ngFor="let perro of perros">
+      <p-button icon="pi pi-iconName" label="{{perro.nombre}}" (click)="seleccionarPerro(perro.id_perro)"></p-button>
     </div>
   </div>
+
+  <div *ngIf="perroSeleccionado">
+    <h2>Perro Seleccionado</h2>
+    <p>{{ perroSeleccionado.nombre }}</p>
+  </div>
+
+    
+  
 
   <h2>Actividades disponibles</h2>
   <ul>

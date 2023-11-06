@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-perros',
@@ -9,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./perros.component.scss']
 })
 export class PerrosComponent {
-
+  
   perros: any;
   registro: FormGroup;
   mostrarModal: boolean = false;
@@ -29,7 +28,6 @@ export class PerrosComponent {
   ngOnInit(): void {
     this.obtenerPerros();
   }
-
 
   abrirModal() {
     this.mostrarModal = true;

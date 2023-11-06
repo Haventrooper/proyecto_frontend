@@ -4,14 +4,13 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';  // Asegúrate de importar DatePipe correctamente
 
-
-
 @Component({
   selector: 'app-perfilperro',
   templateUrl: './perfilperro.component.html',
   styleUrls: ['./perfilperro.component.scss']
 })
 export class PerfilperroComponent implements OnInit {
+
   perro: any; // Aquí guardarás los datos del perro
   actividades: any
   formulario: FormGroup;
