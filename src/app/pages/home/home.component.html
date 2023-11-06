@@ -3,6 +3,7 @@
 
   <div class="btn-container">
     <p-button icon="pi pi-iconName" label="Perfil" (click)="perfilUsuario()"></p-button>
+    <p-button icon="pi pi-iconName" label="Perros de {{username?.nombre}}" [routerLink]="['/perros']"></p-button>
     <p-button icon="pi pi-iconName" label="Cerrar Sesión" (click)="logout()"></p-button>
   </div>
 
@@ -18,22 +19,31 @@
     <li *ngFor="let actividad of actividades">
       <ng-container *ngIf="actividad.id_categoria === 1">
         <h3>Trucos:</h3>
-        <div (click)="seleccionarActividad(actividad)">
-          {{ actividad.nombre }} - {{ actividad.descripcion }}
-        </div>
+
+        <p-card (click)="seleccionarActividad(actividad)">
+          <div>
+            {{ actividad.nombre }} - {{ actividad.descripcion }}
+          </div>
+        </p-card>
+        
       </ng-container>
 
       <ng-container *ngIf="actividad.id_categoria === 2">
         <h3>Juegos:</h3>
-        <div (click)="seleccionarActividad(actividad)">
-          {{ actividad.nombre }} - {{ actividad.descripcion }}
-        </div>
+        <p-card (click)="seleccionarActividad(actividad)">
+          <div>
+            {{ actividad.nombre }} - {{ actividad.descripcion }}
+          </div>
+        </p-card>
+        
       </ng-container>
       <ng-container *ngIf="actividad.id_categoria === 3">
         <h3>Ejercicios:</h3>
-        <div (click)="seleccionarActividad(actividad)">
-          {{ actividad.nombre }} - {{ actividad.descripcion }}
-        </div>
+        <p-card (click)="seleccionarActividad(actividad)">
+          <div>
+            {{ actividad.nombre }} - {{ actividad.descripcion }}
+          </div>
+        </p-card>
       </ng-container>
     </li>
   </ul>
@@ -57,20 +67,26 @@
     </div>
   </p-dialog>
 
-  <h2>Todas las categorías</h2>
-  <ul>
-    <li *ngFor="let categoria of categorias">
-      <p-button icon="pi pi-iconName" label="{{categoria.nombre}}" [routerLink]="['/categorias', categoria.id_categoria]"></p-button>
-    </li>
-  </ul>
+
+  <div>
+    <h2>Todas las categorías</h2>
+    <div>
+      <div *ngFor="let categoria of categorias">
+        <p-button icon="pi pi-iconName" label="{{categoria.nombre}}" [routerLink]="['/categorias', categoria.id_categoria]"></p-button>
+      </div>
+    </div>
+  </div>
+  
   
 
-
   <h2>Sugerencias generales</h2>
-  <ul *ngFor="let sugerencia of sugerencias">
-    <li>
-      <strong>{{sugerencia.nombre}}</strong><br>
-      {{sugerencia.descripcion}}
-    </li>
-  </ul>
+  <p-card>
+    <div *ngFor="let sugerencia of sugerencias">
+      <div>
+        <strong>{{sugerencia.nombre}}</strong><br>
+        {{sugerencia.descripcion}}
+      </div>
+    </div>
+  </p-card>
+  
 </div>

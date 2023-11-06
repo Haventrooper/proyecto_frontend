@@ -10,6 +10,7 @@ import { PerfilComponent } from '../pages/perfil/perfil.component';
 import { SignupComponent } from '../pages/signup/signup.component';
 import { PerfilperroComponent } from '../pages/perfilperro/perfilperro.component';
 import { CategoriasComponent } from '../pages/categorias/categorias.component';
+import { PerrosComponent } from '../pages/perros/perros.component';
 
 
 @NgModule({
@@ -47,8 +48,14 @@ import { CategoriasComponent } from '../pages/categorias/categorias.component';
         path: 'perfilperro/:id_perro',
         component: PerfilperroComponent
       },
-      { path: 'categorias/:idCategoria',
-       component: CategoriasComponent },
+      { 
+        path: 'categorias/:idCategoria',
+        component: CategoriasComponent 
+      },
+      {
+        path: 'perros',
+        component: PerrosComponent
+      }
     ]),
   ]
 })

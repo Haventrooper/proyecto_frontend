@@ -23,6 +23,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PerfilperroComponent } from './pages/perfilperro/perfilperro.component';
 import { CategoriasComponent } from './pages/categorias/categorias.component';
+import { PerrosComponent } from './pages/perros/perros.component';
 
 
 
@@ -38,7 +39,8 @@ import { CategoriasComponent } from './pages/categorias/categorias.component';
     HomeComponent,
     PerfilComponent,
     PerfilperroComponent,
-    CategoriasComponent
+    CategoriasComponent,
+    PerrosComponent
   ],
   imports: [
     BrowserModule,

@@ -16,21 +16,6 @@ export class TdserviceService {
   login(user: string, password: string){
     return this.http.get(this.url + `/login?nombre=${user}&contrasena=${password}`);
   }
-  
-  signUp(datosRegistro: any): Observable<any>{
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    return this.http.post(`${this.url}/signup`, datosRegistro, httpOptions);
-  }
-
-  sendPerros(json:Array<string>, token: string){
-    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
-    return this.http.post(`${this.url}/perrosUsuario`, json, {headers:headers})
-  }
 
   getPerros(token: string) {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -78,5 +63,26 @@ export class TdserviceService {
   getSugerencias(token: string) {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.url}/sugerencias`, { headers: headers });
+  }
+
+  //Post
+
+  signUp(datosRegistro: any): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(`${this.url}/signup`, datosRegistro, httpOptions);
+  }
+
+  postPerro(datosRegistro: any, token: string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    return this.http.post(`${this.url}/registroPerro`, datosRegistro, httpOptions);
   }
 }

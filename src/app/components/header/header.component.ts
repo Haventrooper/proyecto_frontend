@@ -16,12 +16,12 @@ export class HeaderComponent {
   }
   
   ngOnInit() { 
-    this.menu = [ 
+    this.menu = [
       { 
-        label: 'Iniciar sesión',  
-      }, 
+        label: 'Perfil', 
+      },
       { 
-        label: 'Registrarse', 
+        label: 'Perros', 
       } 
     ]; 
   } 
