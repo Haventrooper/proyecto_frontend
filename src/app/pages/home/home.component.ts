@@ -36,6 +36,11 @@ export class HomeComponent {
     this.seleccionarPerro(this.perroSeleccionado.id_perro)
   }
 
+  verPerfilDelPerro(perroId: number) {
+    // Utiliza el enrutador para navegar a la página del perfil del perro
+    this.router.navigate(['/perfilperro', perroId]);
+  }
+
   logout(){
     localStorage.removeItem("token")
     alert("La sesión ha caducado")
