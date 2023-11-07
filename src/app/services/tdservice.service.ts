@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
 
 
 @Injectable({
@@ -100,6 +102,13 @@ export class TdserviceService {
     };
     const body = {idPerro, idActividad};
     return this.http.post(`${this.url}/guardarActividad/${idPerro}/${idActividad}`, body, httpOptions);
+  }
+
+  private perroSeleccionado = new BehaviorSubject<any>(null);
+  perroSeleccionado$ = this.perroSeleccionado.asObservable();
+  
+  actualizarPerroSeleccionado(perro: any) {
+    this.perroSeleccionado.next(perro);
   }
 
   //PUT

@@ -9,11 +9,6 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  @Input() perroSeleccionado: any;
-  perroSeleccionadoId: any;
-
-  idActividadEspecifico: number = 1;
-
   perros: any;
   perro: any;
   username: any;
@@ -27,6 +22,10 @@ export class HomeComponent {
 
   constructor(private td_service: TdserviceService,
     private router: Router) {
+      this.td_service.perroSeleccionado$.subscribe((perro) => {
+        this.perroSeleccionado = perro;
+      });
+
     }
 
   ngOnInit(): void {
@@ -35,7 +34,7 @@ export class HomeComponent {
     this.obtenerActividades();
     this.obtenerCategorias();
     this.obtenerSugerencias();
-
+    this.seleccionarPerro(this.perroSeleccionado.id_perro)
   }
 
   logout(){
@@ -113,6 +112,7 @@ export class HomeComponent {
     this.selectedActividad = actividad;
     this.displayModal = true;
   }
+  
 
   obtenerCategorias(){
     const token = localStorage.getItem('token');
@@ -181,8 +181,9 @@ export class HomeComponent {
       console.error('Token no encontrado');
     }
   }
-
+  
   selectedPerroId: number | null = null;
+  perroSeleccionado: any;
 
   seleccionarPerro(perroId: number) {
     this.selectedPerroId = perroId;
