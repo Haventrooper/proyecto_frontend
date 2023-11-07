@@ -1,4 +1,5 @@
 <div class="mt-8 mb-8">
+  <h2>Modificar datos de perrito</h2>
     <div *ngFor="let p of perro">
         <p>{{p.nombre}}</p>
         <p>{{p.fecha_nacimiento}}</p>
@@ -6,7 +7,6 @@
         <p>{{p.genero}}</p>
     </div>
     
-    <h2>Modificar datos de perrito</h2>
     <h1>Mostrar las actividades guardadas para el perrito</h1>
     <div *ngFor="let actividad of actividades">
         <div>
@@ -14,7 +14,6 @@
         </div>
     </div>
     <h1>Mostrar las actividades recientes con progreso en %</h1>
-    <h2>Opcion de eliminar perrito desde perfil</h2>
 
     <form [formGroup]="formulario" (submit)="modificarPerro()">
         <div class="form-group">
@@ -38,5 +37,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Modificar Perro</button>
       </form>
+
+      <h1>Eliminar perro</h1>
+      <button (click)="eliminarPerro()">Eliminar Perro</button>
+
       
 </div>

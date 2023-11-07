@@ -127,4 +127,17 @@ export class TdserviceService {
     return this.http.put(`${this.url}/modificarPerro/${idPerro}`, datosActualizados, httpOptions);
   }
 
+  //Delete
+
+  deletePerro(idPerro: number, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    // Realiza la solicitud PUT con los datos actualizados en el cuerpo de la solicitud
+    return this.http.delete(`${this.url}/eliminarPerro/${idPerro}`, httpOptions);
+  }
 }

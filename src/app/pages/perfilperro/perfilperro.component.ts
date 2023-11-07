@@ -39,6 +39,7 @@ export class PerfilperroComponent implements OnInit {
               }
 
   ngOnInit() {
+    console.log(this.perro)
   }
 
   obtenerDatosDelPerro(idPerro: number) {
@@ -88,6 +89,32 @@ export class PerfilperroComponent implements OnInit {
         console.error('Token no encontrado en el Local Storage');
       }    
     }
+  }
+
+  //Delete
+
+  eliminarPerro() {
+    
+    const idPerro = this.perro[0].id_perro
+    const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
+
+    if(token){
+      this.td_service.deletePerro(idPerro, token).subscribe(
+        (response) => {
+          // Maneja la respuesta de la API después de la eliminación exitosa.
+          console.log(response);
+          // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
+        },
+        (error) => {
+          // Maneja los errores en caso de que ocurra un problema con la eliminación.
+          console.error(error);
+        }
+      );
+    }
+    else{
+      console.error("No se ha encontrado el token en el Local Storage")
+    }
+   
   }
 }
 
