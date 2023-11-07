@@ -12,7 +12,8 @@ export class HomeComponent {
   @Input() perroSeleccionado: any;
   perroSeleccionadoId: any;
 
-  
+  idActividadEspecifico: number = 1;
+
   perros: any;
   perro: any;
   username: any;

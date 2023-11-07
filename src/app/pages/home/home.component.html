@@ -23,38 +23,17 @@
   
 
   <h2>Actividades disponibles</h2>
-  <ul>
-    <li *ngFor="let actividad of actividades">
-      <ng-container *ngIf="actividad.id_categoria === 1">
-        <h3>Trucos:</h3>
-
-        <p-card (click)="seleccionarActividad(actividad)">
-          <div>
-            {{ actividad.nombre }} - {{ actividad.descripcion }}
-          </div>
-        </p-card>
-        
-      </ng-container>
-
-      <ng-container *ngIf="actividad.id_categoria === 2">
-        <h3>Juegos:</h3>
-        <p-card (click)="seleccionarActividad(actividad)">
-          <div>
-            {{ actividad.nombre }} - {{ actividad.descripcion }}
-          </div>
-        </p-card>
-        
-      </ng-container>
-      <ng-container *ngIf="actividad.id_categoria === 3">
-        <h3>Ejercicios:</h3>
+  <div>
+    <div *ngFor="let actividad of actividades">
+      <ng-container>
         <p-card (click)="seleccionarActividad(actividad)">
           <div>
             {{ actividad.nombre }} - {{ actividad.descripcion }}
           </div>
         </p-card>
       </ng-container>
-    </li>
-  </ul>
+    </div>
+  </div>
 
   <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true">
     <div *ngIf="selectedActividad">
