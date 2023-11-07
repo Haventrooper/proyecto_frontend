@@ -10,9 +10,14 @@
 
   <div *ngIf="perroSeleccionado">
     <h2>Perro Seleccionado</h2>
-    <p-button icon="pi pi-iconName" label="{{perroSeleccionado.nombre}}"></p-button>
-    <p>{{ perroSeleccionado.nombre }}</p>
-    <p>{{ perroSeleccionado.fecha_nacimiento }}</p>
+    <p-card header="{{perroSeleccionado.nombre}}">
+      <div>
+        {{perroSeleccionado.fecha_nacimiento}}
+      </div>
+      <div>
+        {{perroSeleccionado.genero}}
+      </div>
+    </p-card>
   </div>
 
   <h2>Actividades disponibles</h2>

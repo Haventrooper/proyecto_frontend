@@ -25,7 +25,6 @@ export class HomeComponent {
       this.td_service.perroSeleccionado$.subscribe((perro) => {
         this.perroSeleccionado = perro;
       });
-
     }
 
   ngOnInit(): void {

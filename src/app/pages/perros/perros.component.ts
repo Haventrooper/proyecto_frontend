@@ -78,6 +78,7 @@ export class PerrosComponent {
 
 
   seleccionarPerro(perroSeleccionado: any) {
+    
     this.td_service.actualizarPerroSeleccionado(perroSeleccionado);
   }
 }
