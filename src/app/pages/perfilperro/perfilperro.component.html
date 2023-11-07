@@ -11,6 +11,8 @@
     <div *ngFor="let actividad of actividades">
         <div>
             {{actividad.nombre}} - {{actividad.descripcion}}
+            <button (click)="eliminarRelacionPerroActividad(actividad.id_actividad)">Eliminar</button>
+
         </div>
     </div>
     <h1>Mostrar las actividades recientes con progreso en %</h1>

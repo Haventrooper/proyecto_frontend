@@ -11,56 +11,61 @@ import { DatePipe } from '@angular/common';  // Asegúrate de importar DatePipe 
 })
 export class PerfilperroComponent implements OnInit {
 
-  perro: any; // Aquí guardarás los datos del perro
-  actividades: any
+  perro: any;
+  actividades: any;
   formulario: FormGroup;
 
-
   constructor(private route: ActivatedRoute, 
-              private td_service: TdserviceService,
-              private formBuilder: FormBuilder,
-              private datePipe: DatePipe)
-              {
-                this.route.params.subscribe(params => {
-                  const idPerro = params['id_perro'];
-                  if (idPerro) {
-                    this.obtenerDatosDelPerro(idPerro);
-                    this.obtenerActividadPerro(idPerro);
-                  } else {
-                    console.error('idPerro es undefined');
-                  }
-                });
-                this.formulario = this.formBuilder.group({
-                  nombre: ['', Validators.required],
-                  fecha_nacimiento: ['', Validators.required],
-                  id_raza: ['', [Validators.required]],
-                  genero: ['', Validators.required]
-                });
-              }
+    private td_service: TdserviceService,
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe) {
+
+      this.route.params.subscribe(params => {
+      let idPerro = params['id_perro'];
+      
+      if (idPerro !== undefined && idPerro !== null) {
+        // El parámetro 'id_perro' tiene un valor válido, puedes proceder
+        this.obtenerDatosDelPerro(idPerro);
+        this.obtenerActividadPerro(idPerro);
+      } else {
+        console.error('idPerro es undefined');
+        }
+  });
+
+  this.formulario = this.formBuilder.group({
+  nombre: ['', Validators.required],
+  fecha_nacimiento: ['', Validators.required],
+  id_raza: ['', [Validators.required]],
+  genero: ['', Validators.required]
+  });
+}
 
   ngOnInit() {
-    console.log(this.perro)
   }
 
   obtenerDatosDelPerro(idPerro: number) {
-    // Supongo que deberías proporcionar un token válido en lugar de "token"
     const token = localStorage.getItem('token');
     if (token) {
       this.td_service.getPerroPorId(idPerro, token).subscribe((data) => {
-        this.perro = data; // Asigna los datos del perro a la variable perro
+        this.perro = data;
         console.log('Datos del perro cargados:', this.perro);
-
+  
+        // Mueve aquí cualquier código que dependa de this.perro
+        // Por ejemplo, puedes llamar a otras funciones que utilicen this.perro aquí
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
     }
   }
+  
 
-  obtenerActividadPerro(idPerro: number){
+  obtenerActividadPerro(idPerro: number): void{
     const token = localStorage.getItem('token');
     if (token) {
       this.td_service.getActividadesPerro(idPerro, token).subscribe((data) => {
         this.actividades = data;
+        console.log('Datos del perro cargados:', this.actividades);
+
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
@@ -94,7 +99,6 @@ export class PerfilperroComponent implements OnInit {
   //Delete
 
   eliminarPerro() {
-    
     const idPerro = this.perro[0].id_perro
     const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
 
@@ -115,6 +119,27 @@ export class PerfilperroComponent implements OnInit {
       console.error("No se ha encontrado el token en el Local Storage")
     }
    
+  }
+  eliminarRelacionPerroActividad(idActividad: number) {
+
+    const idPerro = this.perro[0].id_perro;
+    const token = localStorage.getItem('token'); /* Obtén el token de autenticación */;
+
+    if (token) {
+      this.td_service.eliminarActividadPorPerro(idPerro, idActividad, token).subscribe(
+        (response) => {
+          // Maneja la respuesta de la API después de la eliminación exitosa.
+          console.log(response);
+          // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
+        },
+        (error) => {
+          // Maneja los errores en caso de que ocurra un problema con la eliminación.
+          console.error(error);
+        }
+      );
+    } else {
+      console.error("No se ha encontrado el token en el Local Storage");
+    }
   }
 }
 
