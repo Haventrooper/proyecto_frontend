@@ -258,4 +258,17 @@ export class HomeComponent {
       console.error('Token no encontrado o perro no seleccionado');
     }
   }
+
+  //Modificar
+  actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
+    this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
+      (data: any) => {
+        console.log('Contador actualizado correctamente', data);
+        // Realiza acciones adicionales después de actualizar el contador
+      },
+      (error) => {
+        console.error('Error al actualizar el contador', error);
+        // Maneja errores si es necesario
+      });
+  }
 }

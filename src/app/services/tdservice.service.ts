@@ -114,6 +114,19 @@ export class TdserviceService {
   }
 
   //PUT
+  putContador(idPerro: number, idActividad: number, nuevoContador: number, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    const body = { nuevoContador }; // Nuevo valor del contador
+
+    return this.http.put(`${this.url}/actualizarActividad/${idPerro}/${idActividad}`, body, httpOptions);
+
+  }
   putModificarUsuario(datosActualizados: any, token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
