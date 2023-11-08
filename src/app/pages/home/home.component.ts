@@ -37,11 +37,25 @@ export class HomeComponent {
     this.seleccionarPerro(this.perroSeleccionado.id_perro)
   }
 
+  ngOnDestroy() {
+    this.reiniciarValores();
+  }
+
+  reiniciarValores() {
+    // Reinicia las variables y valores que necesites aquí
+    this.pasoActual = 0; // Reinicia el paso actual u otro valor predeterminado
+    this.displayModal = false; // Cierra el modal
+    this.selectedActividad = null; // Reinicia la actividad seleccionada
+    this.pasos = []; // Reinicia los pasos
+    // Otras reinicializaciones según tus necesidades
+  }
+  
+
   siguiente(idActividad: number) {
     this.obtenerPasos(idActividad);
     console.log(this.pasos[this.pasoActual])
-    
     this.pasoActual++;
+
 	}
 
 	anterior() {
