@@ -53,10 +53,18 @@ export class HomeComponent {
 
   siguiente(idActividad: number) {
     this.obtenerPasos(idActividad);
-    console.log(this.pasos[this.pasoActual])
-    this.pasoActual++;
-
-	}
+  
+    // Verifica si el paso siguiente es válido
+    if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
+      console.log(this.pasos[this.pasoActual]);
+      this.pasoActual++;
+    } else {
+      // El paso siguiente no es válido, muestra un mensaje de error o toma la acción adecuada.
+      console.log('No hay más pasos disponibles o el paso actual es undefined.');
+      // Puedes mostrar un mensaje de error al usuario o tomar la acción que desees en caso de un paso no válido.
+    }
+  }
+  
 
 	anterior() {
 		this.pasoActual--;

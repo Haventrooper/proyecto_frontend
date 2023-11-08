@@ -45,18 +45,19 @@
       <p>Progreso: {{ selectedActividad.progreso }}</p>
       <p>Contador: {{ selectedActividad.contador }}</p>
   
-      <div *ngIf="pasoActual >= 0 && pasoActual < pasos?.length">
+      <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
         <h3>{{ pasos[pasoActual].titulo }}</h3>
         <p>{{ pasos[pasoActual].descripcion }}</p>
       </div>
   
       <div>
         <p-button icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
-        <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()"></p-button>
+        <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>
         <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente(selectedActividad.id_actividad)"></p-button>
       </div>
     </div>
   </p-dialog>
+  
   
 </div>
   
