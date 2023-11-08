@@ -10,7 +10,7 @@
     <h1>Mostrar las actividades guardadas para el perrito</h1>
     <div *ngFor="let actividad of actividades">
         <div>
-            {{actividad.nombre}} - {{actividad.descripcion}}
+            {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.contador}}
             <button (click)="eliminarRelacionPerroActividad(actividad.id_actividad)">Eliminar</button>
 
         </div>

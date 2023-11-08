@@ -93,14 +93,14 @@ export class TdserviceService {
     return this.http.post(`${this.url}/registroPerro`, datosRegistro, httpOptions);
   }
 
-  postActividadPerro(idPerro: number, idActividad: number, token: string): Observable<any>{
+  postActividadPerro(idPerro: number, idActividad: number, contador: number, token: string): Observable<any>{ //Añadir contador
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
       })
     };
-    const body = {idPerro, idActividad};
+    const body = {idPerro, idActividad, contador}; //Añadir contador
     return this.http.post(`${this.url}/guardarActividad/${idPerro}/${idActividad}`, body, httpOptions);
   }
 

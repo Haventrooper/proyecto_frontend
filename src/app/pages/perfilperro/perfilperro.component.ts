@@ -65,7 +65,6 @@ export class PerfilperroComponent implements OnInit {
       this.td_service.getActividadesPerro(idPerro, token).subscribe((data) => {
         this.actividades = data;
         console.log('Datos del perro cargados:', this.actividades);
-
       });
     } else {
       console.error('Token no encontrado en el Local Storage');

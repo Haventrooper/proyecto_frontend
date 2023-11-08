@@ -44,15 +44,16 @@ export class HomeComponent {
   reiniciarValores() {
     // Reinicia las variables y valores que necesites aquí
     this.pasoActual = 0; // Reinicia el paso actual u otro valor predeterminado
+    this.pasos = []; // Reinicia los pasos
     this.displayModal = false; // Cierra el modal
     this.selectedActividad = null; // Reinicia la actividad seleccionada
-    this.pasos = []; // Reinicia los pasos
     // Otras reinicializaciones según tus necesidades
   }
   
 
   siguiente(idActividad: number) {
     this.obtenerPasos(idActividad);
+    console.log(this.pasoActual)
   
     // Verifica si el paso siguiente es válido
     if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
@@ -65,10 +66,12 @@ export class HomeComponent {
     }
   }
   
+  
 
 	anterior() {
 		this.pasoActual--;
     console.log(this.pasos[this.pasoActual])
+    console.log(this.pasoActual)
 
 		if (this.pasoActual < 0) {
 			this.pasoActual = 0;
@@ -133,6 +136,7 @@ export class HomeComponent {
   }
 
   obtenerActividad(idActividad: number){
+    this.pasoActual = 0;
     const token = localStorage.getItem('token');
 
     if (token) {
@@ -231,15 +235,17 @@ export class HomeComponent {
     this.router.navigate(['/perfilperro', perroId]);
   }
 
-  //REQUIERE DE ATENCION PROBLEMA DE TOKEN 401
   guardarActividadPerro() {
     const token = localStorage.getItem('token');
   
     if (token && this.selectedPerroId !== null) {
+
+      const contadorActual = this.pasoActual;
+
       const idPerro = this.selectedPerroId; // Usar el ID del perro seleccionado
       const idActividad = this.selectedActividad.id_actividad; // Reemplaza con el ID de tu actividad
   
-      this.td_service.postActividadPerro(idPerro, idActividad, token).subscribe(
+      this.td_service.postActividadPerro(idPerro, idActividad, contadorActual, token).subscribe(
         (data: any) => {
           console.log('La actividad se ha guardado correctamente', data);
           // Realiza acciones adicionales después de guardar la actividad
