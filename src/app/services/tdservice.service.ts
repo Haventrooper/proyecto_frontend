@@ -104,6 +104,8 @@ export class TdserviceService {
     return this.http.post(`${this.url}/guardarActividad/${idPerro}/${idActividad}`, body, httpOptions);
   }
 
+  private perroSeleccionadoKey = 'perroSeleccionado';
+
   private perroSeleccionado = new BehaviorSubject<any>(null);
   perroSeleccionado$ = this.perroSeleccionado.asObservable();
   

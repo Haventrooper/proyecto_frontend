@@ -18,6 +18,7 @@ export class HomeComponent {
   displayModal: boolean = false;
   categorias: any;
   pasos: any;
+  pasoActual: number = 0;
   sugerencias: any;
 
   constructor(private td_service: TdserviceService,
@@ -35,6 +36,23 @@ export class HomeComponent {
     this.obtenerSugerencias();
     this.seleccionarPerro(this.perroSeleccionado.id_perro)
   }
+
+  siguiente(idActividad: number) {
+    this.obtenerPasos(idActividad);
+    console.log(this.pasos[this.pasoActual])
+    
+    this.pasoActual++;
+	}
+
+	anterior() {
+		this.pasoActual--;
+    console.log(this.pasos[this.pasoActual])
+
+		if (this.pasoActual < 0) {
+			this.pasoActual = 0;
+		}
+	}
+
 
   logout(){
     localStorage.removeItem("token")
@@ -141,9 +159,7 @@ export class HomeComponent {
       console.error('Token no encontrado en el Local Storage');
     } 
   }
-  mostrarPasos(idActividad: number) {
-    this.obtenerPasos(idActividad);
-  }
+ 
 
   obtenerPerroPorId(idPerro: number){
     const token = localStorage.getItem('token');

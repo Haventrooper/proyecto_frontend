@@ -35,7 +35,7 @@
       </ng-container>
     </div>
   </div>
-
+<div>
   <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true">
     <div *ngIf="selectedActividad">
       <h3>Nombre: {{ selectedActividad.nombre }}</h3>
@@ -44,17 +44,19 @@
       <p>Calificación: {{ selectedActividad.calificacion }}</p>
       <p>Progreso: {{ selectedActividad.progreso }}</p>
       <p>Contador: {{ selectedActividad.contador }}</p>
+      <div *ngIf="pasoActual >= 0 && pasoActual < pasos?.length">
+        <h3>{{ pasos[pasoActual].titulo }}</h3>
+        <p>{{ pasos[pasoActual].descripcion }}</p>
+      </div>
       <div>
-        <p-button icon="pi pi-iconName" label="Ver guía" (click)="mostrarPasos(selectedActividad.id_actividad)"></p-button>
         <p-button icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
-        <ul *ngFor="let paso of pasos">
-          <li>
-            {{ paso.titulo }} - {{ paso.nombre }} - {{ paso.descripcion }}
-          </li>
-        </ul>
+        <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()"></p-button>
+        <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente(selectedActividad.id_actividad)"></p-button>
       </div>
     </div>
   </p-dialog>
+</div>
+  
 
   <div>
     <h2>Todas las categorías</h2>
