@@ -78,6 +78,8 @@ export class PerrosComponent {
 
 
   seleccionarPerro(perroSeleccionado: any) {
+        // Luego, guárdalos en el localStorage
+    localStorage.setItem('perroSeleccionado', JSON.stringify(perroSeleccionado));
     this.td_service.actualizarPerroSeleccionado(perroSeleccionado);
   }
 }
