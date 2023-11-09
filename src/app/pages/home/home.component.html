@@ -27,7 +27,7 @@
   <div>
     <div *ngFor="let actividad of actividades">
       <ng-container>
-        <p-card (click)="seleccionarActividad(actividad)">
+        <p-card (click)="abrirDialogo(actividad)">
           <div>
             {{ actividad.nombre }} - {{ actividad.descripcion }}
           </div>
@@ -36,7 +36,7 @@
     </div>
   </div>
 <div>
-  <p-dialog header="Detalles de la Actividad" (click)="abrirDialogo()" [(visible)]="displayModal" [modal]="true" (onHide)="reiniciarValores()"> 
+  <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true" (onHide)="reiniciarValores()"> 
     <div *ngIf="selectedActividad">
       <h3>Nombre: {{ selectedActividad.nombre }}</h3>
       <p>Description: {{ selectedActividad.descripcion }}</p>
@@ -51,7 +51,7 @@
       </div>
   
       <div>
-        <p-button icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
+        <p-button  *ngIf="!actividadExistente" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
         <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>
         <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente(selectedActividad.id_actividad)"></p-button>
       </div>

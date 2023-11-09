@@ -45,14 +45,13 @@ export class HomeComponent {
 
 
   
-  seleccionarActividad(actividad: any) {
+  abrirDialogo(actividad: any) {
     this.selectedActividad = actividad;
     this.displayModal = true;
-  }
-  
-  abrirDialogo() {
-    const token = localStorage.getItem('token');
+    this.actividadExistente = false; // Establece inicialmente en false
 
+    const token = localStorage.getItem('token');
+    
     if (token) {
     
     this.td_service.getVerificarActividad(this.perroSeleccionado.id_perro,
@@ -61,10 +60,7 @@ export class HomeComponent {
         if (data.mensaje === 'Actividad ya en BD') {
           this.actividadExistente = true;
         } else if (data.mensaje === 'No hay actividad guardada en BD') {
-          this.actividadExistente = false;
         }
-        // Abre el diálogo
-        this.displayModal = true;
         console.log("found: ", this.perroSeleccionado.id_perro,
         this.selectedActividad.id_actividad);
 
