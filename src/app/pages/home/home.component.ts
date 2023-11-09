@@ -101,6 +101,15 @@ export class HomeComponent {
     if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
       console.log(this.pasos[this.pasoActual]);
       this.pasoActual++;
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+    
+    } else {
+      console.error('Token no encontrado en el Local Storage');
+    }
+
     } else {
       // El paso siguiente no es válido, muestra un mensaje de error o toma la acción adecuada.
       console.log('No hay más pasos disponibles o el paso actual es undefined.');
@@ -119,13 +128,14 @@ export class HomeComponent {
       let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
 
       console.log(contadorActual)
+
       if (token) {
         this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
     
-    } else {
+      } else {
       console.error('Token no encontrado en el Local Storage');
-    }
-  } else {
+      }
+    } else {
     console.error('El paso actual ya es 0, no se puede decrementar más.');
   }
 }
