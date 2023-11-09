@@ -36,7 +36,14 @@ export class HomeComponent {
     this.obtenerActividades();
     this.obtenerCategorias();
     this.obtenerSugerencias();
-    this.seleccionarPerro(this.perroSeleccionado.id_perro)
+
+    const perroSeleccionado = localStorage.getItem('perroSeleccionado');
+    
+    if (perroSeleccionado) {
+        // Si hay datos en el localStorage, convierte la cadena JSON a un objeto y selecciona el perro
+        this.perroSeleccionado = JSON.parse(perroSeleccionado);
+        this.seleccionarPerro(this.perroSeleccionado.id_perro);
+    }
   }
 
   ngOnDestroy() {
@@ -225,6 +232,9 @@ export class HomeComponent {
           const perroSeleccionado = data[0];
           console.log('Información del perro seleccionado:', perroSeleccionado);
           // Aquí puedes asignar los datos a las variables de tu componente
+
+        // Aquí puedes asignar los datos a las variables de tu componente
+        
       },
       (error) => {
         console.error('Error al obtener la información del perro', error);
