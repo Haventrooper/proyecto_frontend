@@ -52,8 +52,8 @@
   
       <div>
         <p-button  *ngIf="!actividadExistente" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
-        <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>
-        <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente(selectedActividad.id_actividad)"></p-button>
+        <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual < 0"></p-button>
+        <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente()"></p-button>
       </div>
     </div>
   </p-dialog>

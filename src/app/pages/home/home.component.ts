@@ -51,8 +51,66 @@ export class HomeComponent {
     this.reiniciarValores();
   }
 
-
+  abrirDialogo(actividad: any) {
+    this.selectedActividad = actividad;
+    this.displayModal = true;
+    this.actividadExistente = false; // Establece inicialmente en false
   
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      this.td_service.getVerificarActividad(this.perroSeleccionado.id_perro,
+        this.selectedActividad.id_actividad, token).subscribe(
+        (data: any) => {
+          if (data.mensaje === 'Actividad ya en BD') {
+            this.actividadExistente = true;
+          } else if (data.mensaje === 'No hay actividad guardada en BD') {
+          }
+          console.log("found: ", this.perroSeleccionado.id_perro,
+          this.selectedActividad.id_actividad);
+  
+        },
+        (error) => {
+          console.error('Error al verificar la actividad', error);
+          // Maneja errores si es necesario
+        }
+      );
+   
+      this.td_service.getPasos(actividad.id_actividad, token).subscribe(
+        (data: any) => {
+          this.pasos = data; // Cargar los pasos al abrir el diálogo
+        },
+        (error) => {
+          console.error('Error al obtener los pasos de la actividad', error);
+          // Maneja errores si es necesario
+        }
+      );
+  
+      // Resto del código para verificar la actividad existente
+    } else {
+      console.error('Token no encontrado en el Local Storage');
+    }
+  }
+  
+  siguiente() {
+    // Verifica si el paso siguiente es válido
+    if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
+      console.log(this.pasos[this.pasoActual]);
+      this.pasoActual++;
+      const token = localStorage.getItem('token');
+  
+      if (token) {
+        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+      } else {
+        console.error('Token no encontrado en el Local Storage');
+      }
+    } else {
+      console.error('No hay más pasos disponibles o el paso actual es undefined.');
+    }
+  }
+  
+
+  /*
   abrirDialogo(actividad: any) {
     this.selectedActividad = actividad;
     this.displayModal = true;
@@ -83,6 +141,31 @@ export class HomeComponent {
     }
   }
 
+  siguiente(idActividad: number) {
+    // Llama a obtenerPasos para obtener los pasos antes de avanzar
+    this.obtenerPasos(idActividad);
+    
+    // Verifica si el paso siguiente es válido
+    if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
+      // Resto del código para avanzar al siguiente paso
+      console.log(this.pasos[this.pasoActual]);
+      this.pasoActual++;
+      const token = localStorage.getItem('token');
+      
+      if (token) {
+        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+      } else {
+        console.error('Token no encontrado en el Local Storage');
+      }
+    } else {
+      // El paso siguiente no es válido, muestra un mensaje de error o toma la acción adecuada.
+      console.error('No hay más pasos disponibles o el paso actual es undefined.');
+      // Puedes mostrar un mensaje de error al usuario o tomar la acción que desees en caso de un paso no válido.
+    }
+  }
+   */
+  
+
   reiniciarValores() {
     // Reinicia las variables y valores que necesites aquí
     this.pasoActual = 0; // Reinicia el paso actual u otro valor predeterminado
@@ -93,27 +176,8 @@ export class HomeComponent {
   }
   
 
-  siguiente(idActividad: number) {
-    this.obtenerPasos(idActividad)
-      console.log(this.pasoActual);
   
-      // Verifica si el paso siguiente es válido
-      if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
-        console.log(this.pasos[this.pasoActual]);
-        this.pasoActual++;
-        const token = localStorage.getItem('token');
   
-        if (token) {
-          this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
-        } else {
-          console.error('Token no encontrado en el Local Storage');
-        }
-      } else {
-        // El paso siguiente no es válido, muestra un mensaje de error o toma la acción adecuada.
-        console.error('No hay más pasos disponibles o el paso actual es undefined.');
-        // Puedes mostrar un mensaje de error al usuario o tomar la acción que desees en caso de un paso no válido.
-      }
-  }
   
   
   
