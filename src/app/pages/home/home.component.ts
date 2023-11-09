@@ -94,28 +94,27 @@ export class HomeComponent {
   
 
   siguiente(idActividad: number) {
-    this.obtenerPasos(idActividad);
-    console.log(this.pasoActual)
+    this.obtenerPasos(idActividad)
+      console.log(this.pasoActual);
   
-    // Verifica si el paso siguiente es válido
-    if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
-      console.log(this.pasos[this.pasoActual]);
-      this.pasoActual++;
-      const token = localStorage.getItem('token');
-
-      if (token) {
-        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
-    
-    } else {
-      console.error('Token no encontrado en el Local Storage');
-    }
-
-    } else {
-      // El paso siguiente no es válido, muestra un mensaje de error o toma la acción adecuada.
-      console.log('No hay más pasos disponibles o el paso actual es undefined.');
-      // Puedes mostrar un mensaje de error al usuario o tomar la acción que desees en caso de un paso no válido.
-    }
+      // Verifica si el paso siguiente es válido
+      if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
+        console.log(this.pasos[this.pasoActual]);
+        this.pasoActual++;
+        const token = localStorage.getItem('token');
+  
+        if (token) {
+          this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+        } else {
+          console.error('Token no encontrado en el Local Storage');
+        }
+      } else {
+        // El paso siguiente no es válido, muestra un mensaje de error o toma la acción adecuada.
+        console.error('No hay más pasos disponibles o el paso actual es undefined.');
+        // Puedes mostrar un mensaje de error al usuario o tomar la acción que desees en caso de un paso no válido.
+      }
   }
+  
   
   
 
