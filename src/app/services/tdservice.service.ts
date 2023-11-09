@@ -72,6 +72,11 @@ export class TdserviceService {
     return this.http.get(`${this.url}/actividadPerro/${id}`, { headers: headers });
   }
 
+  getVerificarActividad(idPerro: number, idActividad: number, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/verificarActividad/${idPerro}/${idActividad}`, { headers: headers });
+  }
+
   //Post
 
   signUp(datosRegistro: any): Observable<any>{

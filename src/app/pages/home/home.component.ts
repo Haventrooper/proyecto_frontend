@@ -20,6 +20,8 @@ export class HomeComponent {
   pasos: any;
   pasoActual: number = 0;
   sugerencias: any;
+  actividadExistente = false;
+
 
   constructor(private td_service: TdserviceService,
     private router: Router) {
@@ -39,6 +41,42 @@ export class HomeComponent {
 
   ngOnDestroy() {
     this.reiniciarValores();
+  }
+
+
+  
+  seleccionarActividad(actividad: any) {
+    this.selectedActividad = actividad;
+    this.displayModal = true;
+  }
+  
+  abrirDialogo() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+    
+    this.td_service.getVerificarActividad(this.perroSeleccionado.id_perro,
+      this.selectedActividad.id_actividad, token).subscribe(
+      (data: any) => {
+        if (data.mensaje === 'Actividad ya en BD') {
+          this.actividadExistente = true;
+        } else if (data.mensaje === 'No hay actividad guardada en BD') {
+          this.actividadExistente = false;
+        }
+        // Abre el diálogo
+        this.displayModal = true;
+        console.log("found: ", this.perroSeleccionado.id_perro,
+        this.selectedActividad.id_actividad);
+
+      },
+      (error) => {
+        console.error('Error al verificar la actividad', error);
+        // Maneja errores si es necesario
+      }
+    );
+    }else{
+      console.error('Token no encontrado en el Local Storage');
+    }
   }
 
   reiniciarValores() {
@@ -151,10 +189,6 @@ export class HomeComponent {
     } 
   }
 
-  seleccionarActividad(actividad: any) {
-    this.selectedActividad = actividad;
-    this.displayModal = true;
-  }
   
 
   obtenerCategorias(){
@@ -218,6 +252,30 @@ export class HomeComponent {
         console.error('Error al obtener la información de la sugerencia', error);
         // Maneja el error de la solicitud
       });
+    }else{
+      console.error('Token no encontrado');
+    }
+  }
+
+  verificarActividad(idPerro: number, idActividad: number) {
+
+    const token = localStorage.getItem('token');
+    if(token){
+    this.td_service.getVerificarActividad(idPerro, idActividad, token).subscribe(
+      (data: any) => {
+        if (data.mensaje === 'Actividad ya en BD') {
+          // La actividad ya está guardada en la base de datos
+          // Puedes tomar acciones en consecuencia
+        } else if (data.mensaje === 'No hay actividad guardada en BD') {
+          // La actividad no está guardada en la base de datos
+          // Puedes tomar acciones en consecuencia
+        }
+      },
+      (error) => {
+        console.error('Error al verificar la actividad', error);
+        // Maneja errores si es necesario
+      }
+    );
     }else{
       console.error('Token no encontrado');
     }
