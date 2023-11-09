@@ -28,6 +28,7 @@ export class HomeComponent {
       this.td_service.perroSeleccionado$.subscribe((perro) => {
         this.perroSeleccionado = perro;
       });
+      this.pasos = [];
     }
 
   ngOnInit(): void {
@@ -110,14 +111,25 @@ export class HomeComponent {
   
 
 	anterior() {
-		this.pasoActual--;
-    console.log(this.pasos[this.pasoActual])
-    console.log(this.pasoActual)
+  if (this.pasoActual > 0) {
+    this.pasoActual--;
+    console.log(this.pasos[this.pasoActual]);
 
-		if (this.pasoActual < 0) {
-			this.pasoActual = 0;
-		}
-	}
+    const token = localStorage.getItem('token');
+      let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
+
+      console.log(contadorActual)
+      if (token) {
+        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
+    
+    } else {
+      console.error('Token no encontrado en el Local Storage');
+    }
+  } else {
+    console.error('El paso actual ya es 0, no se puede decrementar más.');
+  }
+}
+
 
 
   logout(){
