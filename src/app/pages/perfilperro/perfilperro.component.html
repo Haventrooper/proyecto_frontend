@@ -17,6 +17,14 @@
     </div>
     <h1>Mostrar las actividades recientes con progreso en %</h1>
 
+    <div *ngFor="let actividad of actividades_recientes">
+      <div>
+          {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente}}
+      </div>
+  </div>
+
+  <h1>Formulario de modificacion</h1>
+
     <form [formGroup]="formulario" (submit)="modificarPerro()">
         <div class="form-group">
           <label for="nombre">Nombre:</label>

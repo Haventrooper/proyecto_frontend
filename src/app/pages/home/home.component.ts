@@ -408,6 +408,30 @@ export class HomeComponent {
     }
   }
 
+  guardarActividadPerroReciente() {
+    const token = localStorage.getItem('token');
+  
+    if (token && this.selectedPerroId !== null) {
+
+      const fecha_reciente = new Date();
+
+      const idPerro = this.selectedPerroId; // Usar el ID del perro seleccionado
+      const idActividad = this.selectedActividad.id_actividad; // Reemplaza con el ID de tu actividad
+  
+      this.td_service.postActividadPerroReciente(idPerro, idActividad, fecha_reciente, token).subscribe(
+        (data: any) => {
+          console.log('La actividad reciente se ha guardado correctamente', data);
+          // Realiza acciones adicionales después de guardar la actividad
+        },
+        (error) => {
+          console.error('Error al guardar la actividad reciente', error);
+          // Maneja errores si es necesario
+        });
+    } else {
+      console.error('Token no encontrado o perro no seleccionado');
+    }
+  }
+
   //Modificar
   actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
     this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(

@@ -13,6 +13,7 @@ export class PerfilperroComponent implements OnInit {
 
   perro: any;
   actividades: any;
+  actividades_recientes: any[] = [];
   formulario: FormGroup;
 
   constructor(private route: ActivatedRoute, 
@@ -27,6 +28,7 @@ export class PerfilperroComponent implements OnInit {
         // El parámetro 'id_perro' tiene un valor válido, puedes proceder
         this.obtenerDatosDelPerro(idPerro);
         this.obtenerActividadPerro(idPerro);
+        this.obtenerActividadPerroRecientes(idPerro);
       } else {
         console.error('idPerro es undefined');
         }
@@ -41,6 +43,18 @@ export class PerfilperroComponent implements OnInit {
 }
 
   ngOnInit() {
+    this.ordenarActividadesRecientes();
+
+  }
+
+  ordenarActividadesRecientes() {
+    this.actividades_recientes.sort((a: any, b: any) => {
+      const fechaA = new Date(a.fecha_reciente);
+      const fechaB = new Date(b.fecha_reciente);
+  
+      // Ordenar de más antiguo a más reciente
+      return fechaA.getTime() - fechaB.getTime();
+    });
   }
 
   obtenerDatosDelPerro(idPerro: number) {
@@ -70,6 +84,19 @@ export class PerfilperroComponent implements OnInit {
       console.error('Token no encontrado en el Local Storage');
     }
   }
+
+  obtenerActividadPerroRecientes(idPerro: number): void{
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.td_service.getActividadesPerroRecientes(idPerro, token).subscribe((data: any) => {
+        this.actividades_recientes = data;
+        console.log('Datos de la actividad reciente del perro cargados:', this.actividades_recientes);
+      });
+    } else {
+      console.error('Token no encontrado en el Local Storage');
+    }
+  }
+  
 
   modificarPerro() {
     if (this.formulario.valid && this.perro && this.perro.length > 0) {

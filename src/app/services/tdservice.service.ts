@@ -77,6 +77,11 @@ export class TdserviceService {
     return this.http.get(`${this.url}/verificarActividad/${idPerro}/${idActividad}`, { headers: headers });
   }
 
+  getActividadesPerroRecientes(idPerro: number, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/actividadesRecientes/${idPerro}`, { headers: headers });
+  }
+
   //Post
 
   signUp(datosRegistro: any): Observable<any>{
@@ -107,6 +112,17 @@ export class TdserviceService {
     };
     const body = {idPerro, idActividad, contador}; //Añadir contador
     return this.http.post(`${this.url}/guardarActividad/${idPerro}/${idActividad}`, body, httpOptions);
+  }
+
+  postActividadPerroReciente(idPerro: number, idActividad: number, fecha_reciente: Date, token: string): Observable<any>{ //Añadir actividad reciente
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    const body = {idPerro, idActividad, fecha_reciente: fecha_reciente.toISOString().slice(0, 19).replace('T', ' ')}; //Añadir fecha_reciente
+    return this.http.post(`${this.url}/guardarActividadReciente/${idPerro}/${idActividad}`, body, httpOptions);
   }
 
   private perroSeleccionadoKey = 'perroSeleccionado';
