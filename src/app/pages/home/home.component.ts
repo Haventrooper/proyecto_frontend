@@ -55,10 +55,23 @@ export class HomeComponent {
     this.selectedActividad = actividad;
     this.displayModal = true;
     this.actividadExistente = false; // Establece inicialmente en false
-  
+    const fecha_reciente =new Date()
     const token = localStorage.getItem('token');
   
     if (token) {
+      this.td_service.postActividadPerroReciente(this.perroSeleccionado.id_perro,
+        this.selectedActividad.id_actividad, fecha_reciente, token).subscribe(
+        (data: any) => {
+          console.log('La actividad reciente se ha guardado correctamente', data);
+          // Realiza acciones adicionales después de guardar la actividad
+        },
+        (error) => {
+          console.error('Error al guardar la actividad reciente', error);
+          // Maneja errores si es necesario
+        }
+      );
+
+
       this.td_service.getVerificarActividad(this.perroSeleccionado.id_perro,
         this.selectedActividad.id_actividad, token).subscribe(
         (data: any) => {
@@ -85,6 +98,8 @@ export class HomeComponent {
           // Maneja errores si es necesario
         }
       );
+
+      
   
       // Resto del código para verificar la actividad existente
     } else {
