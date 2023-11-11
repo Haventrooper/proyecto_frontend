@@ -28,9 +28,9 @@
   </div>
 
   <div class="mt-4 mb-8" *ngIf="perroSeleccionado">
-    <div class="flex flex-column align-items-center justify-content-center">
+    <div class="flex flex-column align-items-center justify-content-center text-center">
       <h2>Perro Seleccionado</h2>
-      <p-card styleClass="bg-green-200" header="{{perroSeleccionado.nombre}}">
+      <p-card styleClass="bg-cyan-100" header="{{perroSeleccionado.nombre}}">
         <div class="d-flex flex-column align-items-center justify-content-center">
           <div class="mb-2">
             {{perroSeleccionado.fecha_nacimiento}}
@@ -50,8 +50,10 @@
     MOSTRAR TODAS LAS ACTIVIDADES EN TARJETAS
   -->
   <p-card styleClass="bg-cyan-50">
-    <div>
-      <h2>Actividades disponibles</h2>
+    <div class="text-center">
+      <div>
+        <h2>Actividades disponibles</h2>
+      </div>
       <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let actividad of actividades">
           <p-card styleClass="bg-indigo-200" (click)="abrirDialogo(actividad)">
             <div>
