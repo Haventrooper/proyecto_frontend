@@ -18,14 +18,11 @@ export class SignupComponent {
               private td_service: TdserviceService) {
 
     this.registro = this.fb.group({
-      id_tema: ['', Validators.required],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', Validators.required],
       contrasena: ['', Validators.required],
-      fecha_creacion: ['', Validators.required],
       fecha_nacimiento: ['', Validators.required],
-      sin_perro: ['', Validators.required],
     });
 
   }
