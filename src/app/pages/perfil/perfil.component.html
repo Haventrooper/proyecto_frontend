@@ -1,35 +1,48 @@
 <div class="mt-8 mb-8">
-    <p>perfil works!</p>
-
-    <ul>
-    <li>{{usuario?.nombre}}</li>
-    <li>{{usuario?.apellido}}</li>
-    <li>{{usuario?.email}}</li>
-    <li>{{usuario?.fecha_nacimiento}}</li>
-    </ul>
-
-    <div class="container">
-        <h2>Modificar Datos de Usuario</h2>
+  <div class="text-center">
+    <div>
+      <h2>Perfil de {{usuario?.nombre}}</h2>
+    </div>
+    <div class="ml-2 mr-2 mt-4 mb-4">
+        <p-card class="border-800" styleClass="bg-indigo-200 border-solid">
+          <div>
+            <div>
+              {{ usuario?.nombre }}
+            </div>
+            <div>
+              {{ usuario?.apellido }}
+            </div>
+            <div>
+              {{ usuario?.fecha_nacimiento }}
+            </div>
+          </div>
+        </p-card>
+    </div>
+  </div>
+    
+  <div class="text-center align-items-center justify-content-center">
+    <p-card [style]="{width: 'width'}" styleClass="styleClass">
+        <div class="align-items-center justify-content-center">
         <form [formGroup]="formulario">
-          <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" formControlName="nombre" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="apellido">Apellido</label>
-            <input type="text" id="apellido" formControlName="apellido" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" formControlName="email" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-            <input type="date" id="fecha_nacimiento" formControlName="fecha_nacimiento" class="form-control">
-          </div>
-          <button (click)="guardarCambios()" class="btn btn-primary">Guardar Cambios</button>
+            <h1>Modificar datos de {{usuario?.nombre}}</h1>
+            
+            <div class="p-2">
+                <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
+            </div>
+            <div class="p-2">
+                <input type="text" placeholder="Apellido" pInputText formControlName="apellido" />
+            </div>
+            <div class="p-2">
+                <input type="text" placeholder="Email" pInputText formControlName="email" />
+            </div>
+            
+            <div class="p-2">
+                <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
+            </div>
+            <div>
+                <p-button (click)="guardarCambios()" label="Guardar cambios"></p-button>
+            </div>
         </form>
-      </div>
-      
+        </div>
+    </p-card>
 </div>
-
