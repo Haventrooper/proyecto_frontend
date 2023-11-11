@@ -46,8 +46,15 @@
       <p>Contador: {{ selectedActividad.contador }}</p>
   
       <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
-        <h3>{{ pasos[pasoActual].titulo }}</h3>
-        <p>{{ pasos[pasoActual].descripcion }}</p>
+        <div>
+          
+            <h3>{{ pasos[pasoActual].titulo }}</h3>
+            <span class="material-symbols-outlined" style="font-size: 200px;">
+              pets
+              </span>
+              <p>{{ pasos[pasoActual].descripcion }}</p>
+
+        </div>
       </div>
   
       <div>

@@ -1,24 +1,32 @@
 <div class="mt-8 mb-8">
-    <div class="text-center flex flex-column flex align-items-center justify-content-center">
+    <div class="text-center align-items-center justify-content-center">
         <p-card [style]="{width: 'width'}" styleClass="styleClass">
             <div>
+            <div class="align-items-center justify-content-center">
                 <form [formGroup]="form">
+                <div>
                     <h1>Iniciar sesión</h1>
+                    <div class="field col">
+                        <input placeholder="Usuario" type="text" pInputText formControlName="user"/>
+                    </div>
+                    <div class="field col">
+                        <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
+                    </div>
+                    <div>
+                        <p-button (click)="login()" label="Iniciar sesión"></p-button>    
+                    </div>
         
-                <p-header>
-                    <input placeholder="Usuario" type="text" pInputText formControlName="user"/>
-    
-                </p-header>
-                    <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
                 <p-footer>
-                    <p-button (click)="login()" label="Iniciar sesión"></p-button>
-                    <p-button (click)="paginaRegistro()" icon="pi pi-iconName" label="Registrarse"></p-button>
-    
+                    <h3>¿No se ha registrado aún en TraineeDoggie?</h3>
+                    <p-button (click)="paginaRegistro()" icon="pi pi-iconName" label="Registrarse"></p-button>                    
                 </p-footer>
+                </div>
+
                 </form>
     
             </div>
             
+        </div>
     
         </p-card>
     
