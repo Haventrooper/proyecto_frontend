@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class PerfilComponent {
 
   constructor(private td_service: TdserviceService,
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe){
+    private datePipe: DatePipe,
+    private router: Router){
       this.formulario = this.formBuilder.group({
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
@@ -36,7 +38,18 @@ export class PerfilComponent {
 
 
   }
+  logout(){
+    localStorage.removeItem("token")
+    localStorage.removeItem("perroSeleccionado");
+    localStorage.clear();
 
+    alert("La sesión ha caducado")
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
+
+
+  }
   obtenerPerros(): void {
     const token = localStorage.getItem('token');
 
