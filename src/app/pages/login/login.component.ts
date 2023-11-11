@@ -35,7 +35,7 @@ export class LoginComponent {
         alert("Verificar credenciales")
       
       } else {
-      
+        
         localStorage.setItem("token", resp["token"]);
         alert("Sesión iniciada correctamente")
         console.log("Success")

@@ -161,8 +161,15 @@ cargarPasos(idActividad: number, token: string) {
 
   logout(){
     localStorage.removeItem("token")
+    localStorage.removeItem("perroSeleccionado");
+    localStorage.clear();
+
     alert("La sesión ha caducado")
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
+
+
   }
 
   obtenerPerros(): void {

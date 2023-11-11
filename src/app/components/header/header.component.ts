@@ -26,17 +26,3 @@ export class HeaderComponent {
     ]; 
   } 
 }
-
-
-/*
-Ejemplo de como añadir sub menus
-
-        items: [ 
-          { 
-            label: 'Angular 1'
-          }, 
-          { 
-            label: 'Angular 2'
-          } 
-        ] 
-*/

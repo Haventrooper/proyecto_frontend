@@ -15,7 +15,8 @@ export class SignupComponent {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private td_service: TdserviceService) {
+              private td_service: TdserviceService) 
+              {
 
     this.registro = this.fb.group({
       nombre: ['', Validators.required],
@@ -24,7 +25,6 @@ export class SignupComponent {
       contrasena: ['', Validators.required],
       fecha_nacimiento: ['', Validators.required],
     });
-
   }
 
   ngOnInit(): void {
