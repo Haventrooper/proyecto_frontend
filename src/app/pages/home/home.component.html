@@ -114,16 +114,17 @@
   <!--
     MOSTRAR TODAS LAS SUGERENCIAS
   -->
-  <div>
-    <h2>Sugerencias generales</h2>
-    <p-card>
-      <div *ngFor="let sugerencia of sugerencias">
-        <div>
-          <strong>{{sugerencia.nombre}}</strong><br>
-          {{sugerencia.descripcion}}
+  <p-card styleClass="bg-cyan-50">
+    <div class="text-center">
+      <h2>Sugerencias generales</h2>
+      <p-card>
+        <div *ngFor="let sugerencia of sugerencias">
+          <div>
+            <strong>{{sugerencia.nombre}}</strong><br>
+            {{sugerencia.descripcion}}
+          </div>
         </div>
-      </div>
-    </p-card>
-  </div>
-  
+      </p-card>
+    </div>
+  </p-card>
 </div>
