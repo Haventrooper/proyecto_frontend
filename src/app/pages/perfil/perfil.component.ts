@@ -13,6 +13,9 @@ export class PerfilComponent {
 
   usuario: any;
   formulario: FormGroup;
+  perros: any[] = [];
+  actividades: any[] = [];
+
 
 
   constructor(private td_service: TdserviceService,
@@ -33,6 +36,45 @@ export class PerfilComponent {
 
 
   }
+
+  obtenerPerros(): void {
+    const token = localStorage.getItem('token');
+
+    if(token){
+      this.td_service.getPerros(token).subscribe((data: any) => {
+        this.perros = data;
+        console.log('Información del perro seleccionado:', this.perros);
+        // Aquí puedes asignar los datos a las variables de tu componente
+    },
+    (error) => {
+      console.error('Error al obtener la información de la sugerencia', error);
+      // Maneja el error de la solicitud
+    });
+
+    }else{
+      console.error("Token no encontrado")
+    }
+  }
+
+  obtenerActividades(): void {
+    const token = localStorage.getItem('token');
+
+    if(token){
+      this.td_service.getActividades(token).subscribe((data: any) => {
+        this.actividades = data;
+        console.log('Información de las actividades:', this.actividades);
+        // Aquí puedes asignar los datos a las variables de tu componente
+    },
+    (error) => {
+      console.error('Error al obtener las actividades', error);
+      // Maneja el error de la solicitud
+    });
+
+    }else{
+      console.error("Token no encontrado")
+    }
+  }
+
 
   obtenerUsuario(): void {
 
@@ -56,7 +98,6 @@ export class PerfilComponent {
       if (this.formulario.valid) {
         const datosActualizados = this.formulario.value;
         datosActualizados.fecha_nacimiento = this.datePipe.transform(datosActualizados.fecha_nacimiento, 'yyyy-MM-dd');
-
         
         this.td_service.putModificarUsuario(datosActualizados, token).subscribe(
           (response) => {
@@ -70,5 +111,24 @@ export class PerfilComponent {
         );
       }
     }
+  }
+
+  //ESTA FUNCION ENVÍA UN ID DE ACTIVIDAD POR EL SERVICIO PARA SER ALMACENADA
+  //Esta funcion tiene que mandar desde el html el id de la actividad que guardará uno a uno el id en el servicio
+  seleccionarActividad(idActividad: number): void {
+    this.td_service.agregarActividadSeleccionada(idActividad);
+  }
+
+  crearEntrenamiento(idUsuario: number, idPerro: number, actividadesSeleccionadas: number[]) {
+    this.td_service.postEntrenamiento(idUsuario, idPerro, actividadesSeleccionadas).subscribe(
+      (response: any) => {
+        console.log('Entrenamiento creado con éxito:', response);
+        // Realiza acciones adicionales si es necesario
+      },
+      (error) => {
+        console.error('Error al crear el entrenamiento:', error);
+        // Maneja errores si es necesario
+      }
+    );
   }
 }

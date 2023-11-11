@@ -44,6 +44,31 @@ export class TdserviceService {
     return this.http.get(`${this.url}/getActividad/${id}`, { headers: headers });
   }
 
+
+  //Guarda actividades seleccionadas en un array para ser insertadas en el body del post entrenamiento...
+  actividadesSeleccionadas: number[] = [];
+
+  agregarActividadSeleccionada(idActividad: number): void {
+    this.actividadesSeleccionadas.push(idActividad);
+  }
+  //CADA VEZ QUE SE SELECCIONA UNA ACTIVIDAD SE LLAMA LA FUNCION DE ARRIBA
+
+  obtenerActividadesSeleccionadas(): number[] {
+    return this.actividadesSeleccionadas;
+  }
+
+  postEntrenamiento(idUsuario: number, idPerro: number, actividadesSeleccionadas: number[]) {
+    const body = {
+      id_usuario: idUsuario,
+      id_perro: idPerro,
+      actividadesSeleccionadas: actividadesSeleccionadas
+    };
+
+    //Crear solicitud en servidor REGISTRO ENTRENAMIENTO NO OLVIDAR
+    //AÑADIR AUTENTICACION CON TOKEN TAMBIEN SI FUNCIONA
+    return this.http.post(`${this.url}/registroEntrenamiento/${idUsuario}`, body);
+  }
+
   getCategorias(token: string){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.url}/categorias`, { headers: headers });
