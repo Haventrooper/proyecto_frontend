@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div *ngIf="perroSeleccionado">
+  <div class="mt-4 mb-8" *ngIf="perroSeleccionado">
     <div class="flex flex-column align-items-center justify-content-center">
       <h2>Perro Seleccionado</h2>
       <p-card styleClass="bg-green-200" header="{{perroSeleccionado.nombre}}">
@@ -49,49 +49,51 @@
   <!--
     MOSTRAR TODAS LAS ACTIVIDADES EN TARJETAS
   -->
-  <div>
-    <h2>Actividades disponibles</h2>
-    <div *ngFor="let actividad of actividades">
-      <ng-container>
-        <p-card styleClass="bg-green-200" (click)="abrirDialogo(actividad)">
-          <div>
-            {{ actividad.nombre }} - {{ actividad.descripcion }}
-          </div>
-        </p-card>
-      </ng-container>
+  <p-card styleClass="bg-green-100">
+    <div>
+      <h2>Actividades disponibles</h2>
+      <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let actividad of actividades">
+          <p-card styleClass="bg-indigo-200" (click)="abrirDialogo(actividad)">
+            <div>
+              {{ actividad.nombre }} - {{ actividad.descripcion }}
+            </div>
+          </p-card>
+      </div>
     </div>
-  </div>
-  <div>
-  <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true" (onHide)="reiniciarValores()"> 
-    <div *ngIf="selectedActividad">
-      <h3>Nombre: {{ selectedActividad.nombre }}</h3>
-      <p>Description: {{ selectedActividad.descripcion }}</p>
-      <p>Fecha de creación: {{ selectedActividad.fecha_creacion }}</p>
-      <p>Calificación: {{ selectedActividad.calificacion }}</p>
-      <p>Progreso: {{ selectedActividad.progreso }}</p>
-      <p>Contador: {{ selectedActividad.contador }}</p>
+    <div>
+    <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true" (onHide)="reiniciarValores()"> 
+      <div *ngIf="selectedActividad">
+        <h3>Nombre: {{ selectedActividad.nombre }}</h3>
+        <p>Description: {{ selectedActividad.descripcion }}</p>
+        <p>Fecha de creación: {{ selectedActividad.fecha_creacion }}</p>
+        <p>Calificación: {{ selectedActividad.calificacion }}</p>
+        <p>Progreso: {{ selectedActividad.progreso }}</p>
+        <p>Contador: {{ selectedActividad.contador }}</p>
+    
+        <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
+          <div>
+            
+              <h3>{{ pasos[pasoActual].titulo }}</h3>
+              <span class="material-symbols-outlined" style="font-size: 200px;">
+                pets
+                </span>
+                <p>{{ pasos[pasoActual].descripcion }}</p>
   
-      <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
+          </div>
+        </div>
         <div>
-          
-            <h3>{{ pasos[pasoActual].titulo }}</h3>
-            <span class="material-symbols-outlined" style="font-size: 200px;">
-              pets
-              </span>
-              <p>{{ pasos[pasoActual].descripcion }}</p>
-
+          <p-button  *ngIf="!actividadExistente" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
+          <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual < 0"></p-button>
+          <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente()" [disabled]="pasoActual >= pasos.length - 1"></p-button>
         </div>
       </div>
-      <div>
-        <p-button  *ngIf="!actividadExistente" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
-        <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual < 0"></p-button>
-        <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente()" [disabled]="pasoActual >= pasos.length - 1"></p-button>
-      </div>
+    </p-dialog>
     </div>
-  </p-dialog>
+
+  </p-card>
   
   
-</div>
+  
   
   <!--
     MOSTRAR TODAS LAS CATEGORIAS
