@@ -1,21 +1,34 @@
 <div class="mt-8 mb-8">
-    <div class="flex">
-        <div *ngFor="let perro of perros">
-            <p-card>
-                {{perro.nombre}}
-                <p-button label="Ver perro" [routerLink]="['/perfilperro', perro.id_perro]"></p-button> 
-                <p-button label="Seleccionar" (click)="seleccionarPerro(perro)"></p-button>
-               
-            </p-card>
-        </div>
+    <div class="flex flex-column align-items-center justify-content-center text-center">
+        <h2>Perros registrados</h2>
+            <div class="col-8 mt-4 mb-4" *ngFor="let perro of perros">
+                <p-card class="border-800" styleClass="bg-cyan-100 border-solid">
+                    <div class="flex inline-flex justify-content-center align-items-center">
+
+                        <div class="mr-4 ml-4">
+                            {{perro.nombre}}
+                        </div>
+                        <div class="mr-4 ml-4">
+                            <p-button label="Ver perro" [routerLink]="['/perfilperro', perro.id_perro]"></p-button> 
+                        </div>
+                        <div class="mr-4 ml-4">
+                            <p-button label="Seleccionar" (click)="seleccionarPerro(perro)"></p-button>
+                        </div>
+                    </div>
+
+                    
+                </p-card>
+            </div>    
     </div>
     
-    <h1>Añadir más perritos, registro de perrito</h1>
-    <div>
-        <p-button icon="pi pi-iconName" label="Registrar un nuevo perro" (click)="abrirModal()"></p-button>
-    </div>
 
-    <div>
+    <div class="text-center flex flex-column">
+        <div>
+            <h2>Añadir más perros</h2>
+            <div>
+                <p-button icon="pi pi-iconName" label="Registrar un nuevo perro" (click)="abrirModal()"></p-button>
+            </div>    
+        </div>
         <p-dialog header="Registro de perrito" [(visible)]="mostrarModal" [modal]="true">
             <form [formGroup]="registro">
                 <div class="p-2">
