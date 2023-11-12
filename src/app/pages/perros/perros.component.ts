@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-perros',
@@ -13,7 +14,11 @@ export class PerrosComponent {
   perros: any;
   registro: FormGroup;
   mostrarModal: boolean = false;
-
+  razas: SelectItem[] = [];
+  generoOptions = [
+    { label: 'Macho', value: 'Macho' },
+    { label: 'Hembra', value: 'Hembra' }
+  ];
 
   constructor(private td_service: TdserviceService,
               private fb: FormBuilder,){
@@ -28,6 +33,7 @@ export class PerrosComponent {
 
   ngOnInit(): void {
     this.obtenerPerros();
+    this.obtenerRazas();
   }
 
   abrirModal() {
@@ -76,6 +82,24 @@ export class PerrosComponent {
     }
   }
 
+  obtenerRazas() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.td_service.getRazas(token).subscribe(
+        (data: any[]) => {
+          // Asigna directamente el resultado a la variable razas
+          this.razas = data.map(raza => ({ label: raza.nombre, value: raza.id_raza }));
+          console.log('Datos de razas cargados:', this.razas);
+        },
+        error => {
+          console.error('Error al obtener las razas:', error);
+          // Maneja el error según tus necesidades.
+        }
+      );
+    } else {
+      console.error('Token no encontrado en el Local Storage');
+    }
+  }
 
   seleccionarPerro(perroSeleccionado: any) {
         // Luego, guárdalos en el localStorage

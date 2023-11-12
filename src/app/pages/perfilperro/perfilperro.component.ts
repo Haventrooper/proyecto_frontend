@@ -13,6 +13,7 @@ import { SelectItem } from 'primeng/api';
 })
 export class PerfilperroComponent implements OnInit {
 
+  razas: SelectItem[] = [];
   perro: any;
   actividades: any;
   actividades_recientes: any[] = [];
@@ -57,7 +58,6 @@ export class PerfilperroComponent implements OnInit {
 
   }
 
-  razas: SelectItem[] = [];
 
 obtenerRazas() {
   const token = localStorage.getItem('token');

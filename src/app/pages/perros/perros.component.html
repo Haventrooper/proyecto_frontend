@@ -29,19 +29,19 @@
                 <p-button icon="pi pi-iconName" label="Registrar un nuevo perro" (click)="abrirModal()"></p-button>
             </div>    
         </div>
-        <p-dialog header="Registro de perrito" [(visible)]="mostrarModal" [modal]="true">
+        <p-dialog header="Registro de perro" [(visible)]="mostrarModal" [modal]="true" [maximizable]="true">
             <form [formGroup]="registro">
                 <div class="p-2">
-                    <input type="text" placeholder="Raza" pInputText formControlName="id_raza" />
+                    <p-dropdown [options]="razas" placeholder="Selecciona una raza"></p-dropdown>
                 </div>
                 <div class="p-2">
                     <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
                 </div>
                 <div class="p-2">
-                    <input type="text" placeholder="Fecha de nacimiento" pInputText formControlName="fecha_nacimiento" />
+                    <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
                 </div>
                 <div class="p-2">
-                    <input type="text" placeholder="Sexo" pInputText formControlName="genero" />
+                    <p-dropdown [options]="generoOptions" formControlName="genero" optionLabel="label" optionValue="value" placeholder="Sexo"></p-dropdown>
                 </div>
                 <p-button icon="pi pi-iconName" label="Registrar" (click)="registrarPerro()"></p-button>
             </form>
