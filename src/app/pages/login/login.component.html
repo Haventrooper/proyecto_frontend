@@ -20,6 +20,19 @@
                     </div>
                     <div class="field col">
                         <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
+                        <div
+                                *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.['touched'])"
+                            >
+                                <small class="p-error" *ngIf="form.get('password')?.errors?.['required']">
+                                Contraseña es obligatoria
+                                </small>
+                                <small class="p-error" *ngIf="form.get('password')?.errors?.['minlength']">
+                                    Minimo es de 1
+                                    </small>
+                                    <small class="p-error" *ngIf="form.get('password')?.errors?.['maxlength']">
+                                        Limite de contraseña alcanzado
+                                        </small>
+                            </div>
                     </div>
                     <div>
                         <p-button (click)="login()" label="Iniciar sesión"></p-button>    
