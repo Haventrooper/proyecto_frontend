@@ -7,20 +7,85 @@
                 <h1>Registro de usuario</h1>
                 
                 <div class="p-2">
-                    <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
+                    <input placeholder="Nombre" type="text" pInputText formControlName="nombre"/>
+                    <div
+                            *ngIf="registro.get('nombre')?.invalid && (registro.get('nombre')?.dirty || registro.get('nombre')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registro.get('nombre')?.errors?.['required']">
+                            Nombre de usuario es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="registro.get('nombre')?.errors?.['nombre']">
+                            Ingrese un usuario válido
+                            </small>
+                    </div>                
                 </div>
                 <div class="p-2">
                     <input type="text" placeholder="Apellido" pInputText formControlName="apellido" />
+                    <div
+                            *ngIf="registro.get('apellido')?.invalid && (registro.get('apellido')?.dirty || registro.get('apellido')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registro.get('apellido')?.errors?.['required']">
+                            Apellido de usuario es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="registro.get('apellido')?.errors?.['apellido']">
+                            Ingrese un apellido válido
+                            </small>
+                    </div>
                 </div>
                 <div class="p-2">
                     <input type="text" placeholder="Email" pInputText formControlName="email" />
+                    <div
+                            *ngIf="registro.get('email')?.invalid && (registro.get('email')?.dirty || registro.get('email')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registro.get('email')?.errors?.['required']">
+                            Correo electrónico es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="registro.get('email')?.errors?.['email']">
+                            Ingrese un correo válido
+                            </small>
+                    </div>
                 </div>
                 <div class="p-2">
                     <input type="text" placeholder="Contraseña" pInputText formControlName="contrasena" />
+                    <div
+                            *ngIf="registro.get('contrasena')?.invalid && (registro.get('contrasena')?.dirty || registro.get('contrasena')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registro.get('contrasena')?.errors?.['required']">
+                            Contraseña es obligatoria
+                            </small>
+                            <small class="p-error" *ngIf="registro.get('contrasena')?.errors?.['contrasena']">
+                            Ingrese un correo válido
+                            </small>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <input type="text" placeholder="Repetir contraseña" pInputText formControlName="contrasenaRep" />
+                    <div
+                            *ngIf="registro.get('contrasenaRep')?.invalid && (registro.get('contrasenaRep')?.dirty || registro.get('contrasenaRep')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registro.get('contrasenaRep')?.errors?.['required']">
+                            Repetir contraseña
+                            </small>
+                            <small class="p-error" *ngIf="registro.get('contrasenaRep')?.errors?.['contrasenaRep']">
+                            Contraseñas no coinciden
+                            </small>
+                    </div>
                 </div>
                 
                 <div class="p-2">
-                    <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
+                    <p-calendar placeholder="Fecha de nacimiento" type="date" [showIcon]="true" formControlName="fecha_nacimiento"></p-calendar>
+                    <div *ngIf="registro.get('fecha_nacimiento')?.invalid && (registro.get('fecha_nacimiento')?.dirty || registro.get('fecha_nacimiento')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.errors?.['required']">
+                            Fecha no valida
+                            </small>
+                            <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')) > 150"
+							>Ingrese una fecha valida.
+						    </small>
+						    <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')) < 18"
+							>Debe ser mayor de 18 años.
+						    </small>
+                    </div>
                 </div>
                
                 <div>
