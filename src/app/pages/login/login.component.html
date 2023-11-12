@@ -28,14 +28,14 @@
                                 </small>
                                 <small class="p-error" *ngIf="form.get('password')?.errors?.['minlength']">
                                     Minimo es de 1
-                                    </small>
-                                    <small class="p-error" *ngIf="form.get('password')?.errors?.['maxlength']">
-                                        Limite de contraseña alcanzado
-                                        </small>
+                                </small>
+                                <small class="p-error" *ngIf="form.get('password')?.errors?.['maxlength']">
+                                    Limite de contraseña alcanzado
+                                </small>
                             </div>
                     </div>
                     <div>
-                        <p-button (click)="login()" label="Iniciar sesión"></p-button>    
+                        <p-button (click)="login()" label="Iniciar sesión"></p-button>
                     </div>
         
                 <p-footer>

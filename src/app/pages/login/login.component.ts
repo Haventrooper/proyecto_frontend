@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
-import { async } from 'rxjs';
+
 
 
 
@@ -21,9 +20,7 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private td_service: TdserviceService, 
-    private router: Router,
-
-
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       email: new FormControl ('', [Validators.required, Validators.email]),
@@ -41,8 +38,7 @@ export class LoginComponent {
       } else {
         
         localStorage.setItem("token", resp["token"]);
-        alert("Sesión iniciada correctamente")
-        console.log("Success")
+        
         this.router.navigate(['/home']);
       }
 		})
