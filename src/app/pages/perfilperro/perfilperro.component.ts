@@ -81,6 +81,13 @@ export class PerfilperroComponent implements OnInit {
       this.pasoActual++;
     }
   }
+  anterior() {
+    if (this.pasoActual > 0) {
+      this.pasoActual--;
+      console.log(this.pasos[this.pasoActual]);
+  
+    }
+  }
 
   cargarPasos(idActividad: number, token: string) {
     this.td_service.getPasos(idActividad, token).subscribe(
