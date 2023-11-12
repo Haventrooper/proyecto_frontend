@@ -26,6 +26,8 @@ export class PerfilperroComponent implements OnInit {
   selectedActividad: any;
   pasos: any;
   pasoActual: number = 0;
+  actividadExistente = false;
+  idP: any;
 
 
   constructor(private route: ActivatedRoute, 
@@ -41,6 +43,10 @@ export class PerfilperroComponent implements OnInit {
         this.obtenerDatosDelPerro(idPerro);
         this.obtenerActividadPerro(idPerro);
         this.obtenerActividadPerroRecientes(idPerro);
+        console.log(idPerro)
+        this.idP = idPerro
+        console.log(this.idP)
+
       } else {
         console.error('idPerro es undefined');
         }
@@ -57,19 +63,21 @@ export class PerfilperroComponent implements OnInit {
   ngOnInit() {
     this.ordenarActividadesRecientes();
     this.obtenerRazas();
-
   }
 
   abrirDialogo(actividad: any){
     this.displayModal = true;
     this.selectedActividad = actividad;
+    this.actividadExistente = false; // Establece inicialmente en false
+
     const token = localStorage.getItem('token');
 
     if (!token) {
       console.error('Token no encontrado o inválido en el Local Storage');
       return;
     }
-
+  
+    this.verificarActividadExistente(token);
     this.cargarPasos(actividad.id_actividad, token);
 
   }
@@ -79,15 +87,67 @@ export class PerfilperroComponent implements OnInit {
     if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
       console.log(this.pasos[this.pasoActual]);
       this.pasoActual++;
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        this.actualizarContador(this.idP, this.selectedActividad.id_actividad, this.pasoActual, token);
+      } else {
+        console.error('Token no encontrado en el Local Storage');
+      }
+    } else {
+      console.error('No hay más pasos disponibles o el paso actual es undefined.');
     }
+    
+    
   }
+
   anterior() {
     if (this.pasoActual > 0) {
       this.pasoActual--;
       console.log(this.pasos[this.pasoActual]);
-  
-    }
+      const token = localStorage.getItem('token');
+      let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
+
+      console.log(contadorActual)
+
+      if (token) {
+        this.actualizarContador(this.idP, this.selectedActividad.id_actividad, contadorActual, token);
+    
+      } else {
+      console.error('Token no encontrado en el Local Storage');
+      }
+    } else {
+    console.error('El paso actual ya es 0, no se puede decrementar más.');
   }
+  }
+
+  actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
+    this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
+      (data: any) => {
+        console.log('Contador actualizado correctamente', data);
+        // Realiza acciones adicionales después de actualizar el contador
+      },
+      (error) => {
+        console.error('Error al actualizar el contador', error);
+        // Maneja errores si es necesario
+      });
+  }
+
+  verificarActividadExistente(token: string) {
+    this.td_service.getVerificarActividad(this.idP, this.selectedActividad.id_actividad, token).subscribe(
+        (data: any) => {
+          if (data.mensaje === 'Actividad ya en BD') {
+            this.actividadExistente = true;
+          } else if (data.mensaje === 'No hay actividad guardada en BD') {
+          }
+          console.log("found: ", this.perro.id_perro, this.selectedActividad.id_actividad);
+        },
+        (error) => {
+          console.error('Error al verificar la actividad', error);
+          // Maneja errores si es necesario
+        }
+    );
+}
 
   cargarPasos(idActividad: number, token: string) {
     this.td_service.getPasos(idActividad, token).subscribe(
