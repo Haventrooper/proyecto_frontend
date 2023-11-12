@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,15 +22,16 @@ export class LoginComponent {
     private td_service: TdserviceService, 
     private router: Router,
 
+
   ) {
     this.form = this.formBuilder.group({
-      user: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
   login(){
-    this.td_service.login(this.form.get('user')?.value,this.form.get('password')?.value).subscribe(response => {
+    this.td_service.login(this.form.get('email')?.value,this.form.get('password')?.value).subscribe(response => {
       let resp: any = response;
       console.log(resp)
       if( resp===false ){

@@ -15,8 +15,8 @@ export class TdserviceService {
   url = 'http://localhost:3000'
 
 
-  login(user: string, password: string){
-    return this.http.get(this.url + `/login?nombre=${user}&contrasena=${password}`);
+  login(email: string, password: string){
+    return this.http.get(this.url + `/login?email=${email}&contrasena=${password}`);
   }
 
   getPerros(token: string) {

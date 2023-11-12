@@ -17,7 +17,6 @@ import { DropdownModule } from 'primeng/dropdown';
 
 
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
@@ -62,7 +61,7 @@ import { PerrosComponent } from './pages/perros/perros.component';
     DialogModule,
     BrowserAnimationsModule,
     CalendarModule,
-    DropdownModule
+    DropdownModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
