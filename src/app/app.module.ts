@@ -12,6 +12,8 @@ import { RoutesModule } from './routes/routes.module';
 import { AppRoutingModule } from './app-routing.module';
 import { DatePipe } from '@angular/common';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 
 
@@ -59,7 +61,8 @@ import { PerrosComponent } from './pages/perros/perros.component';
     MenubarModule,
     DialogModule,
     BrowserAnimationsModule,
-    CalendarModule
+    CalendarModule,
+    DropdownModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -15,6 +15,12 @@ export class PerfilperroComponent implements OnInit {
   actividades: any;
   actividades_recientes: any[] = [];
   formulario: FormGroup;
+  generoOptions = [
+    { label: 'Macho', value: 'Macho' },
+    { label: 'Hembra', value: 'Hembra' }
+  ];
+
+  
 
   constructor(private route: ActivatedRoute, 
     private td_service: TdserviceService,

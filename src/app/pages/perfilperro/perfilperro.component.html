@@ -1,92 +1,109 @@
 <div class="mt-8 mb-8">
   <div class="flex flex-column align-items-center justify-content-center">
-    <h3>Perfil de perro
-    <span class="material-symbols-outlined">
-      pet_supplies
-      </span>
-    </h3>
+    <h3>Perfil de perro <span class="material-symbols-outlined">pet_supplies</span></h3>
   </div>
-  <div>
+
+  <div class="flex align-items-center justify-content-center">
     <div *ngFor="let p of perro">
       <p-card class="border-800" styleClass="bg-cyan-100 border-solid">
         <div class="flex">
           <div class="flex justify-content-center align-items-center mr-4 ml-4">
-            <span class="material-symbols-outlined" style="font-size: 100px;">
-              pets
-              </span>  
-              </div>
-              <div class="flex justify-content-center align-items-center mr-4 ml-4">
-                <div class="mr-4 ml-4">
-                  <h4>Nombre</h4>
-                  <p>{{p.nombre}}</p>
-                </div>
-                <div class="mr-4 ml-4">
-                  <h4>Fecha nacimiento</h4>
-                  <p>{{p.fecha_nacimiento}}</p>
-                </div>
-              </div>
-              <div class="flex justify-content-center align-items-center mr-4 ml-4">
-                  <div class="mr-4 ml-4">
-                    <h4>Raza</h4>
-                    <p>{{p.nombre_raza}}</p>
-                  </div>
-                  <div class="mr-4 ml-4">
-                    <h4>Sexo</h4>
-                    <p>{{p.genero}}</p>
-                  </div>
-              </div>
-          
+            <span class="material-symbols-outlined" style="font-size: 100px;">pets</span>
+          </div>
+          <div class="flex justify-content-center align-items-center mr-4 ml-4">
+            <div class="mr-4 ml-4">
+              <h4>Nombre</h4>
+              <p>{{p.nombre}}</p>
+            </div>
+            <div class="mr-4 ml-4">
+              <h4>Fecha nacimiento</h4>
+              <p>{{p.fecha_nacimiento | date: 'dd/MM/yyyy' }}</p>
+            </div>
+          </div>
+          <div class="flex justify-content-center align-items-center mr-4 ml-4">
+            <div class="mr-4 ml-4">
+              <h4>Raza</h4>
+              <p>{{p.nombre_raza}}</p>
+            </div>
+            <div class="mr-4 ml-4">
+              <h4>Sexo</h4>
+              <p>{{p.genero}}</p>
+            </div>
+          </div>
         </div>
-        
       </p-card>
     </div>
   </div>
-    
-    
-    <h1>Mostrar las actividades guardadas para el perrito</h1>
-    <div *ngFor="let actividad of actividades">
-        <div>
-            {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.contador}}
-            <button (click)="eliminarRelacionPerroActividad(actividad.id_actividad)">Eliminar</button>
 
-        </div>
+  <div class="align-items-center justify-content-center">
+    <div class="text-center">
+      <h2>Actividades guardadas</h2>
     </div>
-    <h1>Mostrar las actividades recientes con progreso en %</h1>
-
-    <div *ngFor="let actividad of actividades_recientes">
+    <div class="flex align-items-center justify-content-center" *ngFor="let actividad of actividades">
       <div>
-          {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente}}
+        <p-card styleClass="bg-red-100">
+          <div class="flex align-items-center justify-content-center">
+            <div class="mr-2 ml-2">
+              {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.contador}}
+            </div>
+            <div class="mr-2 ml-2">
+              <p-button icon="pi pi-iconName" severity="danger" label="Eliminar actividad" (click)="eliminarRelacionPerroActividad(actividad.id_actividad)"></p-button>
+            </div>
+          </div>
+        </p-card>
       </div>
+    </div>
   </div>
 
-  <h1>Formulario de modificacion</h1>
+  <div class="align-items-center justify-content-center">
+    <div class="text-center">
+      <h2>Actividades recientes</h2>
+    </div>
+    <div class="col-12">
+      <div class="flex">
+        <div *ngFor="let actividad of actividades_recientes" class="flex align-items-center justify-content-center">
+          <p-card styleClass="bg-red-100">
+            <div>
+              {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente | date: 'dd/MM/yyyy' }}
+            </div>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <form [formGroup]="formulario" (submit)="modificarPerro()">
-        <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input type="text" formControlName="nombre" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-          <input type="date" formControlName="fecha_nacimiento" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="id_raza">ID de Raza:</label>
-          <input type="number" formControlName="id_raza" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label>Género:</label>
-          <select formControlName="genero" class="form-control" required>
-            <option value="Macho">Macho</option>
-            <option value="Hembra">Hembra</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Modificar Perro</button>
-      </form>
+  <div class="text-center align-items-center justify-content-center">
+    <p-card [style]="{width: 'width'}" styleClass="styleClass">
+      <div class="align-items-center justify-content-center">
+        <form [formGroup]="formulario">
+          <h1>Modificar datos de perro</h1>
+          <div class="p-2">
+            <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
+          </div>
+          <div class="p-2">
+            <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
+          </div>
+          <div class="p-2">
+            <input type="text" placeholder="Raza" pInputText formControlName="id_raza" />
+          </div>
+          <div class="p-2">
+            <p-dropdown [options]="generoOptions" formControlName="genero" optionLabel="label" optionValue="value" placeholder="Sexo"></p-dropdown>
+          </div>
+          <div class="mt-4 mb-4">
+            <p-button (click)="modificarPerro()" label="Modificar perro"></p-button>
+          </div>
+        </form>
+      </div>
+    </p-card>
+  </div>
 
-      <h1>Entrenamientos</h1>
-      <h3>Boton de añadir entrenamiento</h3>
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div class="text-center">
+      <h2>Eliminar perro</h2>
+    </div>
+    <div>
+      <p-button icon="pi pi-iconName" severity="danger" label="Eliminar perro" (click)="eliminarPerro()"></p-button>
+    </div>
+  </div>
 
-      <h1>Eliminar perro</h1>
-      <button (click)="eliminarPerro()">Eliminar Perro</button>
 </div>
