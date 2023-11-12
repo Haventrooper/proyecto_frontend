@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
+import { async } from 'rxjs';
 
 
 
@@ -25,8 +26,9 @@ export class LoginComponent {
 
   ) {
     this.form = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      
+      email: new FormControl ('', [Validators.required, Validators.email]),
+      password: new FormControl ('', Validators.required)
     });
   }
 

@@ -6,7 +6,17 @@
                 <div>
                     <h1>Iniciar sesión</h1>
                     <div class="field col">
-                        <input placeholder="Correo electronico" type="email" pInputText formControlName="email"/>
+                        <input placeholder="Correo electrónico" type="text" pInputText formControlName="email"/>
+                        <div
+                                *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.['touched'])"
+                            >
+                                <small class="p-error" *ngIf="form.get('email')?.errors?.['required']">
+                                Campo email es obligatorio
+                                </small>
+                                <small class="p-error" *ngIf="form.get('email')?.errors?.['email']">
+                                Ingrese un email válido
+                                </small>
+                            </div>
                     </div>
                     <div class="field col">
                         <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
