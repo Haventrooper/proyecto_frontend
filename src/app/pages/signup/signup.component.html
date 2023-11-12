@@ -66,25 +66,28 @@
                             <small class="p-error" *ngIf="registro.get('contrasenaRep')?.errors?.['required']">
                             Repetir contraseña
                             </small>
-                            <small class="p-error" *ngIf="registro.get('contrasenaRep')?.errors?.['contrasenaRep']">
+                            <small class="p-error" *ngIf="registro.get('contrasenaRep')?.errors?.['passwordMismatch']">
                             Contraseñas no coinciden
                             </small>
                     </div>
                 </div>
                 
                 <div class="p-2">
-                    <p-calendar placeholder="Fecha de nacimiento" type="date" [showIcon]="true" formControlName="fecha_nacimiento"></p-calendar>
-                    <div *ngIf="registro.get('fecha_nacimiento')?.invalid && (registro.get('fecha_nacimiento')?.dirty || registro.get('fecha_nacimiento')?.['touched'])"
-                        >
-                            <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.errors?.['required']">
-                            Fecha no valida
-                            </small>
-                            <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')) > 150"
-							>Ingrese una fecha valida.
-						    </small>
-						    <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')) < 18"
-							>Debe ser mayor de 18 años.
-						    </small>
+                    <p-calendar [showIcon]="true" placeholder="Fecha de nacimiento" type="date"
+                    formControlName="fecha_nacimiento"
+                    ></p-calendar>
+                    <div>
+                        <small *ngIf="registro.get('fecha_nacimiento')?.invalid && (registro.get('fecha_nacimiento')?.dirty || registro.get('fecha_nacimiento')?.['touched'])">
+                        </small>
+                        <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.errors?.['required']">
+                            Fecha de nacimiento es obligatorio
+                        </small>
+                        <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')?.value) > 150">
+                            Ingrese una fecha válida.
+                        </small>
+                        <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')?.value) < 18">
+                            Debe ser mayor de 18 años.
+                        </small>
                     </div>
                 </div>
                

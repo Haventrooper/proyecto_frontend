@@ -47,17 +47,16 @@ export class SignupComponent {
   
   
 
-  getAge(fechaNacimiento: any): number {
-    const today = new Date();
-    const birthDate = new Date(fechaNacimiento);
-    const age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      return age - 1;
-    }
-    return age;
-  }
-  
+  getAge(fechaNacimiento: any) {
+		var today = new Date();
+		var birthDate = new Date(fechaNacimiento);
+		var age = today.getFullYear() - birthDate.getFullYear();
+		var m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	}
 
   confirmPasswordValidator(control: FormControl): { [key: string]: any } | null {
     const password = this.registro?.get('contrasena')?.value;
