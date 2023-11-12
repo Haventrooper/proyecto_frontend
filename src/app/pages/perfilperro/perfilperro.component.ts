@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';  // Asegúrate de importar DatePipe correctamente
+import { SelectItem } from 'primeng/api';
+
 
 @Component({
   selector: 'app-perfilperro',
@@ -19,6 +21,7 @@ export class PerfilperroComponent implements OnInit {
     { label: 'Macho', value: 'Macho' },
     { label: 'Hembra', value: 'Hembra' }
   ];
+
 
   
 
@@ -50,8 +53,30 @@ export class PerfilperroComponent implements OnInit {
 
   ngOnInit() {
     this.ordenarActividadesRecientes();
+    this.obtenerRazas();
 
   }
+
+  razas: SelectItem[] = [];
+
+obtenerRazas() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    this.td_service.getRazas(token).subscribe(
+      (data: any[]) => {
+        // Asigna directamente el resultado a la variable razas
+        this.razas = data.map(raza => ({ label: raza.nombre, value: raza.id_raza }));
+        console.log('Datos de razas cargados:', this.razas);
+      },
+      error => {
+        console.error('Error al obtener las razas:', error);
+        // Maneja el error según tus necesidades.
+      }
+    );
+  } else {
+    console.error('Token no encontrado en el Local Storage');
+  }
+}
 
   ordenarActividadesRecientes() {
     this.actividades_recientes.sort((a: any, b: any) => {

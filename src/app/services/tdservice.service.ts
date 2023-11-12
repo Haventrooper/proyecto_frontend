@@ -44,6 +44,11 @@ export class TdserviceService {
     return this.http.get(`${this.url}/getActividad/${id}`, { headers: headers });
   }
 
+  getRazas(token: string) {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any[]>(`${this.url}/razas`, { headers: headers });
+  }
+
 
   //Guarda actividades seleccionadas en un array para ser insertadas en el body del post entrenamiento...
   actividadesSeleccionadas: number[] = [];

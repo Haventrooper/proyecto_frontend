@@ -84,7 +84,7 @@
             <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
           </div>
           <div class="p-2">
-            <input type="text" placeholder="Raza" pInputText formControlName="id_raza" />
+            <p-dropdown [options]="razas" placeholder="Selecciona una raza"></p-dropdown>
           </div>
           <div class="p-2">
             <p-dropdown [options]="generoOptions" formControlName="genero" optionLabel="label" optionValue="value" placeholder="Sexo"></p-dropdown>
