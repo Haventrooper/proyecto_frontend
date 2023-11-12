@@ -22,9 +22,11 @@ export class PerfilperroComponent implements OnInit {
     { label: 'Macho', value: 'Macho' },
     { label: 'Hembra', value: 'Hembra' }
   ];
+  displayModal: boolean = false;
+  selectedActividad: any;
+  pasos: any;
+  pasoActual: number = 0;
 
-
-  
 
   constructor(private route: ActivatedRoute, 
     private td_service: TdserviceService,
@@ -58,7 +60,39 @@ export class PerfilperroComponent implements OnInit {
 
   }
 
+  abrirDialogo(actividad: any){
+    this.displayModal = true;
+    this.selectedActividad = actividad;
+    const token = localStorage.getItem('token');
 
+    if (!token) {
+      console.error('Token no encontrado o inválido en el Local Storage');
+      return;
+    }
+
+    this.cargarPasos(actividad.id_actividad, token);
+
+  }
+
+  siguiente() {
+    // Verifica si el paso siguiente es válido
+    if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
+      console.log(this.pasos[this.pasoActual]);
+      this.pasoActual++;
+    }
+  }
+
+  cargarPasos(idActividad: number, token: string) {
+    this.td_service.getPasos(idActividad, token).subscribe(
+        (data: any) => {
+          this.pasos = data; // Cargar los pasos al abrir el diálogo
+        },
+        (error) => {
+          console.error('Error al obtener los pasos de la actividad', error);
+          // Maneja errores si es necesario
+        }
+    );
+}
 obtenerRazas() {
   const token = localStorage.getItem('token');
   if (token) {

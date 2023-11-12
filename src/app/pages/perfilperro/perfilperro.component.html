@@ -41,7 +41,7 @@
     </div>
     <div class="flex align-items-center justify-content-center" *ngFor="let actividad of actividades">
       <div>
-        <p-card styleClass="bg-red-100">
+        <p-card styleClass="bg-red-100" (click)="abrirDialogo(actividad)">
           <div class="flex align-items-center justify-content-center">
             <div class="mr-2 ml-2">
               {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.contador}}
@@ -51,6 +51,48 @@
             </div>
           </div>
         </p-card>
+      </div>
+      <div>
+        <p-dialog header="header" [(visible)]="displayModal" [modal]="true" [style]="{width: 'width', minWidth: 'minWidth'}"
+        [maximizable]="true">
+        <div *ngIf="selectedActividad">
+          <div>
+            <h3>{{ selectedActividad.nombre }}</h3>
+            <p>{{ selectedActividad.descripcion }}</p>
+            <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy' }}</p>  
+          </div>
+          
+          <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
+            <div>
+              
+                <h3>{{ pasos[pasoActual].titulo }}</h3>
+                <div class="flex flex-column align-items-center justify-content-center">
+                  <div class="col-8">
+                    <p-card styleClass="bg-gray-100">
+                      <span class="material-symbols-outlined" style="font-size: 75px;">
+                        pet_supplies
+                        </span>
+                    </p-card>
+                  </div>
+                </div>
+                <div class="mt-4 mb-4 mr-4 ml-4">
+                  <p>{{ pasos[pasoActual].descripcion }}</p>
+                </div>
+            </div>
+          </div>
+          <div class="flex align-items-center justify-content-center">
+            <div class="mt-4 mb-4 mr-4 ml-4">
+              <p-button icon="pi pi-iconName" label="Guardar guía"></p-button>
+            </div>
+            <div class="mr-4 ml-4">
+              <p-button icon="pi pi-iconName" label="Anterior" [disabled]="pasoActual < 0"></p-button>
+            </div>
+            <div class="mr-4 ml-4">
+              <p-button icon="pi pi-iconName" label="Siguiente" [disabled]="pasoActual >= pasos.length - 1"></p-button>
+            </div>
+          </div>
+        </div>
+        </p-dialog>
       </div>
     </div>
   </div>
