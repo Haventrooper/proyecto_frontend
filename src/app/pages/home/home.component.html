@@ -76,16 +76,15 @@
           </p-card>
       </div>
     </div>
-    <div>
+    <div class="text-center">
     <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true" (onHide)="reiniciarValores()"> 
       <div *ngIf="selectedActividad">
-        <h3>Nombre: {{ selectedActividad.nombre }}</h3>
-        <p>Description: {{ selectedActividad.descripcion }}</p>
-        <p>Fecha de creación: {{ selectedActividad.fecha_creacion }}</p>
-        <p>Calificación: {{ selectedActividad.calificacion }}</p>
-        <p>Progreso: {{ selectedActividad.progreso }}</p>
-        <p>Contador: {{ selectedActividad.contador }}</p>
-    
+        <div>
+          <h3>{{ selectedActividad.nombre }}</h3>
+          <p>{{ selectedActividad.descripcion }}</p>
+          <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy' }}</p>  
+        </div>
+        
         <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
           <div>
             
