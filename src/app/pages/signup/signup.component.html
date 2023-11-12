@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="p-2">
-                    <input type="text" placeholder="Contraseña" pInputText formControlName="contrasena" />
+                    <input type="password" placeholder="Contraseña" pInputText formControlName="contrasena" />
                     <div
                             *ngIf="registro.get('contrasena')?.invalid && (registro.get('contrasena')?.dirty || registro.get('contrasena')?.['touched'])"
                         >
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="p-2">
-                    <input type="text" placeholder="Repetir contraseña" pInputText formControlName="contrasenaRep" />
+                    <input type="password" placeholder="Repetir contraseña" pInputText formControlName="contrasenaRep" />
                     <div
                             *ngIf="registro.get('contrasenaRep')?.invalid && (registro.get('contrasenaRep')?.dirty || registro.get('contrasenaRep')?.['touched'])"
                         >
