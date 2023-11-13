@@ -60,7 +60,7 @@ import { PerrosComponent } from './pages/perros/perros.component';
     DialogModule,
     BrowserAnimationsModule,
     CalendarModule,
-    DropdownModule
+    DropdownModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

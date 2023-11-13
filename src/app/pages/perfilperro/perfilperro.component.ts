@@ -22,12 +22,13 @@ export class PerfilperroComponent implements OnInit {
     { label: 'Macho', value: 'Macho' },
     { label: 'Hembra', value: 'Hembra' }
   ];
-  displayModal: boolean = false;
   selectedActividad: any;
   pasos: any;
   pasoActual: number = 0;
   actividadExistente = false;
   idP: any;
+  mostrarModal: boolean = false;
+  displayModal: boolean = false;
 
 
   constructor(private route: ActivatedRoute, 
@@ -63,6 +64,17 @@ export class PerfilperroComponent implements OnInit {
   ngOnInit() {
     this.ordenarActividadesRecientes();
     this.obtenerRazas();
+    this.formulario = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      fecha_nacimiento: ['', Validators.required],
+      id_raza: ['', [Validators.required]],
+      genero: ['', Validators.required]
+      });
+  }
+
+  
+  abrirModal() {
+    this.mostrarModal = true;
   }
 
   abrirDialogo(actividad: any){
@@ -79,8 +91,13 @@ export class PerfilperroComponent implements OnInit {
   
     this.verificarActividadExistente(token);
     this.cargarPasos(actividad.id_actividad, token);
-
   }
+
+  recargarPagina() {
+    location.reload();
+  }
+
+  
 
   siguiente() {
     // Verifica si el paso siguiente es válido
@@ -299,6 +316,16 @@ obtenerRazas() {
       console.error("No se ha encontrado el token en el Local Storage");
     }
   }
+  getAge(fechaNacimiento: any) {
+		var today = new Date();
+		var birthDate = new Date(fechaNacimiento);
+		var age = today.getFullYear() - birthDate.getFullYear();
+		var m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	}
 }
 
 

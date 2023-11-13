@@ -44,7 +44,8 @@
         <p-card styleClass="bg-red-100" (click)="abrirDialogo(actividad)">
           <div class="flex align-items-center justify-content-center">
             <div class="mr-2 ml-2">
-              {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.contador}}
+              {{actividad.nombre}} - {{actividad.descripcion}} 
+              <p>Paso actual: {{ +actividad.contador + 1 }}</p>
             </div>
             <div class="mr-2 ml-2">
               <p-button icon="pi pi-iconName" severity="danger" label="Eliminar actividad" (click)="eliminarRelacionPerroActividad(actividad.id_actividad)"></p-button>
@@ -54,7 +55,7 @@
       </div>
       <div>
         <p-dialog header="header" [(visible)]="displayModal" [modal]="true" [style]="{width: 'width', minWidth: 'minWidth'}"
-        [maximizable]="true">
+    [maximizable]="true" (onHide)="recargarPagina()">
         <div *ngIf="selectedActividad">
           <div>
             <h3>{{ selectedActividad.nombre }}</h3>
@@ -111,16 +112,47 @@
     </div>
   </div>
 
+    
   <div class="text-center align-items-center justify-content-center">
+    <h2>Modificar datos de perro</h2>
+    <div>
+      <p-button icon="pi pi-iconName" label="Modificar datos perro" (click)="abrirModal()"></p-button>
+  </div>    
+  <p-dialog [(visible)]="mostrarModal" (onHide)="recargarPagina()">
     <p-card [style]="{width: 'width'}" styleClass="styleClass">
       <div class="align-items-center justify-content-center">
         <form [formGroup]="formulario">
-          <h1>Modificar datos de perro</h1>
+          <h2>Modificar datos de perro</h2>
           <div class="p-2">
-            <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
+            <input placeholder="Nombre" type="text" pInputText formControlName="nombre"/>
+            <div
+                    *ngIf="formulario.get('nombre')?.invalid && (formulario.get('nombre')?.dirty || formulario.get('nombre')?.['touched'])"
+                >
+                    <small class="p-error" *ngIf="formulario.get('nombre')?.errors?.['required']">
+                    Nombre del perro es obligatorio
+                    </small>
+                    <small class="p-error" *ngIf="formulario.get('nombre')?.errors?.['nombre']">
+                    Ingrese un nombre válido
+                    </small>
+            </div>           
           </div>
           <div class="p-2">
-            <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
+            <p-calendar [showIcon]="true" placeholder="Fecha de nacimiento" type="date"
+            formControlName="fecha_nacimiento"
+            ></p-calendar>
+            <div>
+                <small *ngIf="formulario.get('fecha_nacimiento')?.invalid && (formulario.get('fecha_nacimiento')?.dirty || formulario.get('fecha_nacimiento')?.['touched'])">
+                </small>
+                <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.errors?.['required']">
+                    Fecha de nacimiento es obligatorio.
+                </small>
+                <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) > 30">
+                    Ingrese una fecha válida.
+                </small>
+                <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) < 0">
+                    Debe tener al menos un año.
+                </small>
+            </div>          
           </div>
           <div class="p-2">
             <p-dropdown [options]="razas" placeholder="Selecciona una raza"></p-dropdown>
@@ -134,6 +166,8 @@
         </form>
       </div>
     </p-card>
+  </p-dialog>
+    
   </div>
 
   <div class="flex flex-column align-items-center justify-content-center">

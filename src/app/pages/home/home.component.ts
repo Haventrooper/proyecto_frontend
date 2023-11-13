@@ -133,6 +133,11 @@ cargarPasos(idActividad: number, token: string) {
     this.pasos = []; // Reinicia los pasos
     this.displayModal = false; // Cierra el modal
     this.selectedActividad = null; // Reinicia la actividad seleccionada
+    
+      console.log('El diálogo se ha cerrado');
+      // Lógica para recargar la página
+      location.reload();
+    
     // Otras reinicializaciones según tus necesidades
   }
   

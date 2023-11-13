@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
-
-
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -33,12 +31,21 @@ export class LoginComponent {
       let resp: any = response;
       console.log(resp)
       if( resp===false ){
-        alert("Verificar credenciales")
-      
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Verificar credenciales',
+          text: ''
+        })
       } else {
         
         localStorage.setItem("token", resp["token"]);
-        
+        Swal.fire(
+          'Se ha iniciado sesión!',
+          '',
+          'success'
+        )
+
         this.router.navigate(['/home']);
       }
 		})

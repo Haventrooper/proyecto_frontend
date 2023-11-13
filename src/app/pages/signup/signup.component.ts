@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { TdserviceService } from 'src/app/services/tdservice.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -74,16 +75,27 @@ export class SignupComponent {
   
       this.td_service.signUp(datosRegistro).subscribe(
         (response) => {
-          console.log('Usuario registrado con éxito', response);
+          Swal.fire(
+            'Se ha registrado con exito!',
+            '',
+            'success'
+          )
           this.router.navigate(['/login']);
         },
         (error) => {
-          console.error('Error al registrar el usuario', error);
-          alert("Error de registro, verifica credenciales");
+          Swal.fire({
+          icon: 'error',
+          title: 'Verificar información personal',
+          text: ''
+          })
         }
       );
     } else {
-      console.log('Formulario inválido. Por favor, verifica los campos.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Verificar información personal',
+        text: ''
+        })
     }
   }
   
