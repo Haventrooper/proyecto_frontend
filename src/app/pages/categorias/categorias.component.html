@@ -1,11 +1,24 @@
 <div class="mt-8 mb-8">
-    <p>categorias works!</p>
     <div>
+      <div>
+        <p-card styleClass="bg-cyan-200">
+          <div class="flex justify-content-center align-items-center">
+            <h2>Todas las categorías</h2>
+            <div class="ml-4 mr-2">
+              <p-button label="Todas las Actividades" (click)="mostrarTodasLasActividades()"></p-button>
+            </div>
+            <div class="flex">
+              <div class="mr-2 ml-2" *ngFor="let categoria of categorias">
+                <p-button icon="pi pi-iconName" label="{{categoria.nombre}}" (click)="seleccionarCategoria(categoria)"></p-button>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </div>
         <h2>Actividades de la categoría</h2>
         <ul>
           <li *ngFor="let actividad of actividades" (click)="seleccionarActividad(actividad)">
             {{ actividad.nombre }} - {{ actividad.descripcion }}
-            
           </li>
         </ul>
         <div>
