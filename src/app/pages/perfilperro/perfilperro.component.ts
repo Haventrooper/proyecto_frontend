@@ -306,7 +306,8 @@ obtenerRazas() {
     }
    
   }
-  eliminarRelacionPerroActividad(idActividad: number) {
+  eliminarRelacionPerroActividad(event: Event, idActividad: number) {
+    event.stopPropagation();
 
     const idPerro = this.perro[0].id_perro;
     const token = localStorage.getItem('token'); /* Obtén el token de autenticación */;

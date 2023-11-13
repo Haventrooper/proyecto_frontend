@@ -48,7 +48,7 @@
               <p>Paso actual: {{ +actividad.contador + 1 }}</p>
             </div>
             <div class="mr-2 ml-2">
-              <p-button icon="pi pi-iconName" severity="danger" label="Eliminar actividad" (click)="eliminarRelacionPerroActividad(actividad.id_actividad)"></p-button>
+              <p-button icon="pi pi-iconName" severity="danger" label="Eliminar actividad" (click)="eliminarRelacionPerroActividad($event, actividad.id_actividad)"></p-button>
             </div>
           </div>
         </p-card>
