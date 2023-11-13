@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
@@ -29,10 +29,10 @@ export class PerrosComponent {
               private router: Router){
 
     this.registro = this.fb.group({
-      id_raza: ['', Validators.required],
-      nombre: ['', Validators.required],
-      fecha_nacimiento: ['', Validators.required],
-      genero: ['', Validators.required],
+      id_raza: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', [Validators.required]),
+      fecha_nacimiento: new FormControl('', [Validators.required]),
+      genero: new FormControl('', [Validators.required]),
     });
     this.obtenerPerros();
 
@@ -138,4 +138,14 @@ export class PerrosComponent {
       'success'
     )
   }
+  getAge(fechaNacimiento: any) {
+		var today = new Date();
+		var birthDate = new Date(fechaNacimiento);
+		var age = today.getFullYear() - birthDate.getFullYear();
+		var m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	}
 }
