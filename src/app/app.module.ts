@@ -29,6 +29,7 @@ import { PerfilperroComponent } from './pages/perfilperro/perfilperro.component'
 import { CategoriasComponent } from './pages/categorias/categorias.component';
 import { PerrosComponent } from './pages/perros/perros.component';
 import { AdminloginComponent } from './pages/adminlogin/adminlogin.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 
 
@@ -46,7 +47,8 @@ import { AdminloginComponent } from './pages/adminlogin/adminlogin.component';
     PerfilperroComponent,
     CategoriasComponent,
     PerrosComponent,
-    AdminloginComponent
+    AdminloginComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

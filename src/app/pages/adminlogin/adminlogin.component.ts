@@ -42,6 +42,7 @@ export class AdminloginComponent {
           '',
           'success'
         )
+        this.router.navigate(['/admin']);
 
       }
 		})
