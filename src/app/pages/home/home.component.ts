@@ -51,11 +51,11 @@ export class HomeComponent {
     this.reiniciarValores();
   }
 
-  abrirDialogo(actividad: any) {
-    this.selectedActividad = actividad;
+  abrirDialogo(actividad: any){
     this.displayModal = true;
+    this.selectedActividad = actividad;
     this.actividadExistente = false; // Establece inicialmente en false
-    const fecha_reciente = new Date();
+
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -63,10 +63,15 @@ export class HomeComponent {
       return;
     }
 
-    this.realizarSolicitudPostActividadReciente(fecha_reciente, token);
-    this.verificarActividadExistente(token);
-    this.cargarPasos(actividad.id_actividad, token);
+    if (this.perroSeleccionado && this.perroSeleccionado.id_perro) {
+      this.verificarActividadExistente(token);
+      this.cargarPasos(actividad.id_actividad, token);
+    } else {
+      this.cargarPasos(actividad.id_actividad, token);
+      console.log('ID de perro no disponible. No se verificará la actividad pero si los pasos.');
+    }
 }
+
 
 realizarSolicitudPostActividadReciente(fecha_reciente: Date, token: string) {
     this.td_service.postActividadPerroReciente(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, fecha_reciente, token).subscribe(
@@ -82,20 +87,22 @@ realizarSolicitudPostActividadReciente(fecha_reciente: Date, token: string) {
 }
 
 verificarActividadExistente(token: string) {
-    this.td_service.getVerificarActividad(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, token).subscribe(
-        (data: any) => {
-          if (data.mensaje === 'Actividad ya en BD') {
-            this.actividadExistente = true;
-          } else if (data.mensaje === 'No hay actividad guardada en BD') {
-          }
-          console.log("found: ", this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad);
-        },
-        (error) => {
-          console.error('Error al verificar la actividad', error);
-          // Maneja errores si es necesario
+  this.td_service.getVerificarActividad(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, token).subscribe(
+      (data: any) => {
+        if (data.mensaje === 'Actividad ya en BD') {
+          this.actividadExistente = true;
+        } else if (data.mensaje === 'No hay actividad guardada en BD') {
+          console.log('La actividad no existe en la BD.');
         }
-    );
+        console.log("found: ", this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad);
+      },
+      (error) => {
+        console.error('Error al verificar la actividad', error);
+        // Maneja errores si es necesario
+      }
+  );
 }
+
 
 cargarPasos(idActividad: number, token: string) {
     this.td_service.getPasos(idActividad, token).subscribe(
@@ -135,9 +142,7 @@ cargarPasos(idActividad: number, token: string) {
     this.selectedActividad = null; // Reinicia la actividad seleccionada
     
       console.log('El diálogo se ha cerrado');
-      // Lógica para recargar la página
-      location.reload();
-    
+      // Lógica para recargar la página    
     // Otras reinicializaciones según tus necesidades
   }
   
