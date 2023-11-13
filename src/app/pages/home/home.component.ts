@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -369,6 +370,13 @@ cargarPasos(idActividad: number, token: string) {
         (data: any) => {
           console.log('La actividad se ha guardado correctamente', data);
           // Realiza acciones adicionales después de guardar la actividad
+          this.displayModal = false
+          Swal.fire({
+            title: 'Actividad guardada',
+            text: 'Actividad guardada correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
         },
         (error) => {
           console.error('Error al guardar la actividad', error);
