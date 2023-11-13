@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TdserviceService } from 'src/app/services/tdservice.service';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { SelectItem } from 'primeng/api';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,7 +13,52 @@ import Swal from 'sweetalert2';
 })
 export class AdminComponent {
 
-  constructor( private router: Router){}
+  registroActividad: FormGroup
+  categorias: SelectItem[] = [];
+  categoriaSeleccionada: any;
+
+
+  constructor( private router: Router,
+    private td_service: TdserviceService,
+    private fb: FormBuilder){
+
+      this.registroActividad = this.fb.group({
+        id_categoria: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+
+      });
+    }
+
+    ngOnInit(): void{
+      this.obtenerCategoriasAdmin();
+
+    }
+
+  postActividadNueva(){
+    
+  }
+
+  obtenerCategoriasAdmin() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.td_service.getCategoriasAdmin(token).subscribe(
+        (response: any) => {
+          console.log(response); // Agrega este console.log para verificar los datos recibidos
+
+          // Mapea las categorías al formato de SelectItem
+          this.categorias = response.map((categorias: any) => ({ label: categorias.nombre, value: categorias.id_categoria }));
+        },
+        (error) => {
+          console.error('Error al obtener categorías:', error);
+        }
+      );
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
+  }
+
 
   logoutAdmin(){
     localStorage.removeItem("token")

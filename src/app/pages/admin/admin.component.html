@@ -2,6 +2,40 @@
     <div class="mr-2 ml-2">
         <p-button icon="pi pi-iconName" severity="danger" label="Cerrar Sesión" (click)="logoutAdmin()"></p-button>
       </div>
-    <p>admin works!</p>
+      <div>
+        <p>Crear actividad nueva</p>
+
+      </div>
+    <form [formGroup]="registroActividad">
+        
+        <p-dropdown [options]="categorias" optionLabel="label" optionValue="value"></p-dropdown>
+        <div class="p-2">
+            <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+            <div
+                    *ngIf="registroActividad.get('nombre')?.invalid && (registroActividad.get('nombre')?.dirty || registroActividad.get('nombre')?.['touched'])"
+                >
+                    <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
+                    Nombre de actividad es obligatorio
+                    </small>
+                    <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['nombre']">
+                    Required
+                    </small>
+            </div>
+        </div>
+        <div class="p-2">
+            <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+            <div
+                    *ngIf="registroActividad.get('descripcion')?.invalid && (registroActividad.get('descripcion')?.dirty || registroActividad.get('descripcion')?.['touched'])"
+                >
+                    <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['required']">
+                    Descripcion es obligatorio
+                    </small>
+                    <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['descripcion']">
+                    Required
+                    </small>
+            </div>
+        </div>
+    </form>
+    
 
 </div>

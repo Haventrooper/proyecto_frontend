@@ -230,4 +230,20 @@ export class TdserviceService {
   loginAdmin(email: string, password: string){
     return this.http.get(this.url + `/admin?email=${email}&contrasena=${password}`);
   }
+
+  //FUNCIONES ADMINISTRADORES
+  adminPostActividad(datosActividad: any, token: string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    return this.http.post(`${this.url}/actividadesAdmin`, datosActividad, httpOptions);
+  }
+
+  getCategoriasAdmin(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/adminCategorias`, { headers: headers });
+  }
 }
