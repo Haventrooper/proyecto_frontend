@@ -53,8 +53,8 @@
           </div>
         </p-card>
       </div>
-      <div>
-        <p-dialog header="header" [(visible)]="displayModal" [modal]="true" [style]="{width: 'width', minWidth: 'minWidth'}"
+      <div class="text-center"> 
+        <p-dialog header="Detalles de la actividad" [(visible)]="displayModal" [modal]="true" [style]="{width: 'width', minWidth: 'minWidth'}"
     [maximizable]="true" (onHide)="recargarPagina()">
         <div *ngIf="selectedActividad">
           <div>
@@ -83,7 +83,7 @@
           </div>
           <div class="flex align-items-center justify-content-center">
             <div class="mr-4 ml-4">
-              <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual < 0"></p-button>
+              <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>
             </div>
             <div class="mr-4 ml-4">
               <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente()" [disabled]="pasoActual >= pasos.length - 1"></p-button>
