@@ -308,27 +308,44 @@ obtenerRazas() {
   }
   eliminarRelacionPerroActividad(event: Event, idActividad: number) {
     event.stopPropagation();
-
-    const idPerro = this.perro[0].id_perro;
+  
+    const idPerro = this.perro && this.perro.length > 0 ? this.perro[0].id_perro : null;
     const token = localStorage.getItem('token'); /* Obtén el token de autenticación */;
-
-    if (token) {
+  
+    if (token && idPerro) {
       this.td_service.eliminarActividadPorPerro(idPerro, idActividad, token).subscribe(
         (response) => {
           // Maneja la respuesta de la API después de la eliminación exitosa.
           console.log(response);
           
+          // Muestra el Swal alert después de la eliminación exitosa.
+          Swal.fire({
+            title: 'Actividad eliminada',
+            text: 'La actividad se ha eliminado con éxito',
+            icon: 'success',
+            confirmButtonText: '¡Entendido!'
+          });
+  
           // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
         },
         (error) => {
           // Maneja los errores en caso de que ocurra un problema con la eliminación.
           console.error(error);
+  
+          // Muestra un Swal alert indicando el error.
+          Swal.fire({
+            title: 'Error',
+            text: 'Ha ocurrido un error al eliminar la actividad',
+            icon: 'error',
+            confirmButtonText: '¡Entendido!'
+          });
         }
       );
     } else {
-      console.error("No se ha encontrado el token en el Local Storage");
+      console.error("No se ha encontrado el token o el ID del perro en el Local Storage");
     }
   }
+  
   getAge(fechaNacimiento: any) {
 		var today = new Date();
 		var birthDate = new Date(fechaNacimiento);
