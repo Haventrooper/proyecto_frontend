@@ -15,6 +15,8 @@ export class PerrosComponent {
   registro: FormGroup;
   mostrarModal: boolean = false;
   razas: SelectItem[] = [];
+  selectedRaza: number | null = null;
+
   generoOptions = [
     { label: 'Macho', value: 'Macho' },
     { label: 'Hembra', value: 'Hembra' }
@@ -29,11 +31,13 @@ export class PerrosComponent {
       fecha_nacimiento: ['', Validators.required],
       genero: ['', Validators.required],
     });
+    this.obtenerPerros();
+
+    this.obtenerRazas();
+
   }
 
   ngOnInit(): void {
-    this.obtenerPerros();
-    this.obtenerRazas();
   }
 
   abrirModal() {
@@ -70,6 +74,7 @@ export class PerrosComponent {
         (data: any) => {
           console.log('Perro registrado con éxito', data);
           // Realizar cualquier acción adicional después del registro
+          
         },
         (error) => {
           console.error('Error al registrar el perro', error);

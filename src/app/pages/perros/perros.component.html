@@ -32,7 +32,7 @@
         <p-dialog header="Registro de perro" [(visible)]="mostrarModal" [modal]="true" [maximizable]="true">
             <form [formGroup]="registro">
                 <div class="p-2">
-                    <p-dropdown [options]="razas" placeholder="Selecciona una raza"></p-dropdown>
+                    <p-dropdown [options]="razas" placeholder="Selecciona una raza" formControlName="id_raza"></p-dropdown>
                 </div>
                 <div class="p-2">
                     <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
