@@ -4,7 +4,8 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';  // Asegúrate de importar DatePipe correctamente
 import { SelectItem } from 'primeng/api';
-
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfilperro',
@@ -31,7 +32,8 @@ export class PerfilperroComponent implements OnInit {
   displayModal: boolean = false;
 
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute,
+    private router: Router, 
     private td_service: TdserviceService,
     private formBuilder: FormBuilder,
     private datePipe: DatePipe) {
@@ -280,11 +282,20 @@ obtenerRazas() {
     if(token){
       this.td_service.deletePerro(idPerro, token).subscribe(
         (response) => {
+          
+
           // Maneja la respuesta de la API después de la eliminación exitosa.
           console.log(response);
           // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
         },
         (error) => {
+          Swal.fire({
+            title: 'Se ha eliminado el perro',
+            text: 'El perro se ha eliminado con exito',
+            icon: 'success',
+            confirmButtonText: '¡Entendido!'
+          });
+          this.router.navigate(['/perros']);
           // Maneja los errores en caso de que ocurra un problema con la eliminación.
           console.error(error);
         }
@@ -305,6 +316,7 @@ obtenerRazas() {
         (response) => {
           // Maneja la respuesta de la API después de la eliminación exitosa.
           console.log(response);
+          
           // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
         },
         (error) => {

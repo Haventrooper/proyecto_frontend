@@ -3,6 +3,9 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { SelectItem } from 'primeng/api';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-perros',
@@ -15,7 +18,6 @@ export class PerrosComponent {
   registro: FormGroup;
   mostrarModal: boolean = false;
   razas: SelectItem[] = [];
-  selectedRaza: number | null = null;
 
   generoOptions = [
     { label: 'Macho', value: 'Macho' },
@@ -23,7 +25,8 @@ export class PerrosComponent {
   ];
 
   constructor(private td_service: TdserviceService,
-              private fb: FormBuilder,){
+              private fb: FormBuilder,
+              private router: Router){
 
     this.registro = this.fb.group({
       id_raza: ['', Validators.required],
@@ -74,11 +77,30 @@ export class PerrosComponent {
         (data: any) => {
           console.log('Perro registrado con éxito', data);
           // Realizar cualquier acción adicional después del registro
-          
+          Swal.fire({
+            title: '¡Registro completado!',
+            text: 'El perro se ha registrado con éxito.',
+            icon: 'success',
+            confirmButtonText: '¡Entendido!'
+          });
+          location.reload();
+
+  
+          // Realizar cualquier acción adicional después del registro
+          // Por ejemplo, cerrar el p-dialog
+          this.mostrarModal = false;
         },
         (error) => {
-          console.error('Error al registrar el perro', error);
-          // Manejar errores si es necesario
+          Swal.fire({
+            title: '¡Error!',
+            text: 'Verifica los campos.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+  
+          // Realizar cualquier acción adicional después del registro
+          // Por ejemplo, cerrar el p-dialog
+          this.mostrarModal = false;
         }
       );
     } else {
@@ -110,5 +132,10 @@ export class PerrosComponent {
         // Luego, guárdalos en el localStorage
     localStorage.setItem('perroSeleccionado', JSON.stringify(perroSeleccionado));
     this.td_service.actualizarPerroSeleccionado(perroSeleccionado);
+    Swal.fire(
+      'Se ha seleccionado correctamente!',
+      '',
+      'success'
+    )
   }
 }
