@@ -174,10 +174,23 @@ cargarPasos(idActividad: number, token: string) {
     localStorage.removeItem("token")
     localStorage.removeItem("perroSeleccionado");
     localStorage.clear();
-
-    alert("La sesión ha caducado")
-    this.router.navigate(['/login']).then(() => {
-      window.location.reload();
+    
+    Swal.fire({
+      title: 'Se ha cerrado la sesión',
+      text: 'Se redigirá al login',
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      preConfirm: () => {
+        return new Promise<void>((resolve) => {
+          this.router.navigate(['/login']).then(() => {
+            window.location.reload();
+            resolve();
+          });
+        });
+      },
+    }).then(() => {
+      // Esto se ejecutará después de que se complete la redirección
+      console.log('Redirección completada');
     });
 
 
