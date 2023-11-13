@@ -146,7 +146,7 @@
     <div class="text-center">
       <h2>Sugerencias generales</h2>
       <p-card styleClass="bg-gray-200">
-        <div *ngFor="let sugerencia of sugerencias">
+        <div *ngFor="let sugerencia of sugerencias?.slice(0,4)">
           <div>
             <strong>{{sugerencia.nombre}}</strong><br>
             {{sugerencia.descripcion}}
