@@ -168,8 +168,6 @@ cargarPasos(idActividad: number, token: string) {
   }
 }
 
-
-
   logout(){
     localStorage.removeItem("token")
     localStorage.removeItem("perroSeleccionado");
