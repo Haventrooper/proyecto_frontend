@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -18,18 +18,16 @@ export class PerfilComponent {
   actividades: any[] = [];
 
 
-
   constructor(private td_service: TdserviceService,
     private formBuilder: FormBuilder,
     private datePipe: DatePipe,
     private router: Router){
       this.formulario = this.formBuilder.group({
-        nombre: ['', Validators.required],
-        apellido: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        fecha_nacimiento: ['', Validators.required]
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl( '', [Validators.required]),
+        email: new FormControl ('', [Validators.required, Validators.email]),
+        fecha_nacimiento: new FormControl ('', [Validators.required])
       });
-
   }
 
   ngOnInit(): void{
@@ -144,4 +142,15 @@ export class PerfilComponent {
       }
     );
   }
+
+  getAge(fechaNacimiento: any) {
+		var today = new Date();
+		var birthDate = new Date(fechaNacimiento);
+		var age = today.getFullYear() - birthDate.getFullYear();
+		var m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+	}
 }

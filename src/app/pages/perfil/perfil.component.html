@@ -26,16 +26,59 @@
             
             <div class="p-2">
                 <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
+                <div
+                            *ngIf="formulario.get('nombre')?.invalid && (formulario.get('nombre')?.dirty || formulario.get('nombre')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="formulario.get('nombre')?.errors?.['required']">
+                            Nombre de usuario es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="formulario.get('nombre')?.errors?.['nombre']">
+                            Ingrese un usuario válido
+                            </small>
+                    </div>        
             </div>
             <div class="p-2">
                 <input type="text" placeholder="Apellido" pInputText formControlName="apellido" />
+                <div
+                            *ngIf="formulario.get('apellido')?.invalid && (formulario.get('apellido')?.dirty || formulario.get('apellido')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="formulario.get('apellido')?.errors?.['required']">
+                            Apellido de usuario es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="formulario.get('apellido')?.errors?.['apellido']">
+                            Ingrese un apellido válido
+                            </small>
+                    </div>
             </div>
             <div class="p-2">
                 <input type="text" placeholder="Email" pInputText formControlName="email" />
+                <div
+                            *ngIf="formulario.get('email')?.invalid && (formulario.get('email')?.dirty || formulario.get('email')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="formulario.get('email')?.errors?.['required']">
+                            Correo electrónico es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="formulario.get('email')?.errors?.['email']">
+                            Ingrese un correo válido
+                            </small>
+                    </div>
             </div>
             
             <div class="p-2">
                 <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
+                <div>
+                  <small *ngIf="formulario.get('fecha_nacimiento')?.invalid && (formulario.get('fecha_nacimiento')?.dirty || formulario.get('fecha_nacimiento')?.['touched'])">
+                  </small>
+                  <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.errors?.['required']">
+                      Fecha de nacimiento es obligatorio
+                  </small>
+                  <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) > 150">
+                      Ingrese una fecha válida.
+                  </small>
+                  <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) < 18">
+                      Debe ser mayor de 18 años.
+                  </small>
+              </div>
             </div>
             <div class="mt-4 mb-4">
                 <p-button (click)="guardarCambios()" label="Guardar cambios"></p-button>
