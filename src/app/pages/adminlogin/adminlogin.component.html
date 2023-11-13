@@ -1,5 +1,48 @@
-<div class="mt-8">
-    <p>adminlogin!</p>
+<div class="mt-8 mb-8">
+    <div class="text-center align-items-center justify-content-center">
+        <p-card [style]="{width: 'width'}" styleClass="styleClass">
+            <div class="align-items-center justify-content-center">
+                <form [formGroup]="form">
+                <div>
+                    <h1>Iniciar sesión (administrador)</h1>
+                    <div class="field col">
+                        <input placeholder="Correo electrónico" type="text" pInputText formControlName="email"/>
+                        <div
+                                *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.['touched'])"
+                            >
+                                <small class="p-error" *ngIf="form.get('email')?.errors?.['required']">
+                                Campo email es obligatorio
+                                </small>
+                                <small class="p-error" *ngIf="form.get('email')?.errors?.['email']">
+                                Ingrese un email válido
+                                </small>
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <input placeholder="Contraseña" type="password" pInputText formControlName="password"/>
+                        <div
+                                *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.['touched'])"
+                            >
+                                <small class="p-error" *ngIf="form.get('password')?.errors?.['required']">
+                                Contraseña es obligatoria
+                                </small>
+                            </div>
+                    </div>
+                    <div>
+                        <p-button (click)="loginAdmin()" label="Iniciar sesión"></p-button>
+                    </div>
+                </div>
 
+                </form>
     
+            
+        </div>
+    
+        </p-card>
+    
+    
+    </div>
+        
+
 </div>
+

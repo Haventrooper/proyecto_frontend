@@ -225,4 +225,9 @@ export class TdserviceService {
     };
     return this.http.delete(`${this.url}/eliminarActividadPorPerro/${idPerro}/${idActividad}`, httpOptions);
   }
+
+  //LOGIN ADMINISTRADOR
+  loginAdmin(email: string, password: string){
+    return this.http.get(this.url + `/admin?email=${email}&contrasena=${password}`);
+  }
 }
