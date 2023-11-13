@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TdserviceService } from 'src/app/services/tdservice.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-categorias',
@@ -14,7 +16,11 @@ export class CategoriasComponent {
   selectedActividad: any;
   displayModal: boolean = false;
   pasos: any;
+  pasoActual: number = 0;
   categorias: any[] = [];
+  perro: any;
+  actividadExistente = false;
+
 
 
   constructor(private route: ActivatedRoute,
@@ -25,9 +31,78 @@ export class CategoriasComponent {
       this.idCategoria = +params['idCategoria']; // Convierte el ID a número
       this.obtenerActividadesPorCat(this.idCategoria)
       this.obtenerCategorias();
+
+      const perroSeleccionado = localStorage.getItem('perroSeleccionado');
+
+      // Parsea el JSON si es necesario
+      this.perro = perroSeleccionado ? JSON.parse(perroSeleccionado) : null;
+      console.log(this.perro.id_perro)
       // Ahora puedes utilizar this.idCategoria para cargar las actividades relacionadas con esta categoría
     });
   }
+
+  abrirDialogo(actividad: any){
+    this.displayModal = true;
+    this.selectedActividad = actividad;
+    this.actividadExistente = false; // Establece inicialmente en false
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('Token no encontrado o inválido en el Local Storage');
+      return;
+    }
+
+    if (this.perro && this.perro.id_perro) {
+      this.verificarActividadExistente(token);
+      this.cargarPasos(actividad.id_actividad, token);
+    } else {
+      this.cargarPasos(actividad.id_actividad, token);
+      console.log('ID de perro no disponible. No se verificará la actividad pero si los pasos.');
+    }
+}
+
+
+verificarActividadExistente(token: string) {
+  this.td_service.getVerificarActividad(this.perro.id_perro, this.selectedActividad.id_actividad, token).subscribe(
+      (data: any) => {
+        if (data.mensaje === 'Actividad ya en BD') {
+          this.actividadExistente = true;
+        } else if (data.mensaje === 'No hay actividad guardada en BD') {
+          console.log('La actividad no existe en la BD.');
+        }
+        console.log("found: ", this.perro.id_perro, this.selectedActividad.id_actividad);
+      },
+      (error) => {
+        console.error('Error al verificar la actividad', error);
+        // Maneja errores si es necesario
+      }
+  );
+}
+
+cargarPasos(idActividad: number, token: string) {
+  this.td_service.getPasos(idActividad, token).subscribe(
+      (data: any) => {
+        this.pasos = data; // Cargar los pasos al abrir el diálogo
+      },
+      (error) => {
+        console.error('Error al obtener los pasos de la actividad', error);
+        // Maneja errores si es necesario
+      }
+  );
+}
+reiniciarValores() {
+  // Reinicia las variables y valores que necesites aquí
+  this.pasoActual = 0; // Reinicia el paso actual u otro valor predeterminado
+  this.pasos = []; // Reinicia los pasos
+  this.displayModal = false; // Cierra el modal
+  this.selectedActividad = null; // Reinicia la actividad seleccionada
+  
+    console.log('El diálogo se ha cerrado');
+    // Lógica para recargar la página    
+  // Otras reinicializaciones según tus necesidades
+}
+
   obtenerActividadesPorCat(idCategoria: number){
     const token = localStorage.getItem('token');
     if (token) {
@@ -131,5 +206,84 @@ export class CategoriasComponent {
     }
     // Lógica para obtener todas las actividades
     
+  }
+  siguiente() {
+    // Verifica si el paso siguiente es válido
+    if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
+      console.log(this.pasos[this.pasoActual]);
+      this.pasoActual++;
+      const token = localStorage.getItem('token');
+  
+      if (token) {
+        this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+      } else {
+        console.error('Token no encontrado en el Local Storage');
+      }
+    } else {
+      console.error('No hay más pasos disponibles o el paso actual es undefined.');
+    }
+  }
+  anterior() {
+    if (this.pasoActual > 0) {
+      this.pasoActual--;
+      console.log(this.pasos[this.pasoActual]);
+  
+      const token = localStorage.getItem('token');
+        let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
+  
+        console.log(contadorActual)
+  
+        if (token) {
+          this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
+      
+        } else {
+        console.error('Token no encontrado en el Local Storage');
+        }
+      } else {
+      console.error('El paso actual ya es 0, no se puede decrementar más.');
+    }
+    
+  }
+  actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
+    this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
+      (data: any) => {
+        console.log('Contador actualizado correctamente', data);
+        // Realiza acciones adicionales después de actualizar el contador
+      },
+      (error) => {
+        console.error('Error al actualizar el contador', error);
+        // Maneja errores si es necesario
+      });
+  }
+
+  guardarActividadPerro() {
+    const token = localStorage.getItem('token');
+  
+    if (token && this.perro.id_perro !== null) {
+
+      const contadorActual = this.pasoActual;
+
+      const idPerro = this.perro.id_perro; // Usar el ID del perro seleccionado
+      const idActividad = this.selectedActividad.id_actividad; // Reemplaza con el ID de tu actividad
+  
+      this.td_service.postActividadPerro(idPerro, idActividad, contadorActual, token).subscribe(
+        (data: any) => {
+          console.log('La actividad se ha guardado correctamente', data);
+          // Realiza acciones adicionales después de guardar la actividad
+          this.displayModal = false
+          Swal.fire({
+            title: 'Actividad guardada',
+            text: 'Actividad guardada correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
+        },
+        (error) => {
+          console.error('Error al guardar la actividad', error);
+          // Maneja errores si es necesario
+        });
+    } else {
+      console.error('Token no encontrado o perro no seleccionado');
+    }
   }
 }

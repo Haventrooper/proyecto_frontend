@@ -15,34 +15,60 @@
           </div>
         </p-card>
       </div>
-        <h2>Actividades de la categoría</h2>
-        <ul>
-          <li *ngFor="let actividad of actividades" (click)="seleccionarActividad(actividad)">
-            {{ actividad.nombre }} - {{ actividad.descripcion }}
-          </li>
-        </ul>
         <div>
-            <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true">
-                <div *ngIf="selectedActividad">
-                  <h2>Nombre: {{ selectedActividad.nombre }}</h2>
-                  <p>Description: {{ selectedActividad.descripcion }}</p>
-                  <p>Fecha de creación: {{ selectedActividad.fecha_creacion }}</p>
-                  <p>Calificación: {{ selectedActividad.calificacion }}</p>
-                  <p>Progreso: {{ selectedActividad.progreso }}</p>
-                  <p>Contador: {{ selectedActividad.contador }}</p>
-                  <!-- Agrega más detalles según la estructura de tu actividad -->
+          <p-card styleClass="bg-cyan-50">
+            <div class="text-center">
+              <div>
+                <h2>Actividades disponibles</h2>
+              </div>
+              <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let actividad of actividades">
+                  <p-card class="border-800" styleClass="bg-indigo-200 border-solid" (click)="abrirDialogo(actividad)">
+                    <div>
+                      {{ actividad.nombre }} - {{ actividad.descripcion }}
+                    </div>
+                  </p-card>
+              </div>
+            </div>
+            <div class="text-center">
+            <p-dialog header="Detalles de la Actividad" [(visible)]="displayModal" [modal]="true" (onHide)="reiniciarValores()"> 
+              <div *ngIf="selectedActividad">
+                <div>
+                  <h3>{{ selectedActividad.nombre }}</h3>
+                  <p>{{ selectedActividad.descripcion }}</p>
+                  <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy' }}</p>  
+                </div>
+                
+                <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
                   <div>
-                    <p-button icon="pi pi-iconName" label="Ver guía" (click)="mostrarPasos(selectedActividad.id_actividad)"></p-button>
-                    <div *ngFor="let paso of pasos">
-                        <li>
-                          {{ paso.titulo }} - {{ paso.nombre }} - {{ paso.descripcion }}
-                        </li>
+                    
+                      <h3>{{ pasos[pasoActual].titulo }}</h3>
+                      <div class="flex flex-column align-items-center justify-content-center">
+                        <div class="col-8">
+                          <p-card styleClass="bg-gray-100">
+                            <span class="material-symbols-outlined" style="font-size: 75px;">
+                              pet_supplies
+                              </span>
+                          </p-card>
+                        </div>
+                      </div>
+                      <div class="mt-4 mb-4 mr-4 ml-4">
+                        <p>{{ pasos[pasoActual].descripcion }}</p>
                       </div>
                   </div>
                 </div>
-              </p-dialog>
-          </div>
-        </div>
+                <div class="flex align-items-center justify-content-center">
+                  <div class="mt-4 mb-4 mr-4 ml-4">
+                    <p-button  *ngIf="!actividadExistente" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
+                  </div>
+                  <div class="mr-4 ml-4">
+                    <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>
+                  </div>
+                  <div class="mr-4 ml-4">
+                    <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente()" [disabled]="pasoActual >= pasos.length - 1"></p-button>
+                  </div>
+                </div>
+              </div>
+            </p-dialog>
         
 
       
