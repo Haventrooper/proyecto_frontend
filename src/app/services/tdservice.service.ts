@@ -288,7 +288,7 @@ export class TdserviceService {
     };
     return this.http.post(`${this.url}/pasoActividad`, datosPaso, httpOptions);
   }
-  
+
   postRazaAdmin(nombre: any, token: string): Observable<any>{ //Añadir actividad reciente
     const httpOptions = {
       headers: new HttpHeaders({
@@ -296,19 +296,18 @@ export class TdserviceService {
         'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
       })
     };
-    const body = {nombre}; //Añadir fecha_reciente
-    return this.http.post(`${this.url}/postRaza`, body, httpOptions);
+
+    return this.http.post(`${this.url}/postRaza`, nombre, httpOptions);
   }
 
-  postSugerenciaAdmin(id_raza: number, nombre: any, descripcion: any, token: string): Observable<any>{ //Añadir actividad reciente
+  postSugerenciaAdmin(datosSugerencia: any, token: string): Observable<any>{ 
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
       })
     };
-    const body = {id_raza, nombre, descripcion}; //Añadir fecha_reciente
-    return this.http.post(`${this.url}/postSugerencia`, body, httpOptions);
+    return this.http.post(`${this.url}/postSugerencia`, datosSugerencia, httpOptions);
   }
 
   //DELETE

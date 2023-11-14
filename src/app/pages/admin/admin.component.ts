@@ -45,12 +45,13 @@ export class AdminComponent {
       });
 
       this.registroSugerencias = this.fb.group({
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
-        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+        id_raza: new FormControl('', [Validators.required]),
+        nombre: new FormControl('', [Validators.required]),
+        descripcion: new FormControl('', [Validators.required]),
       });
 
       this.registroRazas = this.fb.group({
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        nombre: new FormControl('', [Validators.required]),
       });
     }
 
@@ -60,6 +61,65 @@ export class AdminComponent {
       this.obtenerRazasAdmin();
       this.obtenerSugerenciasAdmin();
 
+    }
+
+    postSugerencia(){
+      if (this.registroSugerencias.valid) {
+        const datosSugerencia = this.registroSugerencias.value;
+    
+        const token = localStorage.getItem('token');
+  
+        if(token){
+          this.td_service.postSugerenciaAdmin(datosSugerencia, token).subscribe(
+            (response) => {
+              Swal.fire(
+                'Se ha registrado la sugerencia con exito!',
+                '',
+                'success'
+              )
+            },
+            (error) => {
+              console.error('Error al registrar la sugerencia:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Verificar información',
+                text: 'Hubo un problema al registrar la sugerencia. Por favor, verifica la información e intenta nuevamente.'
+              });
+            }          
+          );
+        }else{
+          console.log("error")
+        }
+      }
+    }
+    postRazaNueva(){
+      if (this.registroRazas.valid) {
+        const datosRaza = this.registroRazas.value;
+    
+        const token = localStorage.getItem('token');
+  
+        if(token){
+          this.td_service.postRazaAdmin(datosRaza, token).subscribe(
+            (response) => {
+              Swal.fire(
+                'Se ha registrado la raza con exito!',
+                '',
+                'success'
+              )
+            },
+            (error) => {
+              console.error('Error al registrar la raza:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Verificar información',
+                text: 'Hubo un problema al registrar la raza. Por favor, verifica la información e intenta nuevamente.'
+              });
+            }          
+          );
+        }else{
+          console.log("error")
+        }
+      }
     }
 
   postActividadNueva(){

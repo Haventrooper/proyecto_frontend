@@ -17,9 +17,6 @@
                     <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
                     Nombre de actividad es obligatorio
                     </small>
-                    <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['nombre']">
-                    Required
-                    </small>
             </div>
         </div>
         <div class="p-2">
@@ -29,9 +26,6 @@
                 >
                     <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['required']">
                     Descripcion es obligatorio
-                    </small>
-                    <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['descripcion']">
-                    Required
                     </small>
             </div>
         </div>
@@ -54,9 +48,6 @@
                             <small class="p-error" *ngIf="registroActividad.get('titulo')?.errors?.['required']">
                             Titulo del paso es obligatorio
                             </small>
-                            <small class="p-error" *ngIf="registroActividad.get('titulo')?.errors?.['nombre']">
-                            Required
-                            </small>
                     </div>
                 </div>
                 <div class="p-2">
@@ -66,9 +57,6 @@
                         >
                             <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
                             Nombre del paso es obligatorio
-                            </small>
-                            <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['descripcion']">
-                            Required
                             </small>
                     </div>
                 </div>
@@ -117,10 +105,54 @@
                 </p-card>
             </div>
             <div>
-                <h1> Razas disponibles</h1>
+                <div>
+                    <h1>Crear sugerencia con raza</h1>
+                </div>
+                <form [formGroup]="registroSugerencias">
+                    <p-dropdown [options]="razas" formControlName="id_raza" optionLabel="label" optionValue="value"></p-dropdown>
+                  
+                    <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                  
+                    <div
+                      *ngIf="registroSugerencias.get('nombre')?.invalid && (registroSugerencias.get('nombre')?.dirty || registroSugerencias.get('nombre')?.touched)"
+                    >
+                      <small class="p-error" *ngIf="registroSugerencias.get('nombre')?.errors?.['required']">
+                        Nombre de la sugerencia es obligatoria
+                      </small>
+                    </div>
+                  
+                    <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+                  
+                    <div
+                      *ngIf="registroSugerencias.get('descripcion')?.invalid && (registroSugerencias.get('descripcion')?.dirty || registroSugerencias.get('descripcion')?.touched)"
+                    >
+                      <small class="p-error" *ngIf="registroSugerencias.get('descripcion')?.errors?.['required']">
+                        Descripcion de la sugerencia es obligatoria
+                      </small>
+                    </div>
+                  
+                    <p-button icon="pi pi-trash" (click)="postSugerencia()" label="Crear sugerencia"></p-button>
+                  </form>
+                  
+
             </div>
             <div>
-                <p-dropdown [options]="razas" optionLabel="label" optionValue="value"></p-dropdown>
+                <h1> Crear razas nuevas</h1>
+            </div>
+            <div>
+                <form [formGroup]="registroRazas">
+                <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                    <div
+                            *ngIf="registroRazas.get('nombre')?.invalid && (registroRazas.get('nombre')?.dirty || registroRazas.get('nombre')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registroRazas.get('nombre')?.errors?.['required']">
+                            Nombre de la raza es obligatoria
+                            </small>
+                    </div>
+                    <div class="mt-4 mb-4">
+                        <p-button (click)="postRazaNueva()" label="Crear raza nueva"></p-button>
+                      </div>
+                </form>
 
             </div>
         </div>
