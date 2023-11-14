@@ -374,7 +374,7 @@ export class AdminComponent {
 
   if (token) {
     // Llama al servicio para eliminar el paso
-    this.td_service.eliminarPaso(idPaso, token).subscribe(
+    this.td_service.deletePaso(idPaso, token).subscribe(
       (response) => {
         // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
         console.log(response);
@@ -395,6 +395,43 @@ export class AdminComponent {
     }
   }
   
+  eliminarSugerencia(idSugerencia: number) {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      this.td_service.deleteSugerencia(idSugerencia, token).subscribe(
+        (response) => {
+          console.log('Sugerencia eliminada con éxito', response);
+          // Realiza acciones adicionales después de eliminar la sugerencia
+        },
+        (error) => {
+          console.error('Error al eliminar la sugerencia:', error);
+          // Maneja errores si es necesario
+        }
+      );
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
+  }
+  
+  eliminarRaza(idRaza: number) {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      this.td_service.deleteRaza(idRaza, token).subscribe(
+        (response) => {
+          console.log('Raza eliminada con éxito', response);
+          // Realiza acciones adicionales después de eliminar la sugerencia
+        },
+        (error) => {
+          console.error('Error al eliminar la raza:', error);
+          // Maneja errores si es necesario
+        }
+      );
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
+  }
   
 }
 

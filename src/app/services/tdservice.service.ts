@@ -320,7 +320,7 @@ export class TdserviceService {
     };
     return this.http.delete(`${this.url}/eliminarActividadYPasos/${idActividad}`, httpOptions);
   }
-  eliminarPaso(idPaso: number, token: string): Observable<any> {
+  deletePaso(idPaso: number, token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -329,4 +329,27 @@ export class TdserviceService {
     };
     return this.http.delete(`${this.url}/eliminarPaso/${idPaso}`, httpOptions);
   }
+
+  deleteSugerencia(idSugerencia: number, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+  
+    return this.http.delete(`${this.url}/eliminarSugerencia/${idSugerencia}`, httpOptions);
+  }
+
+  deleteRaza(idRaza: number, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+  
+    return this.http.delete(`${this.url}/eliminarRaza/${idRaza}`, httpOptions);
+  }
+
 }

@@ -101,7 +101,8 @@
             </div>
             <div>
                 <p-card *ngFor="let sugerencia of sugerencias">
-                    {{sugerencia.nombre}} - {{sugerencia.id_raza}}
+                    Nombre: {{sugerencia.nombre}} - Id raza: {{sugerencia.id_raza}}
+                    <p-button icon="pi pi-iconName" label="Eliminar sugerencia" (click)="eliminarSugerencia(sugerencia.id_sugerencia)"></p-button>
                 </p-card>
             </div>
             <div>
@@ -141,7 +142,9 @@
             </div>
             <div>
                 <p-card *ngFor="let raza of razas_">
-                    {{raza.nombre}}
+                    Nombre: {{raza.nombre}} - Id: {{raza.id_raza}}
+                    <p-button icon="pi pi-iconName" label="Eliminar raza" (click)="eliminarSugerencia(raza.id_raza)"></p-button>
+
                 </p-card>
             </div>
             <div>
