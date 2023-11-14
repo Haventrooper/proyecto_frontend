@@ -8,7 +8,7 @@
       </div>
     <form [formGroup]="registroActividad">
         
-        <p-dropdown [options]="categorias" optionLabel="label" optionValue="value"></p-dropdown>
+        <p-dropdown [options]="categorias" formControlName="id_categoria" optionLabel="label" optionValue="value"></p-dropdown>
         <div class="p-2">
             <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
             <div
@@ -35,6 +35,9 @@
                     </small>
             </div>
         </div>
+        <div class="mt-4 mb-4">
+            <p-button (click)="postActividadNueva()" label="Crear actividad"></p-button>
+          </div>
     </form>
     
 

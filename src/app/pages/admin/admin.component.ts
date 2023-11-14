@@ -23,7 +23,7 @@ export class AdminComponent {
     private fb: FormBuilder){
 
       this.registroActividad = this.fb.group({
-        id_categoria: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        id_categoria: new FormControl('', [Validators.required]),
         nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
 
@@ -36,7 +36,33 @@ export class AdminComponent {
     }
 
   postActividadNueva(){
-    
+    if (this.registroActividad.valid) {
+      const datosActividad = this.registroActividad.value;
+  
+      const token = localStorage.getItem('token');
+
+      if(token){
+        this.td_service.adminPostActividad(datosActividad,token).subscribe(
+          (response) => {
+            Swal.fire(
+              'Se ha registrado actividad con exito!',
+              '',
+              'success'
+            )
+          },
+          (error) => {
+            console.error('Error al registrar actividad:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Verificar información',
+              text: 'Hubo un problema al registrar la actividad. Por favor, verifica la información e intenta nuevamente.'
+            });
+          }          
+        );
+      }else{
+        console.log("error")
+      }
+    }
   }
 
   obtenerCategoriasAdmin() {
@@ -51,9 +77,13 @@ export class AdminComponent {
           this.categorias = response.map((categorias: any) => ({ label: categorias.nombre, value: categorias.id_categoria }));
         },
         (error) => {
-          console.error('Error al obtener categorías:', error);
-        }
-      );
+            console.error('Error al obtener categorías:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al obtener categorías',
+              text: 'Hubo un problema al obtener las categorías. Por favor, intenta nuevamente.'
+            });
+          });
     } else {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
