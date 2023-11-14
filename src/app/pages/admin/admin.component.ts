@@ -207,4 +207,43 @@ export class AdminComponent {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
   }
+
+  eliminarActividad(idActividad: number) {
+    // Aquí debes implementar la lógica para eliminar la actividad
+    // Puedes utilizar tu servicio y sus métodos correspondientes para realizar la eliminación
+  
+    const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta actividad?');
+  
+    if (confirmacion) {
+      const token = localStorage.getItem('token');
+  
+      if (token) {
+        this.td_service.deleteActividadYPasos(idActividad, token).subscribe(
+          (response) => {
+            Swal.fire({
+              title: 'Éxito',
+              text: 'La actividad y sus pasos han sido eliminados correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            // Puedes realizar otras acciones después de la eliminación, por ejemplo, recargar la lista de actividades
+            this.obtenerActividadesAdmin();
+          },
+          (error) => {
+            console.error('Error al eliminar actividad y pasos:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al eliminar la actividad y sus pasos',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+          }
+        );
+      } else {
+        console.error('Token no disponible. El usuario no está autenticado.');
+      }
+    }
+  }
+  
 }
+

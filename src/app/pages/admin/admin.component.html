@@ -98,6 +98,8 @@
                       {{actividad.nombre}}
                       <div>
                         <p-button icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
+                        <p-button icon="pi pi-trash" (click)="eliminarActividad(actividad.id_actividad)" label="Eliminar Actividad"></p-button>
+
                         <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]">
                           {{paso.titulo}} - {{paso.nombre}} - {{paso.descripcion}}
                         </div>
