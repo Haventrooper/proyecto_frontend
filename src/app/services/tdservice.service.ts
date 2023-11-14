@@ -246,4 +246,17 @@ export class TdserviceService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.url}/adminCategorias`, { headers: headers });
   }
+  getActividadesAdmin(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/actividadesAdmin`, { headers: headers });
+  }
+  adminPostPaso(datosPaso: any, token: string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    return this.http.post(`${this.url}/pasoActividad`, datosPaso, httpOptions);
+  }
 }

@@ -38,7 +38,56 @@
         <div class="mt-4 mb-4">
             <p-button (click)="postActividadNueva()" label="Crear actividad"></p-button>
           </div>
-    </form>
+        </form>
+
+        <div>
+            <form [formGroup]="registroPasos">
+        
+                <p-dropdown [options]="actividades" formControlName="id_actividad" optionLabel="label" optionValue="value"></p-dropdown>
+                <div class="p-2">
+                    <input type="text" placeholder="titulo" pInputText formControlName="titulo" />
+                    <div
+                            *ngIf="registroActividad.get('titulo')?.invalid && (registroActividad.get('titulo')?.dirty || registroActividad.get('titulo')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registroActividad.get('titulo')?.errors?.['required']">
+                            Titulo del paso es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="registroActividad.get('titulo')?.errors?.['nombre']">
+                            Required
+                            </small>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                    <div
+                            *ngIf="registroActividad.get('nombre')?.invalid && (registroActividad.get('nombre')?.dirty || registroActividad.get('nombre')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
+                            Nombre del paso es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['descripcion']">
+                            Required
+                            </small>
+                    </div>
+                </div>
+                <div class="p-2">
+                    <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+                    <div
+                            *ngIf="registroActividad.get('descripcion')?.invalid && (registroActividad.get('descripcion')?.dirty || registroActividad.get('descripcion')?.['touched'])"
+                        >
+                            <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['required']">
+                            Descripcion del paso es obligatorio
+                            </small>
+                            <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['descripcion']">
+                            Required
+                            </small>
+                    </div>
+                </div>
+                <div class="mt-4 mb-4">
+                    <p-button (click)="postPasoActividad()" label="Añadir paso"></p-button>
+                  </div>
+            </form>
+        </div>
     
 
 </div>
