@@ -101,7 +101,7 @@
             </div>
             <div>
                 <p-card *ngFor="let sugerencia of sugerencias">
-                    {{sugerencia.nombre}}
+                    {{sugerencia.nombre}} - {{sugerencia.id_raza}}
                 </p-card>
             </div>
             <div>
@@ -138,6 +138,11 @@
             </div>
             <div>
                 <h1> Crear razas nuevas</h1>
+            </div>
+            <div>
+                <p-card *ngFor="let raza of razas_">
+                    {{raza.nombre}}
+                </p-card>
             </div>
             <div>
                 <form [formGroup]="registroRazas">
