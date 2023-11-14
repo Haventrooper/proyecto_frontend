@@ -54,6 +54,8 @@ export class CategoriasComponent {
     }
 
     if (this.perro && this.perro.id_perro) {
+      this.guardarActividadPerroReciente()
+
       this.verificarActividadExistente(token);
       this.cargarPasos(actividad.id_actividad, token);
     } else {
@@ -62,6 +64,29 @@ export class CategoriasComponent {
     }
 }
 
+guardarActividadPerroReciente() {
+  const token = localStorage.getItem('token');
+
+  if (token && this.perro.id_perro !== null) {
+
+    const fecha_reciente = new Date();
+
+    const idPerro = this.perro.id_perro; // Usar el ID del perro seleccionado
+    const idActividad = this.selectedActividad.id_actividad; // Reemplaza con el ID de tu actividad
+
+    this.td_service.postActividadPerroReciente(idPerro, idActividad, fecha_reciente, token).subscribe(
+      (data: any) => {
+        console.log('La actividad reciente se ha guardado correctamente', data);
+        // Realiza acciones adicionales después de guardar la actividad
+      },
+      (error) => {
+        console.error('Error al guardar la actividad reciente', error);
+        // Maneja errores si es necesario
+      });
+  } else {
+    console.error('Token no encontrado o perro no seleccionado');
+  }
+}
 
 verificarActividadExistente(token: string) {
   this.td_service.getVerificarActividad(this.perro.id_perro, this.selectedActividad.id_actividad, token).subscribe(

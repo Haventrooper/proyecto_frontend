@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TdserviceService } from 'src/app/services/tdservice.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, Form } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
-
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,11 +14,15 @@ export class AdminComponent {
 
   registroActividad: FormGroup
   registroPasos: FormGroup
+  registroRazas: FormGroup
+  registroSugerencias: FormGroup
+  razas: SelectItem[] = [];
   categorias: SelectItem[] = [];
   actividades: SelectItem[] = [];
   categoriaSeleccionada: any;
   actividades_: any;
   pasos: any
+  sugerencias: any;
 
 
   constructor( private router: Router,
@@ -40,11 +43,22 @@ export class AdminComponent {
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
 
       });
+
+      this.registroSugerencias = this.fb.group({
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+      });
+
+      this.registroRazas = this.fb.group({
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+      });
     }
 
     ngOnInit(): void{
       this.obtenerCategoriasAdmin();
       this.obtenerActividadesAdmin();
+      this.obtenerRazasAdmin();
+      this.obtenerSugerenciasAdmin();
 
     }
 
@@ -108,6 +122,55 @@ export class AdminComponent {
     }
   }
 
+  obtenerSugerenciasAdmin() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.td_service.getSugerenciasAdmin(token).subscribe(
+        (response: any) => {
+          console.log(response); // Agrega este console.log para verificar los datos recibidos
+
+          // Mapea las categorías al formato de SelectItem
+          this.sugerencias = response;
+        },
+        (error) => {
+            console.error('Error al obtener sugerencias:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al obtener sugerencias',
+              text: 'Hubo un problema al obtener las sugerencias. Por favor, intenta nuevamente.'
+            });
+          });
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
+  }
+
+  obtenerRazasAdmin() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.td_service.getRazasAdmin(token).subscribe(
+        (response: any) => {
+          console.log(response); // Agrega este console.log para verificar los datos recibidos
+
+          // Mapea las categorías al formato de SelectItem
+          this.razas = response.map((razas: any) => ({ label: razas.nombre, value: razas.id_raza }));
+        },
+        (error) => {
+            console.error('Error al obtener razas:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al obtener razas',
+              text: 'Hubo un problema al obtener las razas. Por favor, intenta nuevamente.'
+            });
+          });
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
+  }
+
+
   obtenerCategoriasAdmin() {
     const token = localStorage.getItem('token');
 
@@ -131,9 +194,6 @@ export class AdminComponent {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
   }
-
-
-
 
   logoutAdmin(){
     localStorage.removeItem("token")
@@ -244,9 +304,10 @@ export class AdminComponent {
       }
     }
   }
+
   // En tu archivo de componente TypeScript
-eliminarPaso(idPaso: number) {
-  const token = localStorage.getItem('token');
+  eliminarPaso(idPaso: number) {
+    const token = localStorage.getItem('token');
 
   if (token) {
     // Llama al servicio para eliminar el paso
@@ -266,11 +327,10 @@ eliminarPaso(idPaso: number) {
         Swal.fire('Error', 'Hubo un problema al eliminar el paso. Por favor, intenta nuevamente.', 'error');
       }
     );
-  } else {
-    console.error('Token no disponible. El usuario no está autenticado.');
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
   }
-}
-
   
   
 }

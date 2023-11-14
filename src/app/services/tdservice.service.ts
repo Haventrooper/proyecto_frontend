@@ -226,12 +226,49 @@ export class TdserviceService {
     return this.http.delete(`${this.url}/eliminarActividadPorPerro/${idPerro}/${idActividad}`, httpOptions);
   }
 
+  
+  //FUNCIONES ADMINISTRADORES
+  
   //LOGIN ADMINISTRADOR
   loginAdmin(email: string, password: string){
     return this.http.get(this.url + `/admin?email=${email}&contrasena=${password}`);
   }
 
-  //FUNCIONES ADMINISTRADORES
+  //GET
+
+  getCategoriasAdmin(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/adminCategorias`, { headers: headers });
+  }
+  getActividadesAdmin(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/actividadesAdmin`, { headers: headers });
+  }
+  
+  getPasosActividadesAdmin(id: number, token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/pasosActividad/${id}`, { headers: headers });
+  }
+  
+  getRazasAdmin(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/getRazas`, { headers: headers });
+  }
+  getRazasIdAdmin(id: number, token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/getRazas/${id}`, { headers: headers });
+  }
+  getSugerenciasAdmin(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/getSugerencias`, { headers: headers });
+  }
+  getSugerenciasIdAdmin(id: number, token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/getSugerencias/${id}`, { headers: headers });
+  }
+
+  //POST
+
   adminPostActividad(datosActividad: any, token: string): Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -242,14 +279,6 @@ export class TdserviceService {
     return this.http.post(`${this.url}/actividadesAdmin`, datosActividad, httpOptions);
   }
 
-  getCategoriasAdmin(token: string){
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.url}/adminCategorias`, { headers: headers });
-  }
-  getActividadesAdmin(token: string){
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.url}/actividadesAdmin`, { headers: headers });
-  }
   adminPostPaso(datosPaso: any, token: string): Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -259,11 +288,30 @@ export class TdserviceService {
     };
     return this.http.post(`${this.url}/pasoActividad`, datosPaso, httpOptions);
   }
-  getPasosActividadesAdmin(id: number, token: string){
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.url}/pasosActividad/${id}`, { headers: headers });
+  
+  postRazaAdmin(nombre: any, token: string): Observable<any>{ //Añadir actividad reciente
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    const body = {nombre}; //Añadir fecha_reciente
+    return this.http.post(`${this.url}/postRaza`, body, httpOptions);
   }
 
+  postSugerenciaAdmin(id_raza: number, nombre: any, descripcion: any, token: string): Observable<any>{ //Añadir actividad reciente
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    const body = {id_raza, nombre, descripcion}; //Añadir fecha_reciente
+    return this.http.post(`${this.url}/postSugerencia`, body, httpOptions);
+  }
+
+  //DELETE
   deleteActividadYPasos(idActividad: number, token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -282,5 +330,4 @@ export class TdserviceService {
     };
     return this.http.delete(`${this.url}/eliminarPaso/${idPaso}`, httpOptions);
   }
-  
 }

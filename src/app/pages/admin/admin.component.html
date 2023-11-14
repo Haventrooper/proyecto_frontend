@@ -108,6 +108,21 @@
                     </div>
                   </p-card>
             </div>
+            <div>
+                <h1>Sugerencias generales</h1>
+            </div>
+            <div>
+                <p-card *ngFor="let sugerencia of sugerencias">
+                    {{sugerencia.nombre}}
+                </p-card>
+            </div>
+            <div>
+                <h1> Razas disponibles</h1>
+            </div>
+            <div>
+                <p-dropdown [options]="razas" optionLabel="label" optionValue="value"></p-dropdown>
+
+            </div>
         </div>
     
 

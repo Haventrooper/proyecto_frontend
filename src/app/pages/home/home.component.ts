@@ -65,6 +65,7 @@ export class HomeComponent {
     }
 
     if (this.perroSeleccionado && this.perroSeleccionado.id_perro) {
+      this.guardarActividadPerroReciente()
       this.verificarActividadExistente(token);
       this.cargarPasos(actividad.id_actividad, token);
     } else {
