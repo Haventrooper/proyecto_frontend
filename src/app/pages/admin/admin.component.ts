@@ -16,9 +16,11 @@ export class AdminComponent {
   registroPasos: FormGroup
   registroRazas: FormGroup
   registroSugerencias: FormGroup
+  registroCategorias: FormGroup
   razas: SelectItem[] = [];
   razas_: any;
   categorias: SelectItem[] = [];
+  categorias_: any;
   actividades: SelectItem[] = [];
   categoriaSeleccionada: any;
   actividades_: any;
@@ -43,17 +45,21 @@ export class AdminComponent {
         titulo: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
         nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
-
       });
 
       this.registroSugerencias = this.fb.group({
         id_raza: new FormControl('', [Validators.required]),
-        nombre: new FormControl('', [Validators.required]),
-        descripcion: new FormControl('', [Validators.required]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
 
       this.registroRazas = this.fb.group({
-        nombre: new FormControl('', [Validators.required]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+      });
+
+      this.registroCategorias = this.fb.group({
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)] ),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
     }
 
@@ -63,6 +69,34 @@ export class AdminComponent {
       this.obtenerRazasAdmin();
       this.obtenerSugerenciasAdmin();
 
+    }
+
+    postCategorias(){
+      if (this.registroCategorias.valid) {
+        const datosCategoria = this.registroCategorias.value;
+        const token = localStorage.getItem('token');
+        if(token){
+          this.td_service.postCategoria(datosCategoria, token).subscribe(
+            (response) => {
+              Swal.fire({
+                title: 'Éxito',
+                text: 'Se ha registrado la categoría con exito!',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+            },
+            (error) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Verificar información',
+                text: 'Hubo un problema al registrar la categoría. Por favor, verifica la información e intenta nuevamente.'
+              });
+            }          
+          );
+        }else{
+          console.log("error")
+        }
+      }
     }
 
     postSugerencia(){
@@ -236,6 +270,7 @@ export class AdminComponent {
         (response: any) => {
           // Mapea las categorías al formato de SelectItem
           this.categorias = response.map((categorias: any) => ({ label: categorias.nombre, value: categorias.id_categoria }));
+          this.categorias_= response
         },
         (error) => {
             Swal.fire({
@@ -352,7 +387,37 @@ export class AdminComponent {
     }
   }
 
-  // En tu archivo de componente TypeScript
+  eliminarCategoria(idCat: number) {
+    const token = localStorage.getItem('token');
+
+  if (token) {
+    // Llama al servicio para eliminar el paso
+    this.td_service.deleteCategoria(idCat, token).subscribe(
+      (response) => {
+        // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+        Swal.fire({
+          title: 'Éxito',
+          text: 'La categoria ha sido eliminada correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+        
+      },
+      (error) => {
+        // Maneja el error, por ejemplo, muestra un mensaje de error
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un problema al eliminar la categoría. Por favor, intenta nuevamente.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    );
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
+  }
+
   eliminarPaso(idPaso: number) {
     const token = localStorage.getItem('token');
 

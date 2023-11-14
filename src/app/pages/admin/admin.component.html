@@ -175,6 +175,38 @@
           </div>
         </form>
       </p-card>
+
+      <p-card class="mt-4 mb-4" styleClass="bg-blue-200">
+        <div>
+          <h1>Crear nueva categoría</h1>
+        </div>
+        <form [formGroup]="registroCategorias">
+            <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+            <div *ngIf="registroCategorias.get('nombre')?.invalid && (registroCategorias.get('nombre')?.dirty || registroCategorias.get('nombre')?.['touched'])">
+                <small class="p-error" *ngIf="registroCategorias.get('nombre')?.errors?.['required']">
+                    Nombre de la categoría es obligatoria
+                </small>
+            </div>
+          <div>
+            <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+            <div *ngIf="registroCategorias.get('descripcion')?.invalid && (registroCategorias.get('descripcion')?.dirty || registroCategorias.get('descripcion')?.touched)">
+                <small class="p-error" *ngIf="registroCategorias.get('descripcion')?.errors?.['required']">
+                    Descripcion de la categoría es obligatoria
+                </small>
+            </div>
+          </div>
+          <div class="mt-4 mb-4">
+            <p-button (click)="postCategorias()" label="Crear nueva categoría"></p-button>
+          </div>
+        </form>
+
+        <div *ngFor="let cat of categorias_">
+            <p-card>
+                Nombre: {{cat.nombre}} - Id: {{cat.id_categoria}}
+                <p-button icon="pi pi-iconName" label="Eliminar categoría" (click)="eliminarCategoria(cat.id_categoria)"></p-button>
+            </p-card>
+        </div>
+      </p-card>
     </div>
   </div>
   

@@ -238,7 +238,7 @@ export class TdserviceService {
 
   getCategoriasAdmin(token: string){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.url}/adminCategorias`, { headers: headers });
+    return this.http.get(`${this.url}/getCategorias`, { headers: headers });
   }
   getActividadesAdmin(token: string){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -288,6 +288,15 @@ export class TdserviceService {
     };
     return this.http.post(`${this.url}/pasoActividad`, datosPaso, httpOptions);
   }
+  postCategoria(datosCategoria: any, token: string): Observable<any>{ //Añadir actividad reciente
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+      })
+    };
+    return this.http.post(`${this.url}/postCategoria`, datosCategoria, httpOptions);
+  }
 
   postRazaAdmin(nombre: any, token: string): Observable<any>{ //Añadir actividad reciente
     const httpOptions = {
@@ -311,6 +320,16 @@ export class TdserviceService {
   }
 
   //DELETE
+  deleteCategoria(idCat: number, token: string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.delete(`${this.url}/deleteCategoria/${idCat}`, httpOptions);
+  }
+
   deleteActividadYPasos(idActividad: number, token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -320,6 +339,7 @@ export class TdserviceService {
     };
     return this.http.delete(`${this.url}/eliminarActividadYPasos/${idActividad}`, httpOptions);
   }
+
   deletePaso(idPaso: number, token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
