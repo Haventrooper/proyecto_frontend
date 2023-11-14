@@ -17,12 +17,14 @@ export class AdminComponent {
   registroRazas: FormGroup
   registroSugerencias: FormGroup
   razas: SelectItem[] = [];
+  razas_: any;
   categorias: SelectItem[] = [];
   actividades: SelectItem[] = [];
   categoriaSeleccionada: any;
   actividades_: any;
   pasos: any
   sugerencias: any;
+
 
 
   constructor( private router: Router,
@@ -216,6 +218,7 @@ export class AdminComponent {
 
           // Mapea las categorías al formato de SelectItem
           this.razas = response.map((razas: any) => ({ label: razas.nombre, value: razas.id_raza }));
+          this.razas_= response
         },
         (error) => {
             console.error('Error al obtener razas:', error);
