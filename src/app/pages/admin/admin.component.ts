@@ -244,6 +244,34 @@ export class AdminComponent {
       }
     }
   }
+  // En tu archivo de componente TypeScript
+eliminarPaso(idPaso: number) {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    // Llama al servicio para eliminar el paso
+    this.td_service.eliminarPaso(idPaso, token).subscribe(
+      (response) => {
+        // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+        console.log(response);
+        Swal.fire('Éxito', 'El paso ha sido eliminado correctamente', 'success');
+        
+        // Actualiza la lista de pasos después de la eliminación
+        // Puedes llamar a la función para obtener los pasos de la actividad nuevamente
+        // Ejemplo: this.obtenerPasosPorActividad(this.idActividadActual);
+      },
+      (error) => {
+        // Maneja el error, por ejemplo, muestra un mensaje de error
+        console.error('Error al eliminar el paso:', error);
+        Swal.fire('Error', 'Hubo un problema al eliminar el paso. Por favor, intenta nuevamente.', 'error');
+      }
+    );
+  } else {
+    console.error('Token no disponible. El usuario no está autenticado.');
+  }
+}
+
+  
   
 }
 

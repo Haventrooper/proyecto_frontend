@@ -271,7 +271,16 @@ export class TdserviceService {
         'Authorization': `Bearer ${token}`
       })
     };
-
     return this.http.delete(`${this.url}/eliminarActividadYPasos/${idActividad}`, httpOptions);
   }
+  eliminarPaso(idPaso: number, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.delete(`${this.url}/eliminarPaso/${idPaso}`, httpOptions);
+  }
+  
 }
