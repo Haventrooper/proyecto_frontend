@@ -18,6 +18,8 @@ export class AdminComponent {
   categorias: SelectItem[] = [];
   actividades: SelectItem[] = [];
   categoriaSeleccionada: any;
+  actividades_: any;
+  pasos: any
 
 
   constructor( private router: Router,
@@ -166,6 +168,7 @@ export class AdminComponent {
 
           // Mapea las categorías al formato de SelectItem
           this.actividades = response.map((actividades: any) => ({ label: actividades.nombre, value: actividades.id_actividad }));
+          this.actividades_ = response      
         },
         (error) => {
             console.error('Error al obtener actividades:', error);
@@ -173,6 +176,31 @@ export class AdminComponent {
               icon: 'error',
               title: 'Error al obtener actividades',
               text: 'Hubo un problema al obtener las actividades. Por favor, intenta nuevamente.'
+            });
+          });
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
+    }
+  }
+  pasosPorActividad: { [idActividad: number]: any[] } = {};
+
+  obtenerPasosPorActividad(idActividad: number){
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.td_service.getPasosActividadesAdmin(idActividad, token).subscribe(
+        (response: any) => {
+          console.log(response); // Agrega este console.log para verificar los datos recibidos
+
+          // Mapea las categorías al formato de SelectItem
+          this.pasosPorActividad[idActividad] = response;
+        },
+        (error) => {
+            console.error('Error al obtener pasos de actividad:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al obtener pasos de actividad',
+              text: 'Hubo un problema al obtener los pasos de actividad. Por favor, intenta nuevamente.'
             });
           });
     } else {

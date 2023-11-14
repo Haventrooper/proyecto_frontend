@@ -41,6 +41,8 @@
         </form>
 
         <div>
+        <p>Crear paso nuevo</p>
+
             <form [formGroup]="registroPasos">
         
                 <p-dropdown [options]="actividades" formControlName="id_actividad" optionLabel="label" optionValue="value"></p-dropdown>
@@ -87,6 +89,22 @@
                     <p-button (click)="postPasoActividad()" label="Añadir paso"></p-button>
                   </div>
             </form>
+        </div>
+
+        <div>
+            <div>
+                <p-card *ngFor="let actividad of actividades_">
+                    <div>
+                      {{actividad.nombre}}
+                      <div>
+                        <p-button icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
+                        <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]">
+                          {{paso.titulo}} - {{paso.nombre}} - {{paso.descripcion}}
+                        </div>
+                      </div>
+                    </div>
+                  </p-card>
+            </div>
         </div>
     
 

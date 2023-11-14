@@ -259,4 +259,8 @@ export class TdserviceService {
     };
     return this.http.post(`${this.url}/pasoActividad`, datosPaso, httpOptions);
   }
+  getPasosActividadesAdmin(id: number, token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.url}/pasosActividad/${id}`, { headers: headers });
+  }
 }
