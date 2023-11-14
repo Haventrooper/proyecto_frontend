@@ -74,14 +74,14 @@ export class AdminComponent {
         if(token){
           this.td_service.postSugerenciaAdmin(datosSugerencia, token).subscribe(
             (response) => {
-              Swal.fire(
-                'Se ha registrado la sugerencia con exito!',
-                '',
-                'success'
-              )
+              Swal.fire({
+                title: 'Éxito',
+                text: 'Se ha registrado la sugerencia con exito!',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
             },
             (error) => {
-              console.error('Error al registrar la sugerencia:', error);
               Swal.fire({
                 icon: 'error',
                 title: 'Verificar información',
@@ -103,14 +103,14 @@ export class AdminComponent {
         if(token){
           this.td_service.postRazaAdmin(datosRaza, token).subscribe(
             (response) => {
-              Swal.fire(
-                'Se ha registrado la raza con exito!',
-                '',
-                'success'
-              )
+              Swal.fire({
+                title: 'Éxito',
+                text: 'Se ha registrado la raza con exito!',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
             },
             (error) => {
-              console.error('Error al registrar la raza:', error);
               Swal.fire({
                 icon: 'error',
                 title: 'Verificar información',
@@ -133,14 +133,14 @@ export class AdminComponent {
       if(token){
         this.td_service.adminPostActividad(datosActividad,token).subscribe(
           (response) => {
-            Swal.fire(
-              'Se ha registrado actividad con exito!',
-              '',
-              'success'
-            )
+            Swal.fire({
+              title: 'Éxito',
+              text: 'Se ha registrado actividad con exito!',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
           },
           (error) => {
-            console.error('Error al registrar actividad:', error);
             Swal.fire({
               icon: 'error',
               title: 'Verificar información',
@@ -163,14 +163,14 @@ export class AdminComponent {
       if(token){
         this.td_service.adminPostPaso(datosPaso, token).subscribe(
           (response) => {
-            Swal.fire(
-              'Se ha registrado el paso con exito!',
-              '',
-              'success'
-            )
+            Swal.fire({
+              title: 'Éxito',
+              text: 'Se ha registrado el paso con exito!',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
           },
           (error) => {
-            console.error('Error al registrar el paso:', error);
             Swal.fire({
               icon: 'error',
               title: 'Verificar información',
@@ -190,13 +190,10 @@ export class AdminComponent {
     if (token) {
       this.td_service.getSugerenciasAdmin(token).subscribe(
         (response: any) => {
-          console.log(response); // Agrega este console.log para verificar los datos recibidos
-
           // Mapea las categorías al formato de SelectItem
           this.sugerencias = response;
         },
         (error) => {
-            console.error('Error al obtener sugerencias:', error);
             Swal.fire({
               icon: 'error',
               title: 'Error al obtener sugerencias',
@@ -214,14 +211,11 @@ export class AdminComponent {
     if (token) {
       this.td_service.getRazasAdmin(token).subscribe(
         (response: any) => {
-          console.log(response); // Agrega este console.log para verificar los datos recibidos
-
           // Mapea las categorías al formato de SelectItem
           this.razas = response.map((razas: any) => ({ label: razas.nombre, value: razas.id_raza }));
           this.razas_= response
         },
         (error) => {
-            console.error('Error al obtener razas:', error);
             Swal.fire({
               icon: 'error',
               title: 'Error al obtener razas',
@@ -240,13 +234,10 @@ export class AdminComponent {
     if (token) {
       this.td_service.getCategoriasAdmin(token).subscribe(
         (response: any) => {
-          console.log(response); // Agrega este console.log para verificar los datos recibidos
-
           // Mapea las categorías al formato de SelectItem
           this.categorias = response.map((categorias: any) => ({ label: categorias.nombre, value: categorias.id_categoria }));
         },
         (error) => {
-            console.error('Error al obtener categorías:', error);
             Swal.fire({
               icon: 'error',
               title: 'Error al obtener categorías',
@@ -287,14 +278,11 @@ export class AdminComponent {
     if (token) {
       this.td_service.getActividadesAdmin(token).subscribe(
         (response: any) => {
-          console.log(response); // Agrega este console.log para verificar los datos recibidos
-
           // Mapea las categorías al formato de SelectItem
           this.actividades = response.map((actividades: any) => ({ label: actividades.nombre, value: actividades.id_actividad }));
           this.actividades_ = response      
         },
         (error) => {
-            console.error('Error al obtener actividades:', error);
             Swal.fire({
               icon: 'error',
               title: 'Error al obtener actividades',
@@ -313,13 +301,10 @@ export class AdminComponent {
     if (token) {
       this.td_service.getPasosActividadesAdmin(idActividad, token).subscribe(
         (response: any) => {
-          console.log(response); // Agrega este console.log para verificar los datos recibidos
-
           // Mapea las categorías al formato de SelectItem
           this.pasosPorActividad[idActividad] = response;
         },
         (error) => {
-            console.error('Error al obtener pasos de actividad:', error);
             Swal.fire({
               icon: 'error',
               title: 'Error al obtener pasos de actividad',
@@ -353,7 +338,6 @@ export class AdminComponent {
             this.obtenerActividadesAdmin();
           },
           (error) => {
-            console.error('Error al eliminar actividad y pasos:', error);
             Swal.fire({
               title: 'Error',
               text: 'Hubo un problema al eliminar la actividad y sus pasos',
@@ -377,17 +361,22 @@ export class AdminComponent {
     this.td_service.deletePaso(idPaso, token).subscribe(
       (response) => {
         // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
-        console.log(response);
-        Swal.fire('Éxito', 'El paso ha sido eliminado correctamente', 'success');
+        Swal.fire({
+          title: 'Éxito',
+          text: 'El paso ha sido eliminado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
         
-        // Actualiza la lista de pasos después de la eliminación
-        // Puedes llamar a la función para obtener los pasos de la actividad nuevamente
-        // Ejemplo: this.obtenerPasosPorActividad(this.idActividadActual);
       },
       (error) => {
         // Maneja el error, por ejemplo, muestra un mensaje de error
-        console.error('Error al eliminar el paso:', error);
-        Swal.fire('Error', 'Hubo un problema al eliminar el paso. Por favor, intenta nuevamente.', 'error');
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un problema al eliminar el paso. Por favor, intenta nuevamente.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     );
     } else {
@@ -401,11 +390,21 @@ export class AdminComponent {
     if (token) {
       this.td_service.deleteSugerencia(idSugerencia, token).subscribe(
         (response) => {
-          console.log('Sugerencia eliminada con éxito', response);
+          Swal.fire({
+            title: 'Éxito',
+            text: 'La sugerencia ha sido eliminada correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
           // Realiza acciones adicionales después de eliminar la sugerencia
         },
         (error) => {
-          console.error('Error al eliminar la sugerencia:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al eliminar la sugerencia',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
           // Maneja errores si es necesario
         }
       );
@@ -420,11 +419,21 @@ export class AdminComponent {
     if (token) {
       this.td_service.deleteRaza(idRaza, token).subscribe(
         (response) => {
-          console.log('Raza eliminada con éxito', response);
+          Swal.fire({
+            title: 'Éxito',
+            text: 'La raza ha sido eliminada correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
           // Realiza acciones adicionales después de eliminar la sugerencia
         },
         (error) => {
-          console.error('Error al eliminar la raza:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al eliminar la raza',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
           // Maneja errores si es necesario
         }
       );
