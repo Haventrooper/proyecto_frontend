@@ -1,169 +1,180 @@
 <div class="mt-8 mb-8">
-    <div class="mr-2 ml-2">
+    <div class="flex flex-column justify-content-center align-items-center text-center">
+      <div class="mr-2 ml-2">
         <p-button icon="pi pi-iconName" severity="danger" label="Cerrar Sesión" (click)="logoutAdmin()"></p-button>
       </div>
-      <div>
-        <p>Crear actividad nueva</p>
-
-      </div>
-    <form [formGroup]="registroActividad">
-        
-        <p-dropdown [options]="categorias" formControlName="id_categoria" optionLabel="label" optionValue="value"></p-dropdown>
-        <div class="p-2">
-            <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
-            <div
-                    *ngIf="registroActividad.get('nombre')?.invalid && (registroActividad.get('nombre')?.dirty || registroActividad.get('nombre')?.['touched'])"
-                >
-                    <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
-                    Nombre de actividad es obligatorio
-                    </small>
-            </div>
-        </div>
-        <div class="p-2">
-            <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
-            <div
-                    *ngIf="registroActividad.get('descripcion')?.invalid && (registroActividad.get('descripcion')?.dirty || registroActividad.get('descripcion')?.['touched'])"
-                >
-                    <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['required']">
-                    Descripcion es obligatorio
-                    </small>
-            </div>
-        </div>
-        <div class="mt-4 mb-4">
-            <p-button (click)="postActividadNueva()" label="Crear actividad"></p-button>
+  
+      <p-card class="mt-4 mb-4" styleClass="bg-blue-200">
+        <div>
+            <h1>Crear actividad nueva</h1>
           </div>
-        </form>
-
+      
+          <form [formGroup]="registroActividad">
+            <p-dropdown [options]="categorias" formControlName="id_categoria" optionLabel="label" optionValue="value"></p-dropdown>
+      
+            <div class="p-2">
+              <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+              <div *ngIf="registroActividad.get('nombre')?.invalid && (registroActividad.get('nombre')?.dirty || registroActividad.get('nombre')?.['touched'])">
+                <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
+                  Nombre de actividad es obligatorio
+                </small>
+              </div>
+            </div>
+      
+            <div class="p-2">
+              <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+              <div *ngIf="registroActividad.get('descripcion')?.invalid && (registroActividad.get('descripcion')?.dirty || registroActividad.get('descripcion')?.['touched'])">
+                <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['required']">
+                  Descripcion es obligatorio
+                </small>
+              </div>
+            </div>
+      
+            <div class="mt-4 mb-4">
+              <p-button (click)="postActividadNueva()" label="Crear actividad"></p-button>
+            </div>
+          </form>
+      </p-card>
+  
+      <p-card class="mt-4 mb-4" styleClass="bg-blue-200">
         <div>
-        <p>Crear paso nuevo</p>
-
-            <form [formGroup]="registroPasos">
-        
-                <p-dropdown [options]="actividades" formControlName="id_actividad" optionLabel="label" optionValue="value"></p-dropdown>
-                <div class="p-2">
-                    <input type="text" placeholder="titulo" pInputText formControlName="titulo" />
-                    <div
-                            *ngIf="registroActividad.get('titulo')?.invalid && (registroActividad.get('titulo')?.dirty || registroActividad.get('titulo')?.['touched'])"
-                        >
-                            <small class="p-error" *ngIf="registroActividad.get('titulo')?.errors?.['required']">
-                            Titulo del paso es obligatorio
-                            </small>
-                    </div>
+          <h1>Crear paso nuevo de actividad</h1>
+  
+          <form [formGroup]="registroPasos">
+            <p-dropdown [options]="actividades" formControlName="id_actividad" optionLabel="label" optionValue="value"></p-dropdown>
+  
+            <div class="p-2">
+              <input type="text" placeholder="titulo" pInputText formControlName="titulo" />
+              <div *ngIf="registroPasos.get('titulo')?.invalid && (registroPasos.get('titulo')?.dirty || registroPasos.get('titulo')?.['touched'])">
+                <small class="p-error" *ngIf="registroPasos.get('titulo')?.errors?.['required']">
+                  Titulo del paso es obligatorio
+                </small>
+              </div>
+            </div>
+  
+            <div class="p-2">
+              <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+              <div *ngIf="registroPasos.get('nombre')?.invalid && (registroPasos.get('nombre')?.dirty || registroPasos.get('nombre')?.['touched'])">
+                <small class="p-error" *ngIf="registroPasos.get('nombre')?.errors?.['required']">
+                  Nombre del paso es obligatorio
+                </small>
+              </div>
+            </div>
+  
+            <div class="p-2">
+              <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+              <div *ngIf="registroPasos.get('descripcion')?.invalid && (registroPasos.get('descripcion')?.dirty || registroPasos.get('descripcion')?.['touched'])">
+                <small class="p-error" *ngIf="registroPasos.get('descripcion')?.errors?.['required']">
+                  Descripcion del paso es obligatorio
+                </small>
+                <small class="p-error" *ngIf="registroPasos.get('descripcion')?.errors?.['descripcion']">
+                  Required
+                </small>
+              </div>
+            </div>
+  
+            <div class="mt-4 mb-4">
+              <p-button (click)="postPasoActividad()" label="Añadir paso"></p-button>
+            </div>
+          </form>
+  
+          <div *ngFor="let actividad of actividades_">
+            <div>
+              {{actividad.nombre}}
+              <div>
+                <p-button icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
+                <p-button icon="pi pi-trash" (click)="eliminarActividad(actividad.id_actividad)" label="Eliminar Actividad"></p-button>
+  
+                <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]">
+                  {{paso.titulo}} - {{paso.nombre}} - {{paso.descripcion}}
+                  <p-button icon="pi pi-trash" (click)="eliminarPaso(paso.id_paso)" label="Eliminar Paso"></p-button>
                 </div>
-                <div class="p-2">
-                    <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
-                    <div
-                            *ngIf="registroActividad.get('nombre')?.invalid && (registroActividad.get('nombre')?.dirty || registroActividad.get('nombre')?.['touched'])"
-                        >
-                            <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
-                            Nombre del paso es obligatorio
-                            </small>
-                    </div>
-                </div>
-                <div class="p-2">
-                    <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
-                    <div
-                            *ngIf="registroActividad.get('descripcion')?.invalid && (registroActividad.get('descripcion')?.dirty || registroActividad.get('descripcion')?.['touched'])"
-                        >
-                            <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['required']">
-                            Descripcion del paso es obligatorio
-                            </small>
-                            <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['descripcion']">
-                            Required
-                            </small>
-                    </div>
-                </div>
-                <div class="mt-4 mb-4">
-                    <p-button (click)="postPasoActividad()" label="Añadir paso"></p-button>
-                  </div>
-            </form>
+              </div>
+            </div>
+          </div>
         </div>
-
+      </p-card>
+  
+      <p-card class="mt-4 mb-4" styleClass="bg-blue-200">
         <div>
-            <div>
-                <p-card *ngFor="let actividad of actividades_">
-                    <div>
-                      {{actividad.nombre}}
-                      <div>
-                        <p-button icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
-                        <p-button icon="pi pi-trash" (click)="eliminarActividad(actividad.id_actividad)" label="Eliminar Actividad"></p-button>
-
-                        <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]">
-                          {{paso.titulo}} - {{paso.nombre}} - {{paso.descripcion}}
-                          <p-button icon="pi pi-trash" (click)="eliminarPaso(paso.id_paso)" label="Eliminar Paso"></p-button>
-                        </div>
-                      </div>
-                    </div>
-                  </p-card>
-            </div>
-            <div>
-                <h1>Sugerencias generales</h1>
-            </div>
-            <div>
-                <p-card *ngFor="let sugerencia of sugerencias">
-                    Nombre: {{sugerencia.nombre}} - Id raza: {{sugerencia.id_raza}}
-                    <p-button icon="pi pi-iconName" label="Eliminar sugerencia" (click)="eliminarSugerencia(sugerencia.id_sugerencia)"></p-button>
-                </p-card>
-            </div>
+          <h1>Sugerencias generales</h1>
+        </div>
+  
+        <div *ngFor="let sugerencia of sugerencias">
+          <p-card>
+            Nombre: {{sugerencia.nombre}} - Id raza: {{sugerencia.id_raza}}
+            <p-button icon="pi pi-iconName" label="Eliminar sugerencia" (click)="eliminarSugerencia(sugerencia.id_sugerencia)"></p-button>
+          </p-card>
+        </div>
+      </p-card>
+  
+      <p-card class="mt-4 mb-4" styleClass="bg-blue-200">
+        <div>
             <div>
                 <div>
                     <h1>Crear sugerencia con raza</h1>
                 </div>
                 <form [formGroup]="registroSugerencias">
-                    <p-dropdown [options]="razas" formControlName="id_raza" optionLabel="label" optionValue="value"></p-dropdown>
-                  
-                    <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
-                  
-                    <div
-                      *ngIf="registroSugerencias.get('nombre')?.invalid && (registroSugerencias.get('nombre')?.dirty || registroSugerencias.get('nombre')?.touched)"
-                    >
-                      <small class="p-error" *ngIf="registroSugerencias.get('nombre')?.errors?.['required']">
-                        Nombre de la sugerencia es obligatoria
-                      </small>
+                    <div>
+                        <p-dropdown [options]="razas" formControlName="id_raza" optionLabel="label" optionValue="value"></p-dropdown>
                     </div>
-                  
-                    <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
-                  
-                    <div
-                      *ngIf="registroSugerencias.get('descripcion')?.invalid && (registroSugerencias.get('descripcion')?.dirty || registroSugerencias.get('descripcion')?.touched)"
-                    >
-                      <small class="p-error" *ngIf="registroSugerencias.get('descripcion')?.errors?.['required']">
-                        Descripcion de la sugerencia es obligatoria
-                      </small>
-                    </div>
-                  
-                    <p-button icon="pi pi-trash" (click)="postSugerencia()" label="Crear sugerencia"></p-button>
-                  </form>
-                  
-
-            </div>
-            <div>
-                <h1> Crear razas nuevas</h1>
-            </div>
-            <div>
-                <p-card *ngFor="let raza of razas_">
-                    Nombre: {{raza.nombre}} - Id: {{raza.id_raza}}
-                    <p-button icon="pi pi-iconName" label="Eliminar raza" (click)="eliminarSugerencia(raza.id_raza)"></p-button>
-
-                </p-card>
-            </div>
-            <div>
-                <form [formGroup]="registroRazas">
-                <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
-                    <div
-                            *ngIf="registroRazas.get('nombre')?.invalid && (registroRazas.get('nombre')?.dirty || registroRazas.get('nombre')?.['touched'])"
-                        >
-                            <small class="p-error" *ngIf="registroRazas.get('nombre')?.errors?.['required']">
-                            Nombre de la raza es obligatoria
+                    <div>
+                        <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                        <div *ngIf="registroSugerencias.get('nombre')?.invalid && (registroSugerencias.get('nombre')?.dirty || registroSugerencias.get('nombre')?.touched)">
+                            <small class="p-error" *ngIf="registroSugerencias.get('nombre')?.errors?.['required']">
+                              Nombre de la sugerencia es obligatoria
                             </small>
+                          </div>
+                    </div>            
+                    <div>
+                        <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+                        <div *ngIf="registroSugerencias.get('descripcion')?.invalid && (registroSugerencias.get('descripcion')?.dirty || registroSugerencias.get('descripcion')?.touched)">
+                            <small class="p-error" *ngIf="registroSugerencias.get('descripcion')?.errors?.['required']">
+                              Descripcion de la sugerencia es obligatoria
+                            </small>
+                          </div>
                     </div>
-                    <div class="mt-4 mb-4">
-                        <p-button (click)="postRazaNueva()" label="Crear raza nueva"></p-button>
-                      </div>
+                    <div>
+                        <p-button icon="pi pi-trash" (click)="postSugerencia()" label="Crear sugerencia"></p-button>
+                    </div>
                 </form>
-
             </div>
+            
         </div>
-    
-
-</div>
+        
+      </p-card>
+  
+      <p-card class="mt-4 mb-4" styleClass="bg-blue-200">
+        <div>
+          <h1>Razas disponibles</h1>
+        </div>
+        <div *ngFor="let raza of razas_">
+          <p-card>
+            Nombre: {{raza.nombre}} - Id: {{raza.id_raza}}
+            <p-button icon="pi pi-iconName" label="Eliminar raza" (click)="eliminarSugerencia(raza.id_raza)"></p-button>
+          </p-card>
+        </div>
+    </p-card>
+  
+      <p-card class="mt-4 mb-4" styleClass="bg-blue-200">
+        <div>
+          <h1>Crear raza nueva</h1>
+        </div>
+  
+        <form [formGroup]="registroRazas">
+          <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+  
+          <div *ngIf="registroRazas.get('nombre')?.invalid && (registroRazas.get('nombre')?.dirty || registroRazas.get('nombre')?.['touched'])">
+            <small class="p-error" *ngIf="registroRazas.get('nombre')?.errors?.['required']">
+              Nombre de la raza es obligatoria
+            </small>
+          </div>
+  
+          <div class="mt-4 mb-4">
+            <p-button (click)="postRazaNueva()" label="Crear raza nueva"></p-button>
+          </div>
+        </form>
+      </p-card>
+    </div>
+  </div>
+  
