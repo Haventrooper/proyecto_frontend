@@ -17,7 +17,7 @@
             </div>
             <div class="mr-4 ml-4">
               <h4>Fecha nacimiento</h4>
-              <p>{{p.fecha_nacimiento | date: 'dd/MM/yyyy' }}</p>
+              <p>{{p.fecha_nacimiento | date: 'dd/MM/yyyy': 'UTC' }}</p>
             </div>
           </div>
           <div class="flex justify-content-center align-items-center mr-4 ml-4">
@@ -60,7 +60,7 @@
           <div>
             <h3>{{ selectedActividad.nombre }}</h3>
             <p>{{ selectedActividad.descripcion }}</p>
-            <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy' }}</p>  
+            <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy': 'UTC' }}</p>  
           </div>
           
           <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
@@ -103,7 +103,7 @@
         <div class="mt-4 mb-4 ml-3 mr-3" *ngFor="let actividad of actividades_recientes">
             <p-card class="align-items-center" styleClass="bg-purple-200 border-solid	">
               <div>
-                {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente | date: 'dd/MM/yyyy' }}
+                {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente | date: 'dd/MM/yyyy': 'UTC' }}
               </div>
             </p-card>
         </div>
@@ -118,8 +118,8 @@
     <div>
       <p-button icon="pi pi-iconName" label="Modificar datos perro" (click)="abrirModal()"></p-button>
   </div>    
-  <p-dialog [(visible)]="mostrarModal" (onHide)="recargarPagina()">
-    <p-card [style]="{width: 'width'}" styleClass="styleClass">
+  <p-dialog [(visible)]="mostrarModal" [maximizable]="true" (onHide)="recargarPagina()">
+    <p-card [style]="{width: 'width'}">
       <div class="align-items-center justify-content-center">
         <form [formGroup]="formulario">
           <h2>Modificar datos de perro</h2>
@@ -137,7 +137,7 @@
             </div>           
           </div>
           <div class="p-2">
-            <p-calendar [showIcon]="true" placeholder="Fecha de nacimiento" type="date"
+            <p-calendar placeholder="Fecha de nacimiento" type="date"
             formControlName="fecha_nacimiento"
             ></p-calendar>
             <div>
@@ -146,16 +146,10 @@
                 <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.errors?.['required']">
                     Fecha de nacimiento es obligatorio.
                 </small>
-                <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) > 30">
-                    Ingrese una fecha válida.
-                </small>
-                <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) < 0">
-                    Debe tener al menos un año.
-                </small>
             </div>          
           </div>
           <div class="p-2">
-            <p-dropdown [options]="razas" placeholder="Selecciona una raza"></p-dropdown>
+            <p-dropdown [options]="razas" placeholder="Selecciona una raza" formControlName="id_raza"></p-dropdown>
           </div>
           <div class="p-2">
             <p-dropdown [options]="generoOptions" formControlName="genero" optionLabel="label" optionValue="value" placeholder="Sexo"></p-dropdown>

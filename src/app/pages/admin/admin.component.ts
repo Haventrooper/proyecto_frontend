@@ -35,7 +35,7 @@ export class AdminComponent {
 
       this.registroActividad = this.fb.group({
         id_categoria: new FormControl('', [Validators.required]),
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
 
       });
@@ -49,16 +49,16 @@ export class AdminComponent {
 
       this.registroSugerencias = this.fb.group({
         id_raza: new FormControl('', [Validators.required]),
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
 
       this.registroRazas = this.fb.group({
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
       });
 
       this.registroCategorias = this.fb.group({
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)] ),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)] ),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
     }

@@ -27,7 +27,7 @@ export class PerfilperroComponent implements OnInit {
   pasos: any;
   pasoActual: number = 0;
   actividadExistente = false;
-  idP: any;
+  id_perro_: any;
   mostrarModal: boolean = false;
   displayModal: boolean = false;
 
@@ -47,8 +47,8 @@ export class PerfilperroComponent implements OnInit {
         this.obtenerActividadPerro(idPerro);
         this.obtenerActividadPerroRecientes(idPerro);
         console.log(idPerro)
-        this.idP = idPerro
-        console.log(this.idP)
+        this.id_perro_ = idPerro
+        console.log(this.id_perro_)
 
       } else {
         console.error('idPerro es undefined');
@@ -109,7 +109,7 @@ export class PerfilperroComponent implements OnInit {
       const token = localStorage.getItem('token');
 
       if (token) {
-        this.actualizarContador(this.idP, this.selectedActividad.id_actividad, this.pasoActual, token);
+        this.actualizarContador(this.id_perro_, this.selectedActividad.id_actividad, this.pasoActual, token);
       } else {
         console.error('Token no encontrado en el Local Storage');
       }
@@ -130,7 +130,7 @@ export class PerfilperroComponent implements OnInit {
       console.log(contadorActual)
 
       if (token) {
-        this.actualizarContador(this.idP, this.selectedActividad.id_actividad, contadorActual, token);
+        this.actualizarContador(this.id_perro_, this.selectedActividad.id_actividad, contadorActual, token);
     
       } else {
       console.error('Token no encontrado en el Local Storage');
@@ -153,7 +153,7 @@ export class PerfilperroComponent implements OnInit {
   }
 
   verificarActividadExistente(token: string) {
-    this.td_service.getVerificarActividad(this.idP, this.selectedActividad.id_actividad, token).subscribe(
+    this.td_service.getVerificarActividad(this.id_perro_, this.selectedActividad.id_actividad, token).subscribe(
         (data: any) => {
           if (data.mensaje === 'Actividad ya en BD') {
             this.actividadExistente = true;
@@ -212,7 +212,7 @@ obtenerRazas() {
     const token = localStorage.getItem('token');
     if (token) {
       this.td_service.getPerroPorId(idPerro, token).subscribe((data) => {
-        this.perro = data;
+        this.perro = data;  
         console.log('Datos del perro cargados:', this.perro);
   
         // Mueve aquí cualquier código que dependa de this.perro
@@ -229,7 +229,7 @@ obtenerRazas() {
     if (token) {
       this.td_service.getActividadesPerro(idPerro, token).subscribe((data) => {
         this.actividades = data;
-        console.log('Datos del perro cargados:', this.actividades);
+        console.log('Actividades del perro:', this.actividades);
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
@@ -252,9 +252,9 @@ obtenerRazas() {
   modificarPerro() {
     if (this.formulario.valid && this.perro && this.perro.length > 0) {
       const idPerro = this.perro[0].id_perro;
+      console.log(idPerro)
       const datosActualizados = this.formulario.value;
       const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
-      datosActualizados.fecha_nacimiento = this.datePipe.transform(datosActualizados.fecha_nacimiento, 'yyyy-MM-dd');
 
       if(token){
         this.td_service.putModificarPerro(idPerro, datosActualizados, token).subscribe(
@@ -276,7 +276,7 @@ obtenerRazas() {
   //Delete
 
   eliminarPerro() {
-    const idPerro = this.perro[0].id_perro
+    const idPerro = this.perro.id_perro
     const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
 
     if(token){
@@ -309,7 +309,7 @@ obtenerRazas() {
   eliminarRelacionPerroActividad(event: Event, idActividad: number) {
     event.stopPropagation();
   
-    const idPerro = this.perro && this.perro.length > 0 ? this.perro[0].id_perro : null;
+    const idPerro = this.perro && this.perro.length > 0 ? this.perro.id_perro : null;
     const token = localStorage.getItem('token'); /* Obtén el token de autenticación */;
   
     if (token && idPerro) {

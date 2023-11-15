@@ -27,9 +27,6 @@ export class HomeComponent {
   selectedPerroId: number | null = null;
   perroSeleccionado: any;
 
-
-
-
   constructor(private td_service: TdserviceService,
     private router: Router) {
       this.td_service.perroSeleccionado$.subscribe((perro) => {

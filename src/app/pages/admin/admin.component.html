@@ -1,6 +1,9 @@
 <div class="mt-8 mb-8">
   
     <div class="mr-2 ml-2 text-center align-items-center justify-content-center">
+      <div>
+        <h1>Bienvenid@ administrador(a)</h1>
+      </div>
       <p-button icon="pi pi-iconName" severity="danger" label="Cerrar Sesión" (click)="logoutAdmin()"></p-button>
     </div>
 
@@ -158,8 +161,7 @@
                     <p-button icon="pi pi-iconName" label="Eliminar sugerencia" severity="danger" (click)="eliminarSugerencia(sugerencia.id_sugerencia)"></p-button>
                   </div>
                 </p-card>
-              </div>
-                
+                </div>
               </div>
             </div>
           </div>
@@ -169,41 +171,51 @@
 
       <div class="text-center justify-content-center align-content-center mt-4 mb-4">
         <p-card styleClass="bg-blue-200">
-          <div class="flex">
-            <div class="mt-4 mb-4" styleClass="bg-blue-200">
+          <div class="flex flex-wrap">
+            <div class="ml-4 mr-4">
               <div>
                 <h2>Crear raza nueva</h2>
               </div>
-        
-              <form [formGroup]="registroRazas">
-                <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
-        
-                <div *ngIf="registroRazas.get('nombre')?.invalid && (registroRazas.get('nombre')?.dirty || registroRazas.get('nombre')?.['touched'])">
-                  <small class="p-error" *ngIf="registroRazas.get('nombre')?.errors?.['required']">
-                    Nombre de la raza es obligatoria
-                  </small>
-                </div>
-        
-                <div class="mt-4 mb-4">
-                  <p-button (click)="postRazaNueva()" label="Crear raza nueva"></p-button>
-                </div>
-              </form>
+              <div >
+                <form [formGroup]="registroRazas">
+                  <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+          
+                  <div *ngIf="registroRazas.get('nombre')?.invalid && (registroRazas.get('nombre')?.dirty || registroRazas.get('nombre')?.['touched'])">
+                    <small class="p-error" *ngIf="registroRazas.get('nombre')?.errors?.['required']">
+                      Nombre de la raza es obligatoria
+                    </small>
+                  </div>
+          
+                  <div class="mt-4 mb-4">
+                    <p-button (click)="postRazaNueva()" label="Crear raza nueva"></p-button>
+                  </div>
+                </form>
+              </div>
+              
             </div>
   
-                <div class="mt-4 mb-4 ml-4 mr-4" styleClass="bg-blue-200">
-                  <div>
-                    <h2>Razas disponibles</h2>
-                  </div>
+              <div class="text-center justify-content-center align-content-center mt-4 mb-4">
+                <div>
+                  <h2>Razas disponibles</h2>
+                </div>
+                <div class="flex flex-wrap">
                   <div *ngFor="let raza of razas_">
-                    <p-card>
-                      Nombre: {{raza.nombre}} - Id: {{raza.id_raza}}
-                      <p-button icon="pi pi-iconName" label="Eliminar raza" severity="danger" (click)="eliminarRaza(raza.id_raza)"></p-button>
-                    </p-card>
+                    <div class="mt-4 mb-4 ml4 mr-4">
+                      <p-card>
+                        <div>
+                          Nombre: {{raza.nombre}} - Id: {{raza.id_raza}}
+                        </div>
+                        <div>
+                          <p-button icon="pi pi-iconName" label="Eliminar raza" severity="danger" (click)="eliminarRaza(raza.id_raza)"></p-button>
+                        </div>
+                      </p-card>
+                    </div>
                   </div>
                 </div>
+              </div>
             </div>
-        </p-card>
-      </div>
+          </p-card>
+        </div>
 
       <div class="text-center justify-content-center align-content-center mt-4 mb-4">
         <p-card  styleClass="bg-blue-200">
@@ -213,18 +225,22 @@
                 <h2>Crear nueva categoría</h2>
               </div>
               <form [formGroup]="registroCategorias">
+                  <div class="p-2">
                   <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
                   <div *ngIf="registroCategorias.get('nombre')?.invalid && (registroCategorias.get('nombre')?.dirty || registroCategorias.get('nombre')?.['touched'])">
                       <small class="p-error" *ngIf="registroCategorias.get('nombre')?.errors?.['required']">
                           Nombre de la categoría es obligatoria
                       </small>
                   </div>
+                  </div>
                 <div>
-                  <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
-                  <div *ngIf="registroCategorias.get('descripcion')?.invalid && (registroCategorias.get('descripcion')?.dirty || registroCategorias.get('descripcion')?.touched)">
-                      <small class="p-error" *ngIf="registroCategorias.get('descripcion')?.errors?.['required']">
-                          Descripcion de la categoría es obligatoria
-                      </small>
+                  <div class="p-2">
+                    <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+                    <div *ngIf="registroCategorias.get('descripcion')?.invalid && (registroCategorias.get('descripcion')?.dirty || registroCategorias.get('descripcion')?.touched)">
+                        <small class="p-error" *ngIf="registroCategorias.get('descripcion')?.errors?.['required']">
+                            Descripcion de la categoría es obligatoria
+                        </small>
+                    </div>
                   </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -236,10 +252,12 @@
               <div>
                 <h2>Categorías disponibles</h2>
                 <div *ngFor="let cat of categorias_">
-                  <p-card>
+                  <div class="mt-4 mb-4">
+                    <p-card>
                       Nombre: {{cat.nombre}} - Id: {{cat.id_categoria}}
                       <p-button icon="pi pi-iconName" label="Eliminar categoría" severity="danger" (click)="eliminarCategoria(cat.id_categoria)"></p-button>
                   </p-card>
+                  </div>
                 </div>
               </div>
             </div>
