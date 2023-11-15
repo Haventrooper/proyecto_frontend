@@ -84,6 +84,7 @@ export class AdminComponent {
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
+              this.obtenerCategoriasAdmin();
             },
             (error) => {
               Swal.fire({
@@ -114,6 +115,8 @@ export class AdminComponent {
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
+              this.obtenerSugerenciasAdmin();
+
             },
             (error) => {
               Swal.fire({
@@ -143,6 +146,8 @@ export class AdminComponent {
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
+              this.obtenerRazasAdmin();
+
             },
             (error) => {
               Swal.fire({
@@ -173,6 +178,8 @@ export class AdminComponent {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
+            this.obtenerActividadesAdmin();
+
           },
           (error) => {
             Swal.fire({
@@ -402,127 +409,216 @@ export class AdminComponent {
       console.error("No se encontró token");
     }
   }
-  
 
   eliminarCategoria(idCat: number) {
     const token = localStorage.getItem('token');
+  
+    if (token) {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+          this.td_service.deleteCategoria(idCat, token).subscribe(
+            (response) => {
+              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+              Swal.fire({
+                title: 'Éxito',
+                text: 'La categoría ha sido eliminada correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+              this.obtenerCategoriasAdmin();
 
-  if (token) {
-    // Llama al servicio para eliminar el paso
-    this.td_service.deleteCategoria(idCat, token).subscribe(
-      (response) => {
-        // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
-        Swal.fire({
-          title: 'Éxito',
-          text: 'La categoria ha sido eliminada correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
-        
-      },
-      (error) => {
-        // Maneja el error, por ejemplo, muestra un mensaje de error
-        Swal.fire({
-          title: 'Error',
-          text: 'Hubo un problema al eliminar la categoría. Por favor, intenta nuevamente.',
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-      }
-    );
+              // Puedes realizar otras acciones después de la eliminación si es necesario
+            },
+            (error) => {
+              // Maneja el error, por ejemplo, muestra un mensaje de error
+              Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al eliminar la categoría. Por favor, intenta nuevamente.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // El usuario hizo clic en "Cancelar" o cerró la alerta
+          Swal.fire({
+            title: 'Cancelado',
+            text: 'La acción ha sido cancelada',
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
+          });
+          // No realizas la eliminación en este caso
+        }
+      });
     } else {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
   }
+  
 
   eliminarPaso(idPaso: number) {
     const token = localStorage.getItem('token');
-
-  if (token) {
-    // Llama al servicio para eliminar el paso
-    this.td_service.deletePaso(idPaso, token).subscribe(
-      (response) => {
-        // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
-        Swal.fire({
-          title: 'Éxito',
-          text: 'El paso ha sido eliminado correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
-        
-      },
-      (error) => {
-        // Maneja el error, por ejemplo, muestra un mensaje de error
-        Swal.fire({
-          title: 'Error',
-          text: 'Hubo un problema al eliminar el paso. Por favor, intenta nuevamente.',
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
-      }
-    );
+  
+    if (token) {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+          this.td_service.deletePaso(idPaso, token).subscribe(
+            (response) => {
+              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+              Swal.fire({
+                title: 'Éxito',
+                text: 'El paso ha sido eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+              // Puedes realizar otras acciones después de la eliminación si es necesario
+            },
+            (error) => {
+              // Maneja el error, por ejemplo, muestra un mensaje de error
+              Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al eliminar el paso. Por favor, intenta nuevamente.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // El usuario hizo clic en "Cancelar" o cerró la alerta
+          Swal.fire({
+            title: 'Cancelado',
+            text: 'La acción ha sido cancelada',
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
+          });
+          // No realizas la eliminación en este caso
+        }
+      });
     } else {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
   }
+  
   
   eliminarSugerencia(idSugerencia: number) {
     const token = localStorage.getItem('token');
   
     if (token) {
-      this.td_service.deleteSugerencia(idSugerencia, token).subscribe(
-        (response) => {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+          this.td_service.deleteSugerencia(idSugerencia, token).subscribe(
+            (response) => {
+              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+              Swal.fire({
+                title: 'Éxito',
+                text: 'La sugerencia ha sido eliminada correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+              this.obtenerSugerenciasAdmin();
+              // Puedes realizar otras acciones después de la eliminación si es necesario
+            },
+            (error) => {
+              // Maneja el error, por ejemplo, muestra un mensaje de error
+              Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al eliminar la sugerencia. Por favor, intenta nuevamente.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
-            title: 'Éxito',
-            text: 'La sugerencia ha sido eliminada correctamente',
-            icon: 'success',
+            title: 'Cancelado',
+            text: 'La acción ha sido cancelada',
+            icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // Realiza acciones adicionales después de eliminar la sugerencia
-        },
-        (error) => {
-          Swal.fire({
-            title: 'Error',
-            text: 'Hubo un problema al eliminar la sugerencia',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
-          // Maneja errores si es necesario
+          // No realizas la eliminación en este caso
         }
-      );
+      });
     } else {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
   }
+  
   
   eliminarRaza(idRaza: number) {
     const token = localStorage.getItem('token');
   
     if (token) {
-      this.td_service.deleteRaza(idRaza, token).subscribe(
-        (response) => {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+          this.td_service.deleteRaza(idRaza, token).subscribe(
+            (response) => {
+              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+              Swal.fire({
+                title: 'Éxito',
+                text: 'La raza ha sido eliminada correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+              this.obtenerRazasAdmin()
+              // Puedes realizar otras acciones después de la eliminación si es necesario
+            },
+            (error) => {
+              // Maneja el error, por ejemplo, muestra un mensaje de error
+              Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al eliminar la raza. Por favor, intenta nuevamente.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
-            title: 'Éxito',
-            text: 'La raza ha sido eliminada correctamente',
-            icon: 'success',
+            title: 'Cancelado',
+            text: 'La acción ha sido cancelada',
+            icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // Realiza acciones adicionales después de eliminar la sugerencia
-        },
-        (error) => {
-          Swal.fire({
-            title: 'Error',
-            text: 'Hubo un problema al eliminar la raza',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
-          // Maneja errores si es necesario
+          // No realizas la eliminación en este caso
         }
-      );
+      });
     } else {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
   }
-  
 }
 
