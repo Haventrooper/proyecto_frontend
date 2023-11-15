@@ -14,6 +14,9 @@ import { PerrosComponent } from '../pages/perros/perros.component';
 import { AdminloginComponent } from '../pages/adminlogin/adminlogin.component';
 import { AdminComponent } from '../pages/admin/admin.component';
 
+import { AuthGuard } from '../auth.guard';
+
+
 
 @NgModule({
   declarations: [],
@@ -37,6 +40,7 @@ import { AdminComponent } from '../pages/admin/admin.component';
       {
         path: 'home',
         component: HomeComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'perfil',

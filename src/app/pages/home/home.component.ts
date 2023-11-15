@@ -363,7 +363,6 @@ cargarPasos(idActividad: number, token: string) {
       console.error('Token no encontrado');
     }
   }
-  
 
   verificarActividad(idPerro: number, idActividad: number) {
 
