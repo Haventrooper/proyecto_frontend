@@ -285,25 +285,28 @@ export class AdminComponent {
   }
 
   logoutAdmin(){
-    localStorage.removeItem("token")
-    localStorage.clear();
-    
     Swal.fire({
-      title: 'Se ha cerrado la sesión',
-      text: 'Se redigirá al login',
-      icon: 'error',
+      title: 'Se va a cerrar la sesión',
+      text: 'Se redirigirá al login',
+      icon: 'question',
+      showCancelButton: true,
       confirmButtonText: 'Aceptar',
-      preConfirm: () => {
-        return new Promise<void>((resolve) => {
-          this.router.navigate(['/adminlogin']).then(() => {
-            window.location.reload();
-            resolve();
-          });
-        });
-      },
-    }).then(() => {
-      // Esto se ejecutará después de que se complete la redirección
-      console.log('Redirección completada');
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Lógica a ejecutar si se hace clic en "Aceptar"
+        console.log('Aceptar');
+  
+        // Elimina elementos del localStorage después de confirmar
+        localStorage.removeItem("token");
+        localStorage.clear();
+  
+        // Redirige a la página de login
+        this.router.navigate(['/adminlogin']); // Asegúrate de cambiar '/login' por la ruta correcta
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Lógica a ejecutar si se hace clic en "Cancelar" o se cierra la alerta
+        console.log('Cancelar');
+      }
     });
   }
 
@@ -352,40 +355,54 @@ export class AdminComponent {
   }
 
   eliminarActividad(idActividad: number) {
-    // Aquí debes implementar la lógica para eliminar la actividad
-    // Puedes utilizar tu servicio y sus métodos correspondientes para realizar la eliminación
+    const token = localStorage.getItem('token');
   
-    const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta actividad?');
-  
-    if (confirmacion) {
-      const token = localStorage.getItem('token');
-  
-      if (token) {
-        this.td_service.deleteActividadYPasos(idActividad, token).subscribe(
-          (response) => {
-            Swal.fire({
-              title: 'Éxito',
-              text: 'La actividad y sus pasos han sido eliminados correctamente',
-              icon: 'success',
-              confirmButtonText: 'Aceptar'
-            });
-            // Puedes realizar otras acciones después de la eliminación, por ejemplo, recargar la lista de actividades
-            this.obtenerActividadesAdmin();
-          },
-          (error) => {
-            Swal.fire({
-              title: 'Error',
-              text: 'Hubo un problema al eliminar la actividad y sus pasos',
-              icon: 'error',
-              confirmButtonText: 'Aceptar'
-            });
-          }
-        );
-      } else {
-        console.error('Token no disponible. El usuario no está autenticado.');
-      }
+    if (token) {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+          this.td_service.deleteActividadYPasos(idActividad, token).subscribe(
+            (response) => {
+              Swal.fire({
+                title: 'Éxito',
+                text: 'La acción se realizó con éxito',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+              this.obtenerActividadesAdmin();
+            },
+            (error) => {
+              Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al eliminar la actividad y sus pasos',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // El usuario hizo clic en "Cancelar" o cerró la alerta
+          Swal.fire({
+            title: 'Cancelado',
+            text: 'La acción ha sido cancelada',
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
+          });
+          // No realizas la eliminación en este caso
+        }
+      });
+    } else {
+      console.error("No se encontró token");
     }
   }
+  
 
   eliminarCategoria(idCat: number) {
     const token = localStorage.getItem('token');

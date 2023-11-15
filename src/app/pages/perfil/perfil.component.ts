@@ -3,6 +3,7 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -36,18 +37,35 @@ export class PerfilComponent {
 
 
   }
-  logout(){
-    localStorage.removeItem("token")
-    localStorage.removeItem("perroSeleccionado");
-    localStorage.clear();
 
-    alert("La sesión ha caducado")
-    this.router.navigate(['/login']).then(() => {
-      window.location.reload();
+  logout() {
+    // Muestra la alerta antes de eliminar los elementos del localStorage
+    Swal.fire({
+      title: 'Se va a cerrar la sesión',
+      text: 'Se redirigirá al login',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Lógica a ejecutar si se hace clic en "Aceptar"
+        console.log('Aceptar');
+  
+        // Elimina elementos del localStorage después de confirmar
+        localStorage.removeItem("token");
+        localStorage.removeItem("perroSeleccionado");
+        localStorage.clear();
+  
+        // Redirige a la página de login
+        this.router.navigate(['/login']); // Asegúrate de cambiar '/login' por la ruta correcta
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Lógica a ejecutar si se hace clic en "Cancelar" o se cierra la alerta
+        console.log('Cancelar');
+      }
     });
-
-
   }
+  
   obtenerPerros(): void {
     const token = localStorage.getItem('token');
 
@@ -108,15 +126,24 @@ export class PerfilComponent {
     if(token){
       if (this.formulario.valid) {
         const datosActualizados = this.formulario.value;
-        datosActualizados.fecha_nacimiento = this.datePipe.transform(datosActualizados.fecha_nacimiento, 'yyyy-MM-dd');
         
         this.td_service.putModificarUsuario(datosActualizados, token).subscribe(
           (response) => {
-            console.log('Datos de usuario actualizados con éxito', response);
-            // Realiza acciones adicionales después de la actualización
+            Swal.fire({
+              title: '¡Se han actualizado los datos!',
+              text: 'Se han modificado los datos con éxito.',
+              icon: 'success',
+              confirmButtonText: '¡Entendido!'
+            });
+            location.reload();          
           },
           (error) => {
-            console.error('Error al actualizar los datos de usuario', error);
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Verifica los campos.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
             // Maneja errores si es necesario
           }
         );

@@ -173,31 +173,34 @@ cargarPasos(idActividad: number, token: string) {
   }
 }
 
-  logout(){
-    localStorage.removeItem("token")
-    localStorage.removeItem("perroSeleccionado");
-    localStorage.clear();
-    
-    Swal.fire({
-      title: 'Se ha cerrado la sesión',
-      text: 'Se redigirá al login',
-      icon: 'error',
-      confirmButtonText: 'Aceptar',
-      preConfirm: () => {
-        return new Promise<void>((resolve) => {
-          this.router.navigate(['/login']).then(() => {
-            window.location.reload();
-            resolve();
-          });
-        });
-      },
-    }).then(() => {
-      // Esto se ejecutará después de que se complete la redirección
-      console.log('Redirección completada');
-    });
+logout() {
+  // Muestra la alerta antes de eliminar los elementos del localStorage
+  Swal.fire({
+    title: 'Se va a cerrar la sesión',
+    text: 'Se redirigirá al login',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Lógica a ejecutar si se hace clic en "Aceptar"
+      console.log('Aceptar');
 
+      // Elimina elementos del localStorage después de confirmar
+      localStorage.removeItem("token");
+      localStorage.removeItem("perroSeleccionado");
+      localStorage.clear();
 
-  }
+      // Redirige a la página de login
+      this.router.navigate(['/login']); // Asegúrate de cambiar '/login' por la ruta correcta
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // Lógica a ejecutar si se hace clic en "Cancelar" o se cierra la alerta
+      console.log('Cancelar');
+    }
+  });
+}
+
 
   obtenerPerros(): void {
     // Obtener el token del Local Storage

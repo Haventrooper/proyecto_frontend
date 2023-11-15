@@ -1,21 +1,32 @@
 <div class="mt-8 mb-8">
-  <div class="flex flex-column align-items-center justify-content-center text-center">
-      <h2>Perfil de {{usuario?.nombre}}</h2>
-    <div class="col-8 mt-4 mb-4">
-        <p-card class="border-800"  styleClass="bg-cyan-100 border-solid">
-          <div>
-            <div>
-              {{ usuario?.nombre }}
+  <div class="flex align-items-center justify-content-center">
+      <p-card class="border-800" styleClass="bg-cyan-100 border-solid">
+        <div class="flex">
+          <div class="flex justify-content-center align-items-center mr-4 ml-4">
+            <span class="material-symbols-outlined" style="font-size: 100px;">
+              account_circle
+              </span>
+          </div>
+          <div class="flex justify-content-center align-items-center mr-4 ml-4">
+            <div class="mr-4 ml-4">
+              <h4>Nombre</h4>
+              <p>{{usuario?.nombre}}</p>
             </div>
-            <div>
-              {{ usuario?.apellido }}
+            <div class="mr-4 ml-4">
+              <h4>Apellido</h4>
+              <p>{{usuario?.apellido}}</p>
             </div>
-            <div>
-              {{ usuario?.fecha_nacimiento }}
+            <div class="mr-4 ml-4">
+              <h4>Email</h4>
+              <p>{{usuario?.email}}</p>
+            </div>
+            <div class="mr-4 ml-4">
+              <h4>Fecha nacimiento</h4>
+              <p>{{usuario?.fecha_nacimiento | date: 'dd/MM/yyyy': 'UTC' }}</p>
             </div>
           </div>
-        </p-card>
-    </div>
+        </div>
+      </p-card>
   </div>
     
   <div class="text-center align-items-center justify-content-center">
