@@ -35,13 +35,13 @@
     </div>
   </div>
 
-  <div class="align-items-center justify-content-center">
+  <div class="flex flex-column align-items-center justify-content-center">
     <div class="text-center">
       <h2>Actividades guardadas</h2>
     </div>
-    <div class="flex align-items-center justify-content-center" *ngFor="let actividad of actividades">
+    <div class="flex align-items-center justify-content-center mt-4 mb-4" *ngFor="let actividad of actividades">
       <div>
-        <p-card styleClass="bg-red-100" (click)="abrirDialogo(actividad)">
+        <p-card styleClass="bg-purple-200 border-solid" (click)="abrirDialogo(actividad)">
           <div class="flex align-items-center justify-content-center">
             <div class="mr-2 ml-2">
               {{actividad.nombre}} - {{actividad.descripcion}} 
@@ -95,21 +95,21 @@
     </div>
   </div>
 
-  <div class="align-items-center justify-content-center">
-    <div class="text-center">
-      <h2>Actividades recientes</h2>
-    </div>
-    <div class="col-12">
-      <div class="flex">
-        <div *ngFor="let actividad of actividades_recientes" class="flex align-items-center justify-content-center">
-          <p-card styleClass="bg-red-100">
-            <div>
-              {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente | date: 'dd/MM/yyyy' }}
-            </div>
-          </p-card>
+  <div>
+    
+    <div  class="align-items-center justify-content-center text-center">
+      <div class="text-center">
+        <h2>Actividades recientes</h2>
+        <div class="mt-4 mb-4" *ngFor="let actividad of actividades_recientes">
+            <p-card class="align-items-center" styleClass="bg-purple-200 border-solid	">
+              <div>
+                {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente | date: 'dd/MM/yyyy' }}
+              </div>
+            </p-card>
         </div>
-      </div>
     </div>
+  </div>
+
   </div>
 
     
