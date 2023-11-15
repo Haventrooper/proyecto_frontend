@@ -93,10 +93,8 @@ export class PerfilperroComponent implements OnInit {
   
     this.verificarActividadExistente(token);
     this.cargarPasos(actividad.id_actividad, token);
-  }
+    this.obtenerActividadPerro(this.id_perro_)
 
-  recargarPagina() {
-    location.reload();
   }
 
   
@@ -110,14 +108,13 @@ export class PerfilperroComponent implements OnInit {
 
       if (token) {
         this.actualizarContador(this.id_perro_, this.selectedActividad.id_actividad, this.pasoActual, token);
+
       } else {
         console.error('Token no encontrado en el Local Storage');
       }
     } else {
       console.error('No hay más pasos disponibles o el paso actual es undefined.');
-    }
-    
-    
+    }    
   }
 
   anterior() {
@@ -137,7 +134,7 @@ export class PerfilperroComponent implements OnInit {
       }
     } else {
     console.error('El paso actual ya es 0, no se puede decrementar más.');
-  }
+    }
   }
 
   actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
@@ -335,41 +332,64 @@ obtenerRazas() {
     event.stopPropagation();
   
     const idPerro = this.perro && this.perro.length > 0 ? this.perro[0].id_perro : null;
-    const token = localStorage.getItem('token'); /* Obtén el token de autenticación */;
+    const token = localStorage.getItem('token');
   
     if (token && idPerro) {
-      this.td_service.eliminarActividadPorPerro(idPerro, idActividad, token).subscribe(
-        (response) => {
-          // Maneja la respuesta de la API después de la eliminación exitosa.
-          console.log(response);
-          
-          // Muestra el Swal alert después de la eliminación exitosa.
-          Swal.fire({
-            title: 'Actividad eliminada',
-            text: 'La actividad se ha eliminado con éxito',
-            icon: 'success',
-            confirmButtonText: '¡Entendido!'
-          });
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+          this.td_service.eliminarActividadPorPerro(idPerro, idActividad, token).subscribe(
+            (response) => {
+              // Maneja la respuesta de la API después de la eliminación exitosa.
+              console.log(response);
   
-          // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
-        },
-        (error) => {
-          // Maneja los errores en caso de que ocurra un problema con la eliminación.
-          console.error(error);
+              // Muestra el Swal alert después de la eliminación exitosa.
+              Swal.fire({
+                title: 'Actividad eliminada',
+                text: 'La actividad se ha eliminado con éxito',
+                icon: 'success',
+                confirmButtonText: '¡Entendido!'
+              });
+              this.obtenerActividadPerro(idPerro);
   
-          // Muestra un Swal alert indicando el error.
+              // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
+            },
+            (error) => {
+              // Maneja los errores en caso de que ocurra un problema con la eliminación.
+              console.error(error);
+  
+              // Muestra un Swal alert indicando el error.
+              Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error al eliminar la actividad. Por favor, intenta nuevamente.',
+                icon: 'error',
+                confirmButtonText: '¡Entendido!'
+              });
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
-            title: 'Error',
-            text: 'Ha ocurrido un error al eliminar la actividad',
-            icon: 'error',
-            confirmButtonText: '¡Entendido!'
+            title: 'Cancelado',
+            text: 'La acción ha sido cancelada',
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
           });
+          // No realizas la eliminación en este caso
         }
-      );
+      });
     } else {
       console.error("No se ha encontrado el token o el ID del perro en el Local Storage");
     }
   }
+  
   
   getAge(fechaNacimiento: any) {
 		var today = new Date();

@@ -45,7 +45,7 @@
           <div class="flex align-items-center justify-content-center">
             <div class="mr-2 ml-2">
               {{actividad.nombre}} - {{actividad.descripcion}} 
-              <p>Paso actual: {{ +actividad.contador + 1 }}</p>
+              <p>Último paso visto: {{ +actividad.contador + 1 }}</p>
             </div>
             <div class="mr-2 ml-2">
               <p-button icon="pi pi-iconName" severity="danger" label="Eliminar actividad" (click)="eliminarRelacionPerroActividad($event, actividad.id_actividad)"></p-button>
@@ -55,7 +55,7 @@
       </div>
       <div class="text-center"> 
         <p-dialog header="Detalles de la actividad" [(visible)]="displayModal" [modal]="true" [style]="{width: 'width', minWidth: 'minWidth'}"
-    [maximizable]="true" (onHide)="recargarPagina()">
+    [maximizable]="true">
         <div *ngIf="selectedActividad">
           <div>
             <h3>{{ selectedActividad.nombre }}</h3>
@@ -118,7 +118,7 @@
     <div>
       <p-button icon="pi pi-iconName" label="Modificar datos perro" (click)="abrirModal()"></p-button>
   </div>    
-  <p-dialog [(visible)]="mostrarModal" [maximizable]="true" (onHide)="recargarPagina()">
+  <p-dialog [(visible)]="mostrarModal" [maximizable]="true">
     <p-card [style]="{width: 'width'}">
       <div class="align-items-center justify-content-center">
         <form [formGroup]="formulario">
