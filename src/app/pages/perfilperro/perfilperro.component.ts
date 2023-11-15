@@ -276,40 +276,65 @@ obtenerRazas() {
   //Delete
 
   eliminarPerro() {
-    const idPerro = this.perro.id_perro
-    const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
-
-    if(token){
-      this.td_service.deletePerro(idPerro, token).subscribe(
-        (response) => {
-          
-
-          // Maneja la respuesta de la API después de la eliminación exitosa.
-          console.log(response);
-          // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
-        },
-        (error) => {
+    const idPerro = this.perro[0].id_perro;
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+          this.td_service.deletePerro(idPerro, token).subscribe(
+            (response) => {
+              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+              Swal.fire({
+                title: 'Éxito',
+                text: 'El perro se ha eliminado con éxito',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+              });
+              // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
+              console.log(response);
+              this.router.navigate(['/perros']);
+            },
+            (error) => {
+              // Maneja el error, por ejemplo, muestra un mensaje de error
+              Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al eliminar el perro. Por favor, intenta nuevamente.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+              // Maneja los errores en caso de que ocurra un problema con la eliminación.
+              console.error(error);
+            }
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
-            title: 'Se ha eliminado el perro',
-            text: 'El perro se ha eliminado con exito',
-            icon: 'success',
-            confirmButtonText: '¡Entendido!'
+            title: 'Cancelado',
+            text: 'La acción ha sido cancelada',
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
           });
-          this.router.navigate(['/perros']);
-          // Maneja los errores en caso de que ocurra un problema con la eliminación.
-          console.error(error);
+          // No realizas la eliminación en este caso
         }
-      );
+      });
+    } else {
+      console.error('Token no disponible. El usuario no está autenticado.');
     }
-    else{
-      console.error("No se ha encontrado el token en el Local Storage")
-    }
-   
   }
+  
   eliminarRelacionPerroActividad(event: Event, idActividad: number) {
     event.stopPropagation();
   
-    const idPerro = this.perro && this.perro.length > 0 ? this.perro.id_perro : null;
+    const idPerro = this.perro && this.perro.length > 0 ? this.perro[0].id_perro : null;
     const token = localStorage.getItem('token'); /* Obtén el token de autenticación */;
   
     if (token && idPerro) {

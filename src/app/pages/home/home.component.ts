@@ -187,7 +187,7 @@ logout() {
       // Lógica a ejecutar si se hace clic en "Aceptar"
       console.log('Aceptar');
 
-      // Elimina elementos del localStorage después de confirmar
+      //a elementos del localStorage después de confirmar
       localStorage.removeItem("token");
       localStorage.removeItem("perroSeleccionado");
       localStorage.clear();
