@@ -45,6 +45,7 @@ import { AuthGuard } from '../auth.guard';
       {
         path: 'perfil',
         component: PerfilComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'signup',
@@ -52,15 +53,18 @@ import { AuthGuard } from '../auth.guard';
       },
       {
         path: 'perfilperro/:id_perro',
-        component: PerfilperroComponent
+        component: PerfilperroComponent,
+        canActivate: [AuthGuard]
       },
       { 
         path: 'categorias/:idCategoria',
-        component: CategoriasComponent 
+        component: CategoriasComponent,
+        canActivate: [AuthGuard] 
       },
       {
         path: 'perros',
-        component: PerrosComponent
+        component: PerrosComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'adminlogin',
@@ -68,7 +72,8 @@ import { AuthGuard } from '../auth.guard';
       },
       {
         path: 'admin',
-        component: AdminComponent
+        component: AdminComponent,
+        canActivate: [AuthGuard]
       }
     ]),
   ]
