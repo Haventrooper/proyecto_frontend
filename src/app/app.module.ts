@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DatePipe } from '@angular/common';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 
@@ -65,6 +66,7 @@ import { AdminComponent } from './pages/admin/admin.component';
     BrowserAnimationsModule,
     CalendarModule,
     DropdownModule,
+    InputSwitchModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
