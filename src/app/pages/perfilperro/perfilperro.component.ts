@@ -93,7 +93,6 @@ export class PerfilperroComponent implements OnInit {
   
     this.verificarActividadExistente(token);
     this.cargarPasos(actividad.id_actividad, token);
-    this.obtenerActividadPerro(this.id_perro_)
 
   }
 
