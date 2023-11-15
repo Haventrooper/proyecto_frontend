@@ -26,7 +26,7 @@ export class SignupComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       contrasena: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
       contrasenaRep: new FormControl({value: '', disabled: true}, [Validators.required, Validators.minLength(3), Validators.maxLength(15),this.confirmPasswordValidator.bind(this)]),
-      fecha_nacimiento: new FormControl('', [Validators.required, this.edadMinimaValidator(18)])
+      fecha_nacimiento: new FormControl('', [Validators.required, this.edadMinimaValidator(14)])
     });
   }
 
@@ -63,6 +63,11 @@ export class SignupComponent {
   
       return null;
     };
+  }
+  validateMaxAge(dateOfBirth: Date): boolean {
+    const currentDate = new Date();
+    const maxAgeDate = new Date(currentDate.getFullYear() - 150, currentDate.getMonth(), currentDate.getDate());
+    return dateOfBirth <= maxAgeDate;
   }
 
   getAge(fecha_nacimiento: any) {

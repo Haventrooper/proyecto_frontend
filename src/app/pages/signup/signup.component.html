@@ -77,13 +77,12 @@
                         <p-calendar placeholder="Fecha de nacimiento" formControlName="fecha_nacimiento" [required]="true" [maxDate]="today" [showIcon]="true"></p-calendar>
 
                     </div>
-                    <div *ngIf="registro.get('fecha_nacimiento')?.hasError('required')">
+                    <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.hasError('required')">
                         La fecha de nacimiento es obligatoria.
-                      </div>
-                      <div *ngIf="registro.get('fecha_nacimiento')?.hasError('edadMinima')">
-                        Debes tener al menos 18 años.
-                      </div>
-                    
+                    </small>
+                      <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.hasError('edadMinima')">
+                        Debes tener al menos 14 años.
+                      </small>
                 </div>
                
                 <div>
