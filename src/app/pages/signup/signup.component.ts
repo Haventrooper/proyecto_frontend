@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import Swal from 'sweetalert2';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -25,7 +26,7 @@ export class SignupComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       contrasena: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
       contrasenaRep: new FormControl({value: '', disabled: true}, [Validators.required, Validators.minLength(3), Validators.maxLength(15),this.confirmPasswordValidator.bind(this)]),
-      fecha_nacimiento: new FormControl('', [Validators.required])
+      fecha_nacimiento: new FormControl('', [Validators.required, this.edadMinimaValidator(18)])
     });
   }
 
@@ -46,11 +47,27 @@ export class SignupComponent {
       });
   }
   
-  
+  today = new Date();
 
-  getAge(fechaNacimiento: any) {
+  edadMinimaValidator(edadMinima: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value) {
+        const fechaNacimiento = new Date(control.value);
+        const hoy = new Date();
+        const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+  
+        if (edad < edadMinima) {
+          return { 'edadMinima': { value: control.value } };
+        }
+      }
+  
+      return null;
+    };
+  }
+
+  getAge(fecha_nacimiento: any) {
 		var today = new Date();
-		var birthDate = new Date(fechaNacimiento);
+		var birthDate = new Date(fecha_nacimiento);
 		var age = today.getFullYear() - birthDate.getFullYear();
 		var m = today.getMonth() - birthDate.getMonth();
 		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
@@ -58,6 +75,7 @@ export class SignupComponent {
 		}
 		return age;
 	}
+
 
   confirmPasswordValidator(control: FormControl): { [key: string]: any } | null {
     const password = this.registro?.get('contrasena')?.value;
