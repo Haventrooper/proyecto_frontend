@@ -22,6 +22,12 @@ export class HomeComponent {
   pasoActual: number = 0;
   sugerencias: any;
   actividadExistente = false;
+  razas: any;
+    
+  selectedPerroId: number | null = null;
+  perroSeleccionado: any;
+
+
 
 
   constructor(private td_service: TdserviceService,
@@ -38,6 +44,7 @@ export class HomeComponent {
     this.obtenerActividades();
     this.obtenerCategorias();
     this.obtenerSugerencias();
+    this.obtenerRazas();
 
     const perroSeleccionado = localStorage.getItem('perroSeleccionado');
     
@@ -314,23 +321,49 @@ cargarPasos(idActividad: number, token: string) {
     }
   }
   
-  obtenerSugerencias(){
+  obtenerRazas() {
     const token = localStorage.getItem('token');
-    if(token){
-    this.td_service.getSugerencias(token).subscribe(
-      (data: any) => {
+    if (token) {
+      this.td_service.getRazas(token).subscribe(
+        (data: any) => {
+          // Asigna directamente el resultado a la variable razas
+          this.razas = data
+          console.log('Datos de razas cargados:', this.razas);
+        },
+        error => {
+          console.error('Error al obtener las razas:', error);
+          // Maneja el error según tus necesidades.
+        }
+      );
+    } else {
+      console.error('Token no encontrado en el Local Storage');
+    }
+  }
+
+  obtenerSugerencias() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.td_service.getSugerencias(token).subscribe(
+        (data: any) => {
           this.sugerencias = data;
-          console.log('Información del perro seleccionado:', this.sugerencias);
-          // Aquí puedes asignar los datos a las variables de tu componente
-      },
-      (error) => {
-        console.error('Error al obtener la información de la sugerencia', error);
-        // Maneja el error de la solicitud
-      });
-    }else{
+          console.log('Información del perro seleccionado:', this.perroSeleccionado);
+  
+          // Filtra las sugerencias solo si el perro seleccionado tiene una raza específica diferente de "2"
+          if (this.perroSeleccionado.id_raza !== 2) {
+            this.sugerencias = this.sugerencias.filter((sugerencia: any) =>
+              sugerencia.id_raza === this.perroSeleccionado.id_raza
+            );
+          }
+        },
+        (error) => {
+          console.error('Error al obtener la información de la sugerencia', error);
+          // Maneja el error de la solicitud
+        });
+    } else {
       console.error('Token no encontrado');
     }
   }
+  
 
   verificarActividad(idPerro: number, idActividad: number) {
 
@@ -355,9 +388,6 @@ cargarPasos(idActividad: number, token: string) {
       console.error('Token no encontrado');
     }
   }
-  
-  selectedPerroId: number | null = null;
-  perroSeleccionado: any;
 
   seleccionarPerro(perroId: number) {
     this.selectedPerroId = perroId;

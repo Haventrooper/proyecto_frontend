@@ -42,8 +42,8 @@ export class AdminComponent {
 
       this.registroPasos = this.fb.group({
         id_actividad: new FormControl('', [Validators.required]),
-        titulo: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(15)]),
+        titulo: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
 
