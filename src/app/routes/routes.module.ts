@@ -33,10 +33,6 @@ import { AuthGuard } from '../auth.guard';
         path: 'login', 
         component: LoginComponent,
       },
-      // {
-      //   path: '**', 
-      //   component: PageNotFoundComponent,
-      // },
       {
         path: 'home',
         component: HomeComponent,
@@ -74,7 +70,11 @@ import { AuthGuard } from '../auth.guard';
         path: 'admin',
         component: AdminComponent,
         canActivate: [AuthGuard]
-      }
+      },
+      {
+        path: '404',
+        component: PageNotFoundComponent,
+      },{ path: '**', redirectTo: '404' }
     ]),
   ]
 })
