@@ -43,7 +43,7 @@
           <div class="flex justify-content-center align-items-center">
             <div class="mr-4 ml-4 mb-4">
               <h4>Fecha de nacimiento</h4>
-              {{ perroSeleccionado.fecha_nacimiento | date: 'dd/MM/yyyy' }}
+              {{ perroSeleccionado.fecha_nacimiento | date: 'dd/MM/yyyy': 'UTC' }}
             </div>
             <div class="flex justify-content-center align-items-center">
               <div class="mr-4 ml-4 mb-4">
@@ -84,7 +84,7 @@
         <div>
           <h3>{{ selectedActividad.nombre }}</h3>
           <p>{{ selectedActividad.descripcion }}</p>
-          <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy' }}</p>  
+          <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy': 'UTC' }}</p>  
         </div>
         
         <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">

@@ -35,7 +35,7 @@
                 <div>
                   <h3>{{ selectedActividad.nombre }}</h3>
                   <p>{{ selectedActividad.descripcion }}</p>
-                  <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy' }}</p>  
+                  <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy': 'UTC' }}</p>  
                 </div>
                 
                 <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
