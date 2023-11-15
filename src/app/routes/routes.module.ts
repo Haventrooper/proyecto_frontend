@@ -15,6 +15,7 @@ import { AdminloginComponent } from '../pages/adminlogin/adminlogin.component';
 import { AdminComponent } from '../pages/admin/admin.component';
 
 import { AuthGuard } from '../auth.guard';
+import { NoAuthGuard } from '../no-auth.guard';
 
 
 
@@ -32,6 +33,7 @@ import { AuthGuard } from '../auth.guard';
       {
         path: 'login', 
         component: LoginComponent,
+        canActivate: [NoAuthGuard]
       },
       {
         path: 'home',
@@ -45,7 +47,8 @@ import { AuthGuard } from '../auth.guard';
       },
       {
         path: 'signup',
-        component: SignupComponent
+        component: SignupComponent,
+        canActivate: [NoAuthGuard]
       },
       {
         path: 'perfilperro/:id_perro',
