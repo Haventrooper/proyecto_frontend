@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
