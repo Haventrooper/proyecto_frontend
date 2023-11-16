@@ -115,12 +115,7 @@
 
     
   <div class="text-center align-items-center justify-content-center">
-    <h2>Modificar datos de perro</h2>
-    <div>
-      <p-button icon="pi pi-iconName" label="Modificar datos perro" (click)="abrirModal()"></p-button>
-  </div>    
-  <p-dialog [(visible)]="mostrarModal" [maximizable]="true">
-    <p-card [style]="{width: 'width'}">
+    <p-card>
       <div class="align-items-center justify-content-center">
         <form [formGroup]="formulario">
           <h2>Modificar datos de perro</h2>
@@ -138,17 +133,16 @@
             </div>           
           </div>
           <div class="p-2">
-            <p-calendar placeholder="Fecha de nacimiento" type="date"
-            formControlName="fecha_nacimiento"
-            ></p-calendar>
-            <div>
-                <small *ngIf="formulario.get('fecha_nacimiento')?.invalid && (formulario.get('fecha_nacimiento')?.dirty || formulario.get('fecha_nacimiento')?.['touched'])">
-                </small>
-                <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.errors?.['required']">
-                    Fecha de nacimiento es obligatorio.
-                </small>
-            </div>          
+            <p-calendar placeholder="Fecha de nacimiento" formControlName="fecha_nacimiento" [required]="true" [maxDate]="today" [showIcon]="true">
+            </p-calendar>
           </div>
+          
+            <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.hasError('required')">
+            La fecha de nacimiento es obligatoria.
+            </small>
+            <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.hasError('edadMinima')">
+              Debes tener al menos 14 años.
+            </small>       
           <div class="p-2">
             <p-dropdown [options]="razas" placeholder="Selecciona una raza" formControlName="id_raza"></p-dropdown>
           </div>
@@ -160,9 +154,7 @@
           </div>
         </form>
       </div>
-    </p-card>
-  </p-dialog>
-    
+    </p-card>   
   </div>
 
   <div class="flex flex-column align-items-center justify-content-center">

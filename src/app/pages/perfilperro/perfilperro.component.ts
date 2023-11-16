@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TdserviceService } from 'src/app/services/tdservice.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';  // Asegúrate de importar DatePipe correctamente
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+
 
 @Component({
   selector: 'app-perfilperro',
@@ -30,6 +32,7 @@ export class PerfilperroComponent implements OnInit {
   id_perro_: any;
   mostrarModal: boolean = false;
   displayModal: boolean = false;
+  today = new Date();
 
 
   constructor(private route: ActivatedRoute,
@@ -54,30 +57,41 @@ export class PerfilperroComponent implements OnInit {
         console.error('idPerro es undefined');
         }
   });
-
+  
   this.formulario = this.formBuilder.group({
-  nombre: ['', Validators.required],
-  fecha_nacimiento: ['', Validators.required],
-  id_raza: ['', [Validators.required]],
-  genero: ['', Validators.required]
-  });
+    nombre: new FormControl('', [Validators.required]),
+    fecha_nacimiento: new FormControl('', [Validators.required, this.edadMinimaValidator(0)]),
+    id_raza: new FormControl('', [Validators.required]),
+    genero: new FormControl('', [Validators.required])
+    });
 }
 
   ngOnInit() {
     this.ordenarActividadesRecientes();
     this.obtenerRazas();
-    this.formulario = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      fecha_nacimiento: ['', Validators.required],
-      id_raza: ['', [Validators.required]],
-      genero: ['', Validators.required]
-      });
   }
 
+  edadMinimaValidator(edadMinima: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value) {
+        const fechaNacimiento = new Date(control.value);
+        const hoy = new Date();
+        const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
   
-  abrirModal() {
-    this.mostrarModal = true;
+        if (edad < edadMinima) {
+          return { 'edadMinima': { value: control.value } };
+        }
+      }
+  
+      return null;
+    };
   }
+  validateMaxAge(dateOfBirth: Date): boolean {
+    const currentDate = new Date();
+    const maxAgeDate = new Date(currentDate.getFullYear() - 150, currentDate.getMonth(), currentDate.getDate());
+    return dateOfBirth <= maxAgeDate;
+  }
+
 
   abrirDialogo(actividad: any){
     this.displayModal = true;
@@ -96,7 +110,6 @@ export class PerfilperroComponent implements OnInit {
 
   }
 
-  
 
   siguiente() {
     // Verifica si el paso siguiente es válido
@@ -209,7 +222,17 @@ obtenerRazas() {
     if (token) {
       this.td_service.getPerroPorId(idPerro, token).subscribe((data) => {
         this.perro = data;  
-        console.log('Datos del perro cargados:', this.perro);
+
+        const fechaFormateada = new Date(this.perro[0].fecha_nacimiento);
+
+        this.formulario = this.formBuilder.group({
+          nombre: new FormControl(this.perro[0].nombre, [Validators.required]),
+          fecha_nacimiento: new FormControl(fechaFormateada, [Validators.required, this.edadMinimaValidator(0)]),
+          id_raza: new FormControl(this.perro[0].id_raza, [Validators.required]),
+          genero: new FormControl(this.perro[0].genero, [Validators.required])
+        });
+
+        console.log('Datos del perro cargados:', this.formulario);
   
         // Mueve aquí cualquier código que dependa de this.perro
         // Por ejemplo, puedes llamar a otras funciones que utilicen this.perro aquí
@@ -257,9 +280,22 @@ obtenerRazas() {
           (response) => {
             console.log('El perro se ha modificado correctamente', response);
             // Realiza acciones adicionales después de la modificación
+            Swal.fire({
+              title: '¡Se han actualizado los datos!',
+              text: 'Se han modificado los datos con éxito.',
+              icon: 'success',
+              confirmButtonText: '¡Entendido!'
+            });
+            this.obtenerDatosDelPerro(idPerro)
           },
           (error) => {
             console.error('Error al modificar el perro', error);
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Verifica los campos.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
             // Maneja errores si es necesario
           }
         );
