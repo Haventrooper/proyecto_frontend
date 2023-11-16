@@ -84,6 +84,11 @@
         <div>
           <h3>{{ selectedActividad.nombre }}</h3>
           <p>{{ selectedActividad.descripcion }}</p>
+          <p-card styleClass="bg-gray-100">
+            <span class="material-symbols-outlined" style="font-size: 75px;">
+              sound_detection_dog_barking
+              </span>
+          </p-card>
           <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy': 'UTC' }}</p>  
         </div>
         
@@ -93,11 +98,6 @@
               <h3>{{ pasos[pasoActual].titulo }}</h3>
               <div class="flex flex-column align-items-center justify-content-center">
                 <div class="col-8">
-                  <p-card styleClass="bg-gray-100">
-                    <span class="material-symbols-outlined" style="font-size: 75px;">
-                      pet_supplies
-                      </span>
-                  </p-card>
                 </div>
               </div>
               <div class="mt-4 mb-4 mr-4 ml-4">
@@ -107,7 +107,7 @@
         </div>
         <div class="flex align-items-center justify-content-center">
           <div class="mt-4 mb-4 mr-4 ml-4">
-            <p-button  *ngIf="!actividadExistente" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
+            <p-button  *ngIf="!actividadExistente && perroSeleccionado" [disabled]="!perroSeleccionado" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
           </div>
           <div class="mr-4 ml-4">
             <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>

@@ -58,7 +58,7 @@
                 </div>
                 <div class="flex align-items-center justify-content-center">
                   <div class="mt-4 mb-4 mr-4 ml-4">
-                    <p-button  *ngIf="!actividadExistente" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
+                    <p-button  *ngIf="!actividadExistente && perroSeleccionado" [disabled]="!perroSeleccionado" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
                   </div>
                   <div class="mr-4 ml-4">
                     <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>

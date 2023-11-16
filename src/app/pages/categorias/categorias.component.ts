@@ -20,11 +20,14 @@ export class CategoriasComponent {
   categorias: any[] = [];
   perro: any;
   actividadExistente = false;
+  perroSeleccionado = localStorage.getItem('perroSeleccionado');
 
 
 
   constructor(private route: ActivatedRoute,
-              private td_service: TdserviceService) {}
+              private td_service: TdserviceService) {
+
+              }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
