@@ -44,6 +44,11 @@ export class CategoriasComponent {
     });
   }
 
+  obtenerNombreCategoria(idCategoria: number): string {
+    const nombreCat = this.categorias?.find((c:any) => c.id_categoria === idCategoria);
+    return nombreCat ? nombreCat.nombre : 'Categoría no encontrada';
+  }
+
   abrirDialogo(actividad: any){
     this.displayModal = true;
     this.selectedActividad = actividad;

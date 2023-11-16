@@ -26,9 +26,22 @@
       </div>
   </p-card>
 
-  <div class="mt-4 mb-8" *ngIf="perroSeleccionado">
+  
+  <div class="mt-4 mb-4" *ngIf="!perroSeleccionado">
+    <div class="flex flex-column align-items-center justify-content-center text-center ml-2 mr-2">
+      <h2>Perro seleccionado</h2>
+      <p-card styleClass="bg-pink-100 border-solid border-600">
+        <div>
+          <h4>No hay un perro seleccionado</h4>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+
+  <div class="mt-4 mb-4" *ngIf="perroSeleccionado">
     <div class="flex flex-column align-items-center justify-content-center text-center ml-4 mr-4">
-      <h2>Perro Seleccionado</h2>
+      <h2>Perro seleccionado</h2>
       <p-card styleClass="bg-cyan-100 border-solid border-600	" header="{{perroSeleccionado.nombre}}">
           <div class="flex flex-wrap justify-content-center align-items-center">
             <div class="mr-4 ml-4 mb-4">
@@ -68,6 +81,9 @@
       </div>
       <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let actividad of actividades?.slice(0, 4)">
           <p-card class="border-800" styleClass="bg-indigo-200 border-solid" (click)="abrirDialogo(actividad)">
+            <div class="categoria-container">
+              <h3>{{ obtenerNombreCategoria(actividad.id_categoria) }}</h3>
+            </div>
             <div>
               {{ actividad.nombre }} - {{ actividad.descripcion }}
             </div>
@@ -80,7 +96,7 @@
         <div>
           <h3>{{ selectedActividad.nombre }}</h3>
           <p>{{ selectedActividad.descripcion }}</p>
-          <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy': 'UTC' }}</p>  
+          <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy': 'UTC' }}</p>          
         </div>
         
         <div *ngIf="pasoActual >= 0 && pasos && pasoActual < pasos.length">
@@ -135,7 +151,7 @@
   <p-card styleClass="bg-cyan-50">
     <div class="text-center">
       <h2>Sugerencias generales</h2>
-        <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let sugerencia of sugerencias?.slice(0,4)">
+        <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let sugerencia of sugerencias">
       <p-card styleClass="bg-gray-200">
 
           <div>

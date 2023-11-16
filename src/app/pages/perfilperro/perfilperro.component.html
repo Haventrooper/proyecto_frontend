@@ -44,8 +44,14 @@
         <div>
         <p-card styleClass="bg-teal-300	 border-solid" (click)="abrirDialogo(actividad)">
           <div class="flex align-items-center justify-content-center">
+            
             <div class="mr-2 ml-2">
-              {{actividad.nombre}} - {{actividad.descripcion}} 
+              <div class="categoria-container">
+                <h3>{{ obtenerNombreCategoria(actividad.id_categoria) }}</h3>
+              </div>
+              <div>
+                {{actividad.nombre}} - {{actividad.descripcion}} 
+              </div>
               <p>Último paso visto: {{ +actividad.contador + 1 }}</p>
             </div>
             <div class="mr-2 ml-2">
@@ -103,6 +109,9 @@
         <h2>Actividades recientes</h2>
         <div class="mt-4 mb-4 ml-3 mr-3" *ngFor="let actividad of actividades_recientes">
             <p-card class="align-items-center" styleClass="bg-purple-200 border-solid	">
+              <div class="categoria-container">
+                <h3>{{ obtenerNombreCategoria(actividad.id_categoria) }}</h3>
+              </div>
               <div>
                 {{actividad.nombre}} - {{actividad.descripcion}} - {{actividad.fecha_reciente | date: 'dd/MM/yyyy': 'UTC' }}
               </div>

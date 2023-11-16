@@ -29,6 +29,9 @@
               <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let actividad of actividades">
                   <p-card class="border-800" styleClass="bg-indigo-200 border-solid" (click)="abrirDialogo(actividad)">
                     <div>
+                      <div class="categoria-container">
+                        <h3>{{ obtenerNombreCategoria(actividad.id_categoria) }}</h3>
+                      </div>
                       {{ actividad.nombre }} - {{ actividad.descripcion }}
                     </div>
                   </p-card>

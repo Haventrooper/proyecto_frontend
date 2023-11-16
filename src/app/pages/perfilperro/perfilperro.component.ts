@@ -33,6 +33,7 @@ export class PerfilperroComponent implements OnInit {
   mostrarModal: boolean = false;
   displayModal: boolean = false;
   today = new Date();
+  categorias: any
 
 
   constructor(private route: ActivatedRoute,
@@ -69,6 +70,25 @@ export class PerfilperroComponent implements OnInit {
   ngOnInit() {
     this.ordenarActividadesRecientes();
     this.obtenerRazas();
+    this.obtenerCategorias();
+  }
+
+  obtenerNombreCategoria(idCategoria: number): string {
+    const nombreCat = this.categorias?.find((c:any) => c.id_categoria === idCategoria);
+    return nombreCat ? nombreCat.nombre : 'Categoría no encontrada';
+  }
+  obtenerCategorias(){
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Hacer la solicitud GET utilizando el servicio
+      this.td_service.getCategorias(token).subscribe((data) => {
+        // Asignar la respuesta a la variable actividades
+        this.categorias = data;
+      });
+    } else {
+      // Manejar el caso en que no se encuentra un token en el Local Storage
+      console.error('Token no encontrado en el Local Storage');
+    }   
   }
 
   edadMinimaValidator(edadMinima: number): ValidatorFn {
