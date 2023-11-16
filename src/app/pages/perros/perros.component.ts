@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class PerrosComponent {
   registro: FormGroup;
   mostrarModal: boolean = false;
   razas: SelectItem[] = [];
+  today = new Date();
 
   generoOptions = [
     { label: 'Macho', value: 'Macho' },
@@ -31,7 +33,7 @@ export class PerrosComponent {
     this.registro = this.fb.group({
       id_raza: new FormControl('', [Validators.required]),
       nombre: new FormControl('', [Validators.required]),
-      fecha_nacimiento: new FormControl('', [Validators.required]),
+      fecha_nacimiento: new FormControl('', [Validators.required, this.edadMinimaValidator(0)]),
       genero: new FormControl('', [Validators.required]),
     });
     this.obtenerPerros();
@@ -41,6 +43,22 @@ export class PerrosComponent {
   }
 
   ngOnInit(): void {
+  }
+
+  edadMinimaValidator(edadMinima: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value) {
+        const fechaNacimiento = new Date(control.value);
+        const hoy = new Date();
+        const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+  
+        if (edad < edadMinima) {
+          return { 'edadMinima': { value: control.value } };
+        }
+      }
+  
+      return null;
+    };
   }
 
   abrirModal() {

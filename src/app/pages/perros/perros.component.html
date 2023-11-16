@@ -27,57 +27,46 @@
     <div class="text-center flex flex-column">
         <div>
             <h2>Añadir más perros</h2>
-            <div>
-                <p-button icon="pi pi-iconName" label="Registrar un nuevo perro" (click)="abrirModal()"></p-button>
-            </div>    
         </div>
-        <p-dialog header="Registro de perro" [(visible)]="mostrarModal" [modal]="true" [maximizable]="true">
-            <form [formGroup]="registro">
+        <form [formGroup]="registro">
                     
-                <div class="p-2">
-                    <p-dropdown [options]="razas" placeholder="Selecciona una raza" formControlName="id_raza"></p-dropdown>
-                    <div *ngIf="registro.get('id_raza')?.invalid && (registro.get('id_raza')?.dirty || registro.get('id_raza')?.touched)">
-                        <small class="p-error">La raza es obligatoria</small>
-                    </div>
-                
+            <div class="p-2">
+                <p-dropdown [options]="razas" placeholder="Selecciona una raza" formControlName="id_raza"></p-dropdown>
+                <div *ngIf="registro.get('id_raza')?.invalid && (registro.get('id_raza')?.dirty || registro.get('id_raza')?.touched)">
+                    <small class="p-error">La raza es obligatoria</small>
                 </div>
-                <div class="p-2">
-                    <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
-                    <div
-                            *ngIf="registro.get('nombre')?.invalid && (registro.get('nombre')?.dirty || registro.get('nombre')?.['touched'])"
-                        >
-                            <small class="p-error" *ngIf="registro.get('nombre')?.errors?.['required']">
-                            Nombre del perro es obligatorio
-                            </small>
-                            <small class="p-error" *ngIf="registro.get('nombre')?.errors?.['nombre']">
-                            Ingrese un nombre valido
-                            </small>
-                    </div>          
+            
+            </div>
+            <div class="p-2">
+                <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
+                <div
+                        *ngIf="registro.get('nombre')?.invalid && (registro.get('nombre')?.dirty || registro.get('nombre')?.['touched'])"
+                    >
+                        <small class="p-error" *ngIf="registro.get('nombre')?.errors?.['required']">
+                        Nombre del perro es obligatorio
+                        </small>
+                        <small class="p-error" *ngIf="registro.get('nombre')?.errors?.['nombre']">
+                        Ingrese un nombre valido
+                        </small>
+                </div>          
+            </div>
+            <div class="p-2">
+                <p-calendar placeholder="Fecha de nacimiento" formControlName="fecha_nacimiento" [required]="true" [maxDate]="today" [showIcon]="true">
+                </p-calendar>
+            </div>
+                <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.hasError('required')">
+                La fecha de nacimiento es obligatoria.
+                </small>
+                <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.hasError('edadMinima')">
+                  Debes tener al menos 0 años.
+                </small>
+            <div class="p-2">
+                <p-dropdown [options]="generoOptions" formControlName="genero" optionLabel="label" optionValue="value" placeholder="Sexo"></p-dropdown>
+                <div *ngIf="registro.get('genero')?.invalid && (registro.get('genero')?.dirty || registro.get('genero')?.touched)">
+                    <small class="p-error">El sexo es obligatorio</small>
                 </div>
-                <div class="p-2">
-                    <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
-                    <div>
-                        <small *ngIf="registro.get('fecha_nacimiento')?.invalid && (registro.get('fecha_nacimiento')?.dirty || registro.get('fecha_nacimiento')?.['touched'])">
-                        </small>
-                        <small class="p-error" *ngIf="registro.get('fecha_nacimiento')?.errors?.['required']">
-                            Fecha de nacimiento es obligatorio
-                        </small>
-                        <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')?.value) > 30">
-                            Ingrese una fecha válida.
-                        </small>
-                        <small class="p-error block" *ngIf="getAge(registro.get('fecha_nacimiento')?.value) < 1">
-                            Debe ser mayor de 1 año.
-                        </small>
-                    </div>
-                </div>
-                <div class="p-2">
-                    <p-dropdown [options]="generoOptions" formControlName="genero" optionLabel="label" optionValue="value" placeholder="Sexo"></p-dropdown>
-                    <div *ngIf="registro.get('genero')?.invalid && (registro.get('genero')?.dirty || registro.get('genero')?.touched)">
-                        <small class="p-error">El sexo es obligatorio</small>
-                    </div>
-                </div>
-                <p-button icon="pi pi-iconName" label="Registrar" (click)="registrarPerro()"></p-button>
-            </form>
-        </p-dialog>
+            </div>
+            <p-button icon="pi pi-iconName" label="Registrar" (click)="registrarPerro()"></p-button>
+        </form>
     </div>
 </div>
