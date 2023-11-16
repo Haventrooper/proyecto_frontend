@@ -76,21 +76,16 @@
             </div>
             
             <div class="p-2">
-                <p-calendar placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento"></p-calendar>
-                <div>
-                  <small *ngIf="formulario.get('fecha_nacimiento')?.invalid && (formulario.get('fecha_nacimiento')?.dirty || formulario.get('fecha_nacimiento')?.['touched'])">
-                  </small>
-                  <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.errors?.['required']">
-                      Fecha de nacimiento es obligatorio
-                  </small>
-                  <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) > 150">
-                      Ingrese una fecha válida.
-                  </small>
-                  <small class="p-error block" *ngIf="getAge(formulario.get('fecha_nacimiento')?.value) < 18">
-                      Debe ser mayor de 18 años.
-                  </small>
-              </div>
+              <p-calendar placeholder="Fecha de nacimiento" formControlName="fecha_nacimiento" [required]="true" [maxDate]="today" [showIcon]="true">
+              </p-calendar>
             </div>
+            
+              <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.hasError('required')">
+              La fecha de nacimiento es obligatoria.
+              </small>
+              <small class="p-error" *ngIf="formulario.get('fecha_nacimiento')?.hasError('edadMinima')">
+                Debes tener al menos 14 años.
+              </small>       
             <div class="mt-4 mb-4">
                 <p-button (click)="guardarCambios()" label="Guardar cambios"></p-button>
             </div>

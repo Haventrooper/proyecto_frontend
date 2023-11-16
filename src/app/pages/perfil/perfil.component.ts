@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+
 
 
 @Component({
@@ -17,7 +19,7 @@ export class PerfilComponent {
   formulario: FormGroup;
   perros: any[] = [];
   actividades: any[] = [];
-
+  today = new Date();
 
   constructor(private td_service: TdserviceService,
     private formBuilder: FormBuilder,
@@ -27,7 +29,7 @@ export class PerfilComponent {
         nombre: new FormControl('', [Validators.required]),
         apellido: new FormControl( '', [Validators.required]),
         email: new FormControl ('', [Validators.required, Validators.email]),
-        fecha_nacimiento: new FormControl ('', [Validators.required])
+        fecha_nacimiento: new FormControl ('', [Validators.required, this.edadMinimaValidator(14)])
       });
   }
 
@@ -35,7 +37,23 @@ export class PerfilComponent {
     this.obtenerUsuario()
     console.log("Se llama los datos de usuario del token")
 
+  }
 
+
+  edadMinimaValidator(edadMinima: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value) {
+        const fechaNacimiento = new Date(control.value);
+        const hoy = new Date();
+        const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+  
+        if (edad < edadMinima) {
+          return { 'edadMinima': { value: control.value } };
+        }
+      }
+  
+      return null;
+    };
   }
 
   logout() {
@@ -113,11 +131,26 @@ export class PerfilComponent {
       this.td_service.getUsuario(token).subscribe((data) => {
         // Asignar la respuesta a la variable perros
         this.usuario = data;
+        const fechaFormateada = new Date(this.usuario.fecha_nacimiento);
+        console.log(this.usuario.fecha_nacimiento)
+        console.log(this.usuario.fecha_nacimiento)
+
+        this.formulario = this.formBuilder.group({
+          nombre: new FormControl(this.usuario.nombre, [Validators.required]),
+          apellido: new FormControl(this.usuario.apellido, [Validators.required]),
+          email: new FormControl(this.usuario.email, [Validators.required, Validators.email]),
+          fecha_nacimiento: new FormControl(fechaFormateada, [Validators.required, this.edadMinimaValidator(14)])
+        });
       });
     } else {
       // Manejar el caso en que no se encuentra un token en el Local Storage
       console.error('Token no encontrado en el Local Storage');
     }
+  }
+  validateMaxAge(dateOfBirth: Date): boolean {
+    const currentDate = new Date();
+    const maxAgeDate = new Date(currentDate.getFullYear() - 150, currentDate.getMonth(), currentDate.getDate());
+    return dateOfBirth <= maxAgeDate;
   }
 
   guardarCambios() {
