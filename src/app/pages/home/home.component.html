@@ -84,11 +84,6 @@
         <div>
           <h3>{{ selectedActividad.nombre }}</h3>
           <p>{{ selectedActividad.descripcion }}</p>
-          <p-card styleClass="bg-gray-100">
-            <span class="material-symbols-outlined" style="font-size: 75px;">
-              sound_detection_dog_barking
-              </span>
-          </p-card>
           <p>Fecha de creación {{ selectedActividad.fecha_creacion | date: 'dd/MM/yyyy': 'UTC' }}</p>  
         </div>
         
@@ -98,6 +93,11 @@
               <h3>{{ pasos[pasoActual].titulo }}</h3>
               <div class="flex flex-column align-items-center justify-content-center">
                 <div class="col-8">
+                  <p-card styleClass="bg-gray-100">
+                    <span class="material-symbols-outlined" style="font-size: 75px;">
+                      sound_detection_dog_barking
+                      </span>
+                  </p-card>
                 </div>
               </div>
               <div class="mt-4 mb-4 mr-4 ml-4">
@@ -119,11 +119,7 @@
       </div>
     </p-dialog>
     </div>
-
   </p-card>
-  
-  
-  
   
   <!--
     MOSTRAR TODAS LAS CATEGORIAS
