@@ -30,9 +30,9 @@
   <div class="mt-4 mb-4" *ngIf="!perroSeleccionado">
     <div class="flex flex-column align-items-center justify-content-center text-center ml-2 mr-2">
       <h2>Perro seleccionado</h2>
-      <p-card styleClass="bg-pink-100 border-solid border-600">
+      <p-card styleClass="bg-pink-100 border-solid border-600 cursor-pointer" [routerLink]="['/perros']">
         <div>
-          <h4>No hay un perro seleccionado</h4>
+          <h4>No hay un perro seleccionado, ¿Quiere añadir o seleccionar uno?</h4>
         </div>
       </p-card>
     </div>
