@@ -20,7 +20,7 @@ export class CategoriasComponent {
   categorias: any[] = [];
   perro: any;
   actividadExistente = false;
-
+  perroSeleccionado = localStorage.getItem('perroSeleccionado');
 
 
   constructor(private route: ActivatedRoute,
@@ -246,7 +246,7 @@ reiniciarValores() {
         this.pasoActual++;
   
         // Verifica si hay un perro seleccionado antes de actualizar el contador
-        if (this.perro) {
+        if (this.perroSeleccionado) {
             const token = localStorage.getItem('token');
   
             if (token) {
@@ -268,25 +268,21 @@ reiniciarValores() {
       this.pasoActual--;
       console.log(this.pasos[this.pasoActual]);
   
-      // Verifica si hay un perro seleccionado antes de actualizar el contador
-      if (this.perro) {
-        const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token');
         let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
   
-        console.log(contadorActual);
+        console.log(contadorActual)
   
         if (token) {
           this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
+      
         } else {
-          console.error('Token no encontrado en el Local Storage');
+        console.error('Token no encontrado en el Local Storage');
         }
       } else {
-        console.log('Advertencia: No hay un perro seleccionado. El contador no se actualizará.');
-        // Puedes realizar alguna acción o mostrar un mensaje de advertencia según tus necesidades.
-      }
-    } else {
       console.error('El paso actual ya es 0, no se puede decrementar más.');
     }
+    
   }
   actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
     this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
