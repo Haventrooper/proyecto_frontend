@@ -1,13 +1,12 @@
 <div class="mt-8 mb-8">
-  <div class="flex align-items-center justify-content-center">
+  <div class="flex align-items-center justify-content-center mr-4 ml-4">
       <p-card class="border-800" styleClass="bg-cyan-100 border-solid">
-        <div class="flex">
-          <div class="flex justify-content-center align-items-center mr-4 ml-4">
-            <span class="material-symbols-outlined" style="font-size: 100px;">
-              account_circle
-              </span>
-          </div>
-          <div class="flex justify-content-center align-items-center mr-4 ml-4">
+          <div class="flex flex-wrap justify-content-center align-items-center mr-4 ml-4">
+            <div class="flex justify-content-center align-items-center mr-4 ml-4 mt-2 mb-2">
+              <span class="material-symbols-outlined" style="font-size: 100px;">
+                account_circle
+                </span>
+            </div>
             <div class="mr-4 ml-4">
               <h4>Nombre</h4>
               <p>{{usuario?.nombre}}</p>
@@ -25,7 +24,6 @@
               <p>{{usuario?.fecha_nacimiento | date: 'dd/MM/yyyy': 'UTC' }}</p>
             </div>
           </div>
-        </div>
       </p-card>
   </div>
     

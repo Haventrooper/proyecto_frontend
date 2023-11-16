@@ -3,29 +3,28 @@
   CONTENEDOR DE PAGINA PRINCIPAL
 -->
   <p-card styleClass="bg-gray-100">
-    <div class="flex flex-column align-items-center justify-content-center">
-      <h3>Bienvenid@ {{username?.nombre}}
-        <span class="material-symbols-outlined">
-          pet_supplies
-          </span>
-          !!!
-      </h3>
+      
       <div class="btn-container flex align-items-center justify-content-center">
-        <div class="inline flex col-12 md: col-6 sm: col-4">
-          <div class="mr-2 ml-2">
+        <div class="flex flex-wrap align-items-center justify-content-center">
+          <h3>Bienvenid@ {{username?.nombre}}
+            <span class="material-symbols-outlined">
+              pet_supplies
+              </span>
+              !!!
+          </h3>
+          <div class="mr-2 ml-2  mt-2 mb-2">
             <p-button icon="pi pi-iconName" label="Perfil" (click)="perfilUsuario()"></p-button>
     
           </div>
-          <div class="mr-2 ml-2">
+          <div class="mr-2 ml-2  mt-2 mb-2">
             <p-button icon="pi pi-iconName" label="Perros de {{username?.nombre}}" [routerLink]="['/perros']"></p-button>
     
           </div>
-          <div class="mr-2 ml-2">
+          <div class="mr-2 ml-2  mt-2 mb-2">
             <p-button icon="pi pi-iconName" severity="danger" label="Cerrar Sesión" (click)="logout()"></p-button>
           </div>
         </div>
       </div>
-    </div>
   </p-card>
 
   <div class="mt-4 mb-8" *ngIf="perroSeleccionado">
@@ -123,14 +122,12 @@
     MOSTRAR TODAS LAS CATEGORIAS
   -->
   <p-card styleClass="bg-cyan-200">
-    <div class="flex justify-content-center align-items-center">
+    <div class="flex flex-wrap justify-content-center align-items-center text-center">
       <h2>Todas las categorías</h2>
-      <div class="flex">
-        <div class="mr-2 ml-2" *ngFor="let categoria of categorias">
+        <div class="mr-2 ml-2 mt-2 mb-2" *ngFor="let categoria of categorias">
           <p-button icon="pi pi-iconName" label="{{categoria.nombre}}" [routerLink]="['/categorias', categoria.id_categoria]"></p-button>
         </div>
       </div>
-    </div>
   </p-card>
   
   <!--
