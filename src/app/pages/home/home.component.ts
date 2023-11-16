@@ -199,18 +199,15 @@ logout() {
     cancelButtonText: 'Cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
-      // Lógica a ejecutar si se hace clic en "Aceptar"
-      console.log('Aceptar');
-
-      //a elementos del localStorage después de confirmar
-      localStorage.removeItem("token");
-      localStorage.removeItem("perroSeleccionado");
+      if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+      }
+      if (localStorage.getItem("perroSeleccionado")) {
+        localStorage.removeItem("perroSeleccionado");
+      }
       localStorage.clear();
-
-      // Redirige a la página de login
-      this.router.navigate(['/login']); // Asegúrate de cambiar '/login' por la ruta correcta
+      this.router.navigate(['/login']);
     } else if (result.dismiss === Swal.DismissReason.cancel) {
-      // Lógica a ejecutar si se hace clic en "Cancelar" o se cierra la alerta
       console.log('Cancelar');
     }
   });
