@@ -25,7 +25,7 @@ export class HomeComponent {
   razas: any;
     
   selectedPerroId: number | null = null;
-  perroSeleccionado: any;
+  perroSeleccionado: any = null;
 
   constructor(private td_service: TdserviceService,
     private router: Router) {
@@ -206,6 +206,7 @@ logout() {
         localStorage.removeItem("perroSeleccionado");
       }
       localStorage.clear();
+      this.td_service.actualizarPerroSeleccionado(null);
       this.router.navigate(['/login']);
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       console.log('Cancelar');

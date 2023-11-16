@@ -20,7 +20,6 @@ export class CategoriasComponent {
   categorias: any[] = [];
   perro: any;
   actividadExistente = false;
-  perroSeleccionado = localStorage.getItem('perroSeleccionado');
 
 
 
@@ -247,7 +246,7 @@ reiniciarValores() {
         this.pasoActual++;
   
         // Verifica si hay un perro seleccionado antes de actualizar el contador
-        if (this.perroSeleccionado) {
+        if (this.perro) {
             const token = localStorage.getItem('token');
   
             if (token) {
@@ -270,7 +269,7 @@ reiniciarValores() {
       console.log(this.pasos[this.pasoActual]);
   
       // Verifica si hay un perro seleccionado antes de actualizar el contador
-      if (this.perroSeleccionado) {
+      if (this.perro) {
         const token = localStorage.getItem('token');
         let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
   
