@@ -204,6 +204,16 @@ export class TdserviceService {
 
   //Delete
 
+  deleteUsuario(idUsuario: string, token: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.delete(`${this.url}/eliminarUsuario/${idUsuario}`, httpOptions);
+  }
+
   deletePerro(idPerro: number, token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

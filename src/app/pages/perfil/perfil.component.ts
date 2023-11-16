@@ -145,6 +145,67 @@ export class PerfilComponent {
       console.error('Token no encontrado en el Local Storage');
     }
   }
+
+  eliminarUsuario() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      
+      Swal.fire({
+      title: '¿Está seguro?',
+      text: 'Esta acción es irreversible',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+        // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
+        this.td_service.deleteUsuario(this.usuario.id_usuario, token).subscribe(
+          (response) => {
+            // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
+            Swal.fire({
+              title: 'Éxito',
+              text: 'El usuario se ha eliminado con éxito',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
+            console.log(response);
+            localStorage.removeItem("token");
+            localStorage.removeItem("perroSeleccionado");
+            localStorage.clear();
+            this.td_service.actualizarPerroSeleccionado(null);
+
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            // Maneja el error, por ejemplo, muestra un mensaje de error
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al eliminar usuario. Por favor, intenta nuevamente.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            // Maneja los errores en caso de que ocurra un problema con la eliminación.
+            console.error(error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // El usuario hizo clic en "Cancelar" o cerró la alerta
+        Swal.fire({
+          title: 'Cancelado',
+          text: 'La acción ha sido cancelada',
+          icon: 'info',
+          confirmButtonText: 'Aceptar'
+        });
+        // No realizas la eliminación en este caso
+        }
+      });
+    }
+  }
+
   validateMaxAge(dateOfBirth: Date): boolean {
     const currentDate = new Date();
     const maxAgeDate = new Date(currentDate.getFullYear() - 150, currentDate.getMonth(), currentDate.getDate());
