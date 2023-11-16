@@ -122,22 +122,55 @@ cargarPasos(idActividad: number, token: string) {
     );
 }
   
-  siguiente() {
-    // Verifica si el paso siguiente es válido
-    if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
+siguiente() {
+  // Verifica si el paso siguiente es válido
+  if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
       console.log(this.pasos[this.pasoActual]);
       this.pasoActual++;
+
+      // Verifica si hay un perro seleccionado antes de actualizar el contador
+      if (this.perroSeleccionado) {
+          const token = localStorage.getItem('token');
+
+          if (token) {
+              this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+          } else {
+              console.error('Token no encontrado en el Local Storage');
+          }
+      } else {
+          console.log('Advertencia: No hay un perro seleccionado. El contador no se actualizará.');
+          // Puedes realizar alguna acción o mostrar un mensaje de advertencia según tus necesidades.
+      }
+  } else {
+      console.error('No hay más pasos disponibles o el paso actual es undefined.');
+  }
+}
+anterior() {
+  if (this.pasoActual > 0) {
+    this.pasoActual--;
+    console.log(this.pasos[this.pasoActual]);
+
+    // Verifica si hay un perro seleccionado antes de actualizar el contador
+    if (this.perroSeleccionado) {
       const token = localStorage.getItem('token');
-  
+      let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
+
+      console.log(contadorActual);
+
       if (token) {
-        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
       } else {
         console.error('Token no encontrado en el Local Storage');
       }
     } else {
-      console.error('No hay más pasos disponibles o el paso actual es undefined.');
+      console.log('Advertencia: No hay un perro seleccionado. El contador no se actualizará.');
+      // Puedes realizar alguna acción o mostrar un mensaje de advertencia según tus necesidades.
     }
+  } else {
+    console.error('El paso actual ya es 0, no se puede decrementar más.');
   }
+}
+
   
 
   reiniciarValores() {
@@ -152,26 +185,8 @@ cargarPasos(idActividad: number, token: string) {
     // Otras reinicializaciones según tus necesidades
   }
   
-	anterior() {
-  if (this.pasoActual > 0) {
-    this.pasoActual--;
-    console.log(this.pasos[this.pasoActual]);
-
-    const token = localStorage.getItem('token');
-      let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
-
-      console.log(contadorActual)
-
-      if (token) {
-        this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
-    
-      } else {
-      console.error('Token no encontrado en el Local Storage');
-      }
-    } else {
-    console.error('El paso actual ya es 0, no se puede decrementar más.');
-  }
-}
+	
+  
 
 logout() {
   // Muestra la alerta antes de eliminar los elementos del localStorage

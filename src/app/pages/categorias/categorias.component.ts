@@ -243,39 +243,51 @@ reiniciarValores() {
   siguiente() {
     // Verifica si el paso siguiente es válido
     if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
-      console.log(this.pasos[this.pasoActual]);
-      this.pasoActual++;
-      const token = localStorage.getItem('token');
+        console.log(this.pasos[this.pasoActual]);
+        this.pasoActual++;
   
-      if (token) {
-        this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
-      } else {
-        console.error('Token no encontrado en el Local Storage');
-      }
+        // Verifica si hay un perro seleccionado antes de actualizar el contador
+        if (this.perroSeleccionado) {
+            const token = localStorage.getItem('token');
+  
+            if (token) {
+                this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+            } else {
+                console.error('Token no encontrado en el Local Storage');
+            }
+        } else {
+            console.log('Advertencia: No hay un perro seleccionado. El contador no se actualizará.');
+            // Puedes realizar alguna acción o mostrar un mensaje de advertencia según tus necesidades.
+        }
     } else {
-      console.error('No hay más pasos disponibles o el paso actual es undefined.');
+        console.error('No hay más pasos disponibles o el paso actual es undefined.');
     }
   }
+  
   anterior() {
     if (this.pasoActual > 0) {
       this.pasoActual--;
       console.log(this.pasos[this.pasoActual]);
   
-      const token = localStorage.getItem('token');
+      // Verifica si hay un perro seleccionado antes de actualizar el contador
+      if (this.perroSeleccionado) {
+        const token = localStorage.getItem('token');
         let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
   
-        console.log(contadorActual)
+        console.log(contadorActual);
   
         if (token) {
           this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
-      
         } else {
-        console.error('Token no encontrado en el Local Storage');
+          console.error('Token no encontrado en el Local Storage');
         }
       } else {
+        console.log('Advertencia: No hay un perro seleccionado. El contador no se actualizará.');
+        // Puedes realizar alguna acción o mostrar un mensaje de advertencia según tus necesidades.
+      }
+    } else {
       console.error('El paso actual ya es 0, no se puede decrementar más.');
     }
-    
   }
   actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
     this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
