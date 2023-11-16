@@ -2,13 +2,18 @@
     <div>
       <div>
         <p-card styleClass="bg-cyan-200">
-          <div class="flex justify-content-center align-items-center">
-            <h2>Todas las categorías</h2>
-            <div class="ml-4 mr-2">
+          <div class="flex flex-wrap justify-content-center align-items-center text-center">
+            <div class="ml-4 mr-4">
+              <h2>Todas las categorías</h2>
+
+            </div>
+            <div class="ml-2 mr-2">
               <p-button label="Todas las Actividades" (click)="mostrarTodasLasActividades()"></p-button>
             </div>
-            <div class="flex">
-              <div class="mr-2 ml-2" *ngFor="let categoria of categorias">
+            <div class="flex flex-wrap justify-content-center align-items-center text-center">
+
+              <div class="mr-2 ml-2 mt-2 mb-2" *ngFor="let categoria of categorias">
+
                 <p-button icon="pi pi-iconName" label="{{categoria.nombre}}" (click)="seleccionarCategoria(categoria)"></p-button>
               </div>
             </div>
@@ -57,8 +62,8 @@
                   </div>
                 </div>
                 <div class="flex align-items-center justify-content-center">
-                  <div class="mt-4 mb-4 mr-4 ml-4">
-                    <p-button  *ngIf="!actividadExistente && perroSeleccionado" [disabled]="!perroSeleccionado" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
+                  <div *ngIf="!actividadExistente && perroSeleccionado" class="mt-4 mb-4 mr-4 ml-4">
+                    <p-button [disabled]="!perroSeleccionado" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
                   </div>
                   <div class="mr-4 ml-4">
                     <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>

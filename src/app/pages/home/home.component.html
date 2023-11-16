@@ -3,7 +3,6 @@
   CONTENEDOR DE PAGINA PRINCIPAL
 -->
   <p-card styleClass="bg-gray-100">
-      
       <div class="btn-container flex align-items-center justify-content-center">
         <div class="flex flex-wrap align-items-center justify-content-center">
           <h3>Bienvenid@ {{username?.nombre}}
@@ -103,8 +102,8 @@
           </div>
         </div>
         <div class="flex align-items-center justify-content-center">
-          <div class="mt-4 mb-4 mr-4 ml-4">
-            <p-button  *ngIf="!actividadExistente && perroSeleccionado" [disabled]="!perroSeleccionado" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
+          <div *ngIf="!actividadExistente && perroSeleccionado" class="mt-4 mb-4 mr-4 ml-4">
+            <p-button [disabled]="!perroSeleccionado" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
           </div>
           <div class="mr-4 ml-4">
             <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>
