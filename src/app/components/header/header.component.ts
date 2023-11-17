@@ -16,8 +16,5 @@ export class HeaderComponent {
   }
   
   ngOnInit() { 
-    this.menu = [
-      
-    ]; 
   } 
 }
