@@ -38,7 +38,7 @@ export class CategoriasComponent {
 
       // Parsea el JSON si es necesario
       this.perro = perroSeleccionado ? JSON.parse(perroSeleccionado) : null;
-      console.log(this.perro.id_perro)
+      console.log(this.perro?.id_perro)
       // Ahora puedes utilizar this.idCategoria para cargar las actividades relacionadas con esta categoría
     });
   }
@@ -248,9 +248,11 @@ reiniciarValores() {
         // Verifica si hay un perro seleccionado antes de actualizar el contador
         if (this.perroSeleccionado) {
             const token = localStorage.getItem('token');
+
+
   
             if (token) {
-                this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
+                this.actualizarContador(this.perro?.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
             } else {
                 console.error('Token no encontrado en el Local Storage');
             }
@@ -274,7 +276,7 @@ reiniciarValores() {
         console.log(contadorActual)
   
         if (token) {
-          this.actualizarContador(this.perro.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
+          this.actualizarContador(this.perro?.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
       
         } else {
         console.error('Token no encontrado en el Local Storage');
@@ -284,7 +286,12 @@ reiniciarValores() {
     }
     
   }
+
   actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
+
+    if(!this.perroSeleccionado){
+      return
+    }
     this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
       (data: any) => {
         console.log('Contador actualizado correctamente', data);

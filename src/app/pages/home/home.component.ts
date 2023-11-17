@@ -70,7 +70,6 @@ export class HomeComponent {
 
     if (this.perroSeleccionado && this.perroSeleccionado.id_perro) {
       this.guardarActividadPerroReciente()
-      this.verificarActividadExistente(token);
       this.cargarPasos(actividad.id_actividad, token);
     } else {
       this.cargarPasos(actividad.id_actividad, token);
@@ -93,6 +92,11 @@ realizarSolicitudPostActividadReciente(fecha_reciente: Date, token: string) {
 }
 
 verificarActividadExistente(token: string) {
+
+  if(!this.perroSeleccionado){
+    return
+  }
+  
   this.td_service.getVerificarActividad(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, token).subscribe(
       (data: any) => {
         if (data.mensaje === 'Actividad ya en BD') {
