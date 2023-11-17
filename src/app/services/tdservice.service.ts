@@ -10,6 +10,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TdserviceService {
 
+  actividadesSeleccionadas: number[] = [];
+
   constructor(private http: HttpClient) { }
 
   url = 'http://localhost:3000'
@@ -49,14 +51,9 @@ export class TdserviceService {
     return this.http.get<any[]>(`${this.url}/razas`, { headers: headers });
   }
 
-
-  //Guarda actividades seleccionadas en un array para ser insertadas en el body del post entrenamiento...
-  actividadesSeleccionadas: number[] = [];
-
   agregarActividadSeleccionada(idActividad: number): void {
     this.actividadesSeleccionadas.push(idActividad);
   }
-  //CADA VEZ QUE SE SELECCIONA UNA ACTIVIDAD SE LLAMA LA FUNCION DE ARRIBA
 
   obtenerActividadesSeleccionadas(): number[] {
     return this.actividadesSeleccionadas;
@@ -68,9 +65,6 @@ export class TdserviceService {
       id_perro: idPerro,
       actividadesSeleccionadas: actividadesSeleccionadas
     };
-
-    //Crear solicitud en servidor REGISTRO ENTRENAMIENTO NO OLVIDAR
-    //AÑADIR AUTENTICACION CON TOKEN TAMBIEN SI FUNCIONA
     return this.http.post(`${this.url}/registroEntrenamiento/${idUsuario}`, body);
   }
 
@@ -127,20 +121,20 @@ export class TdserviceService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}` 
       })
     };
     return this.http.post(`${this.url}/registroPerro`, datosRegistro, httpOptions);
   }
 
-  postActividadPerro(idPerro: number, idActividad: number, contador: number, token: string): Observable<any>{ //Añadir contador
+  postActividadPerro(idPerro: number, idActividad: number, contador: number, token: string): Observable<any>{ 
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}` 
       })
     };
-    const body = {idPerro, idActividad, contador}; //Añadir contador
+    const body = {idPerro, idActividad, contador};
     return this.http.post(`${this.url}/guardarActividad/${idPerro}/${idActividad}`, body, httpOptions);
   }
 
@@ -148,7 +142,7 @@ export class TdserviceService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}`
       })
     };
     const body = {idPerro, idActividad, fecha_reciente: fecha_reciente.toISOString().slice(0, 19).replace('T', ' ')}; //Añadir fecha_reciente
@@ -173,7 +167,7 @@ export class TdserviceService {
         'Authorization': `Bearer ${token}`
       })
     };
-    const body = { contador }; // Nuevo valor del contador
+    const body = { contador };
 
     return this.http.put(`${this.url}/actualizarActividad/${idPerro}/${idActividad}`, body, httpOptions);
 
@@ -182,11 +176,10 @@ export class TdserviceService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}` 
       })
     };
         
-    // Realiza la solicitud PUT con los datos actualizados en el cuerpo de la solicitud
     return this.http.put(`${this.url}/modificarUsuario`, datosActualizados, httpOptions);
   }
 
@@ -198,7 +191,6 @@ export class TdserviceService {
       })
     };
 
-    // Realiza la solicitud PUT con los datos actualizados en el cuerpo de la solicitud
     return this.http.put(`${this.url}/modificarPerro/${idPerro}`, datosActualizados, httpOptions);
   }
 
@@ -222,7 +214,6 @@ export class TdserviceService {
       })
     };
 
-    // Realiza la solicitud PUT con los datos actualizados en el cuerpo de la solicitud
     return this.http.delete(`${this.url}/eliminarPerro/${idPerro}`, httpOptions);
   }
 
@@ -283,7 +274,7 @@ export class TdserviceService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}`
       })
     };
     return this.http.post(`${this.url}/actividadesAdmin`, datosActividad, httpOptions);
@@ -293,26 +284,26 @@ export class TdserviceService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}` 
       })
     };
     return this.http.post(`${this.url}/pasoActividad`, datosPaso, httpOptions);
   }
-  postCategoria(datosCategoria: any, token: string): Observable<any>{ //Añadir actividad reciente
+  postCategoria(datosCategoria: any, token: string): Observable<any>{ 
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}`
       })
     };
     return this.http.post(`${this.url}/postCategoria`, datosCategoria, httpOptions);
   }
 
-  postRazaAdmin(nombre: any, token: string): Observable<any>{ //Añadir actividad reciente
+  postRazaAdmin(nombre: any, token: string): Observable<any>{ 
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}`
       })
     };
 
@@ -323,7 +314,7 @@ export class TdserviceService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Añade el token de autenticación en el encabezado si es necesario
+        'Authorization': `Bearer ${token}` 
       })
     };
     return this.http.post(`${this.url}/postSugerencia`, datosSugerencia, httpOptions);
