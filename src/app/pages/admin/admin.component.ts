@@ -208,20 +208,11 @@ export class AdminComponent {
     }
     const reader = new FileReader();
     reader.onloadend = () => {
-        // Use a regex to remove data url part
         const base64String = reader.result
-
         this.imagenPaso = base64String
-
-        // Logs wL2dvYWwgbW9yZ...
     };
     reader.readAsDataURL(file);
-    // let file = document.getElementById('subirImagenActividad')
-    // file?.addEventListener('change', (e) => {
-    //   console.log(e?.target)
-    // })
   }
-
 
   postActividadNueva(){
   
@@ -252,7 +243,6 @@ export class AdminComponent {
           }          
         );
       }else{
-        console.log("error")
       }
     }
   }
@@ -283,7 +273,6 @@ export class AdminComponent {
           }          
         );
       }else{
-        console.log("error")
       }
     }
   }
@@ -294,7 +283,6 @@ export class AdminComponent {
     if (token) {
       this.td_service.getSugerenciasAdmin(token).subscribe(
         (response: any) => {
-          // Mapea las categorías al formato de SelectItem
           this.sugerencias = response;
         },
         (error) => {
@@ -315,7 +303,6 @@ export class AdminComponent {
     if (token) {
       this.td_service.getRazasAdmin(token).subscribe(
         (response: any) => {
-          // Mapea las categorías al formato de SelectItem
           this.razas = response.map((razas: any) => ({ label: razas.nombre, value: razas.id_raza }));
           this.razas_= response
         },
@@ -338,7 +325,6 @@ export class AdminComponent {
     if (token) {
       this.td_service.getCategoriasAdmin(token).subscribe(
         (response: any) => {
-          // Mapea las categorías al formato de SelectItem
           this.categorias = response.map((categorias: any) => ({ label: categorias.nombre, value: categorias.id_categoria }));
           this.categorias_= response
         },
@@ -364,19 +350,12 @@ export class AdminComponent {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Lógica a ejecutar si se hace clic en "Aceptar"
-        console.log('Aceptar');
-  
-        // Elimina elementos del localStorage después de confirmar
         localStorage.removeItem("token");
         localStorage.clear();
   
-        // Redirige a la página de login
-        this.router.navigate(['/adminlogin']); // Asegúrate de cambiar '/login' por la ruta correcta
+        this.router.navigate(['/adminlogin']);
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // Lógica a ejecutar si se hace clic en "Cancelar" o se cierra la alerta
-        console.log('Cancelar');
-      }
+        }
     });
   }
 
@@ -386,7 +365,6 @@ export class AdminComponent {
     if (token) {
       this.td_service.getActividadesAdmin(token).subscribe(
         (response: any) => {
-          // Mapea las categorías al formato de SelectItem
           this.actividades = response.map((actividades: any) => ({ label: actividades.nombre, value: actividades.id_actividad }));
           this.actividades_ = response      
         },
@@ -409,7 +387,6 @@ export class AdminComponent {
     if (token) {
       this.td_service.getPasosActividadesAdmin(idActividad, token).subscribe(
         (response: any) => {
-          // Mapea las categorías al formato de SelectItem
           this.pasosPorActividad[idActividad] = response;
         },
         (error) => {
@@ -437,7 +414,6 @@ export class AdminComponent {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
           this.td_service.deleteActividadYPasos(idActividad, token).subscribe(
             (response) => {
               Swal.fire({
@@ -458,14 +434,12 @@ export class AdminComponent {
             }
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
             title: 'Cancelado',
             text: 'La acción ha sido cancelada',
             icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // No realizas la eliminación en este caso
         }
       });
     } else {
@@ -486,10 +460,8 @@ export class AdminComponent {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
           this.td_service.deleteCategoria(idCat, token).subscribe(
             (response) => {
-              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
               Swal.fire({
                 title: 'Éxito',
                 text: 'La categoría ha sido eliminada correctamente',
@@ -497,11 +469,8 @@ export class AdminComponent {
                 confirmButtonText: 'Aceptar'
               });
               this.obtenerCategoriasAdmin();
-
-              // Puedes realizar otras acciones después de la eliminación si es necesario
             },
             (error) => {
-              // Maneja el error, por ejemplo, muestra un mensaje de error
               Swal.fire({
                 title: 'Error',
                 text: 'Hubo un problema al eliminar la categoría. Por favor, intenta nuevamente.',
@@ -511,14 +480,12 @@ export class AdminComponent {
             }
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
             title: 'Cancelado',
             text: 'La acción ha sido cancelada',
             icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // No realizas la eliminación en este caso
         }
       });
     } else {
@@ -540,20 +507,16 @@ export class AdminComponent {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
           this.td_service.deletePaso(idPaso, token).subscribe(
             (response) => {
-              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
               Swal.fire({
                 title: 'Éxito',
                 text: 'El paso ha sido eliminado correctamente',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
-              // Puedes realizar otras acciones después de la eliminación si es necesario
             },
             (error) => {
-              // Maneja el error, por ejemplo, muestra un mensaje de error
               Swal.fire({
                 title: 'Error',
                 text: 'Hubo un problema al eliminar el paso. Por favor, intenta nuevamente.',
@@ -563,14 +526,12 @@ export class AdminComponent {
             }
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
             title: 'Cancelado',
             text: 'La acción ha sido cancelada',
             icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // No realizas la eliminación en este caso
         }
       });
     } else {
@@ -592,10 +553,8 @@ export class AdminComponent {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
           this.td_service.deleteSugerencia(idSugerencia, token).subscribe(
             (response) => {
-              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
               Swal.fire({
                 title: 'Éxito',
                 text: 'La sugerencia ha sido eliminada correctamente',
@@ -603,10 +562,8 @@ export class AdminComponent {
                 confirmButtonText: 'Aceptar'
               });
               this.obtenerSugerenciasAdmin();
-              // Puedes realizar otras acciones después de la eliminación si es necesario
             },
             (error) => {
-              // Maneja el error, por ejemplo, muestra un mensaje de error
               Swal.fire({
                 title: 'Error',
                 text: 'Hubo un problema al eliminar la sugerencia. Por favor, intenta nuevamente.',
@@ -616,14 +573,12 @@ export class AdminComponent {
             }
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
             title: 'Cancelado',
             text: 'La acción ha sido cancelada',
             icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // No realizas la eliminación en este caso
         }
       });
     } else {
@@ -645,10 +600,8 @@ export class AdminComponent {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
           this.td_service.deleteRaza(idRaza, token).subscribe(
             (response) => {
-              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
               Swal.fire({
                 title: 'Éxito',
                 text: 'La raza ha sido eliminada correctamente',
@@ -656,10 +609,8 @@ export class AdminComponent {
                 confirmButtonText: 'Aceptar'
               });
               this.obtenerRazasAdmin()
-              // Puedes realizar otras acciones después de la eliminación si es necesario
             },
             (error) => {
-              // Maneja el error, por ejemplo, muestra un mensaje de error
               Swal.fire({
                 title: 'Error',
                 text: 'Hubo un problema al eliminar la raza. Por favor, intenta nuevamente.',
@@ -669,14 +620,12 @@ export class AdminComponent {
             }
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
             title: 'Cancelado',
             text: 'La acción ha sido cancelada',
             icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // No realizas la eliminación en este caso
         }
       });
     } else {

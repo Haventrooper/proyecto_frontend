@@ -29,7 +29,6 @@ export class LoginComponent {
   login(){
     this.td_service.login(this.form.get('email')?.value,this.form.get('password')?.value).subscribe(response => {
       let resp: any = response;
-      console.log(resp)
       if( resp===false ){
         
         Swal.fire({

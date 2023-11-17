@@ -46,13 +46,10 @@ export class PerfilperroComponent implements OnInit {
       let idPerro = params['id_perro'];
       
       if (idPerro !== undefined && idPerro !== null) {
-        // El parámetro 'id_perro' tiene un valor válido, puedes proceder
         this.obtenerDatosDelPerro(idPerro);
         this.obtenerActividadPerro(idPerro);
         this.obtenerActividadPerroRecientes(idPerro);
-        console.log(idPerro)
         this.id_perro_ = idPerro
-        console.log(this.id_perro_)
 
       } else {
         console.error('idPerro es undefined');
@@ -80,13 +77,10 @@ export class PerfilperroComponent implements OnInit {
   obtenerCategorias(){
     const token = localStorage.getItem('token');
     if (token) {
-      // Hacer la solicitud GET utilizando el servicio
       this.td_service.getCategorias(token).subscribe((data) => {
-        // Asignar la respuesta a la variable actividades
         this.categorias = data;
       });
     } else {
-      // Manejar el caso en que no se encuentra un token en el Local Storage
       console.error('Token no encontrado en el Local Storage');
     }   
   }
@@ -116,7 +110,7 @@ export class PerfilperroComponent implements OnInit {
   abrirDialogo(actividad: any){
     this.displayModal = true;
     this.selectedActividad = actividad;
-    this.actividadExistente = false; // Establece inicialmente en false
+    this.actividadExistente = false;
 
     const token = localStorage.getItem('token');
 
@@ -132,9 +126,7 @@ export class PerfilperroComponent implements OnInit {
 
 
   siguiente() {
-    // Verifica si el paso siguiente es válido
     if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
-      console.log(this.pasos[this.pasoActual]);
       this.pasoActual++;
       const token = localStorage.getItem('token');
 
@@ -152,15 +144,11 @@ export class PerfilperroComponent implements OnInit {
   anterior() {
     if (this.pasoActual > 0) {
       this.pasoActual--;
-      console.log(this.pasos[this.pasoActual]);
       const token = localStorage.getItem('token');
-      let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
-
-      console.log(contadorActual)
+      let contadorActual = this.pasoActual;
 
       if (token) {
         this.actualizarContador(this.id_perro_, this.selectedActividad.id_actividad, contadorActual, token);
-    
       } else {
       console.error('Token no encontrado en el Local Storage');
       }
@@ -172,12 +160,9 @@ export class PerfilperroComponent implements OnInit {
   actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
     this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
       (data: any) => {
-        console.log('Contador actualizado correctamente', data);
-        // Realiza acciones adicionales después de actualizar el contador
       },
       (error) => {
         console.error('Error al actualizar el contador', error);
-        // Maneja errores si es necesario
       });
   }
 
@@ -188,11 +173,9 @@ export class PerfilperroComponent implements OnInit {
             this.actividadExistente = true;
           } else if (data.mensaje === 'No hay actividad guardada en BD') {
           }
-          console.log("found: ", this.perro.id_perro, this.selectedActividad.id_actividad);
         },
         (error) => {
           console.error('Error al verificar la actividad', error);
-          // Maneja errores si es necesario
         }
     );
 }
@@ -200,39 +183,35 @@ export class PerfilperroComponent implements OnInit {
   cargarPasos(idActividad: number, token: string) {
     this.td_service.getPasos(idActividad, token).subscribe(
         (data: any) => {
-          this.pasos = data; // Cargar los pasos al abrir el diálogo
+          this.pasos = data;
         },
         (error) => {
           console.error('Error al obtener los pasos de la actividad', error);
-          // Maneja errores si es necesario
         }
     );
 }
-obtenerRazas() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    this.td_service.getRazas(token).subscribe(
+
+  obtenerRazas() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.td_service.getRazas(token).subscribe(
       (data: any[]) => {
-        // Asigna directamente el resultado a la variable razas
         this.razas = data.map(raza => ({ label: raza.nombre, value: raza.id_raza }));
-        console.log('Datos de razas cargados:', this.razas);
       },
       error => {
         console.error('Error al obtener las razas:', error);
-        // Maneja el error según tus necesidades.
       }
     );
-  } else {
+    } else {
     console.error('Token no encontrado en el Local Storage');
+    }
   }
-}
 
   ordenarActividadesRecientes() {
     this.actividades_recientes.sort((a: any, b: any) => {
       const fechaA = new Date(a.fecha_reciente);
       const fechaB = new Date(b.fecha_reciente);
   
-      // Ordenar de más antiguo a más reciente
       return fechaA.getTime() - fechaB.getTime();
     });
   }
@@ -251,11 +230,6 @@ obtenerRazas() {
           id_raza: new FormControl(this.perro[0].id_raza, [Validators.required]),
           genero: new FormControl(this.perro[0].genero, [Validators.required])
         });
-
-        console.log('Datos del perro cargados:', this.formulario);
-  
-        // Mueve aquí cualquier código que dependa de this.perro
-        // Por ejemplo, puedes llamar a otras funciones que utilicen this.perro aquí
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
@@ -268,7 +242,6 @@ obtenerRazas() {
     if (token) {
       this.td_service.getActividadesPerro(idPerro, token).subscribe((data) => {
         this.actividades = data;
-        console.log('Actividades del perro:', this.actividades);
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
@@ -280,7 +253,6 @@ obtenerRazas() {
     if (token) {
       this.td_service.getActividadesPerroRecientes(idPerro, token).subscribe((data: any) => {
         this.actividades_recientes = data;
-        console.log('Datos de la actividad reciente del perro cargados:', this.actividades_recientes);
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
@@ -291,15 +263,12 @@ obtenerRazas() {
   modificarPerro() {
     if (this.formulario.valid && this.perro && this.perro.length > 0) {
       const idPerro = this.perro[0].id_perro;
-      console.log(idPerro)
       const datosActualizados = this.formulario.value;
-      const token = localStorage.getItem('token');/* Obtén el token de autenticación */;
+      const token = localStorage.getItem('token');
 
       if(token){
         this.td_service.putModificarPerro(idPerro, datosActualizados, token).subscribe(
           (response) => {
-            console.log('El perro se ha modificado correctamente', response);
-            // Realiza acciones adicionales después de la modificación
             Swal.fire({
               title: '¡Se han actualizado los datos!',
               text: 'Se han modificado los datos con éxito.',
@@ -316,7 +285,6 @@ obtenerRazas() {
               icon: 'error',
               confirmButtonText: 'Aceptar'
             });
-            // Maneja errores si es necesario
           }
         );
       }else{
@@ -341,41 +309,33 @@ obtenerRazas() {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
           this.td_service.deletePerro(idPerro, token).subscribe(
             (response) => {
-              // Maneja la respuesta exitosa, por ejemplo, muestra un mensaje de éxito
               Swal.fire({
                 title: 'Éxito',
                 text: 'El perro se ha eliminado con éxito',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
-              // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
-              console.log(response);
               this.router.navigate(['/perros']);
             },
             (error) => {
-              // Maneja el error, por ejemplo, muestra un mensaje de error
               Swal.fire({
                 title: 'Error',
                 text: 'Hubo un problema al eliminar el perro. Por favor, intenta nuevamente.',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
               });
-              // Maneja los errores en caso de que ocurra un problema con la eliminación.
               console.error(error);
             }
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
             title: 'Cancelado',
             text: 'La acción ha sido cancelada',
             icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // No realizas la eliminación en este caso
         }
       });
     } else {
@@ -399,13 +359,8 @@ obtenerRazas() {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          // El usuario hizo clic en "Aceptar", ahora realizas la eliminación
           this.td_service.eliminarActividadPorPerro(idPerro, idActividad, token).subscribe(
             (response) => {
-              // Maneja la respuesta de la API después de la eliminación exitosa.
-              console.log(response);
-  
-              // Muestra el Swal alert después de la eliminación exitosa.
               Swal.fire({
                 title: 'Actividad eliminada',
                 text: 'La actividad se ha eliminado con éxito',
@@ -413,14 +368,9 @@ obtenerRazas() {
                 confirmButtonText: '¡Entendido!'
               });
               this.obtenerActividadPerro(idPerro);
-  
-              // Puedes actualizar la vista o realizar otras acciones después de la eliminación.
             },
             (error) => {
-              // Maneja los errores en caso de que ocurra un problema con la eliminación.
               console.error(error);
-  
-              // Muestra un Swal alert indicando el error.
               Swal.fire({
                 title: 'Error',
                 text: 'Ha ocurrido un error al eliminar la actividad. Por favor, intenta nuevamente.',
@@ -430,14 +380,12 @@ obtenerRazas() {
             }
           );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // El usuario hizo clic en "Cancelar" o cerró la alerta
           Swal.fire({
             title: 'Cancelado',
             text: 'La acción ha sido cancelada',
             icon: 'info',
             confirmButtonText: 'Aceptar'
           });
-          // No realizas la eliminación en este caso
         }
       });
     } else {

@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class CategoriasComponent {
   idCategoria: any
-  selectedCategoria: any;  // Almacena la categoría seleccionada
+  selectedCategoria: any;
   actividades: any[] = [];
   selectedActividad: any;
   displayModal: boolean = false;
@@ -30,16 +30,13 @@ export class CategoriasComponent {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.idCategoria = +params['idCategoria']; // Convierte el ID a número
+      this.idCategoria = +params['idCategoria'];
       this.obtenerActividadesPorCat(this.idCategoria)
       this.obtenerCategorias();
 
       const perroSeleccionado = localStorage.getItem('perroSeleccionado');
 
-      // Parsea el JSON si es necesario
       this.perro = perroSeleccionado ? JSON.parse(perroSeleccionado) : null;
-      console.log(this.perro?.id_perro)
-      // Ahora puedes utilizar this.idCategoria para cargar las actividades relacionadas con esta categoría
     });
   }
 
@@ -51,7 +48,7 @@ export class CategoriasComponent {
   abrirDialogo(actividad: any){
     this.displayModal = true;
     this.selectedActividad = actividad;
-    this.actividadExistente = false; // Establece inicialmente en false
+    this.actividadExistente = false;
 
     const token = localStorage.getItem('token');
 
@@ -78,17 +75,14 @@ guardarActividadPerroReciente() {
 
     const fecha_reciente = new Date();
 
-    const idPerro = this.perro.id_perro; // Usar el ID del perro seleccionado
-    const idActividad = this.selectedActividad.id_actividad; // Reemplaza con el ID de tu actividad
+    const idPerro = this.perro.id_perro;
+    const idActividad = this.selectedActividad.id_actividad;
 
     this.td_service.postActividadPerroReciente(idPerro, idActividad, fecha_reciente, token).subscribe(
       (data: any) => {
-        console.log('La actividad reciente se ha guardado correctamente', data);
-        // Realiza acciones adicionales después de guardar la actividad
       },
       (error) => {
         console.error('Error al guardar la actividad reciente', error);
-        // Maneja errores si es necesario
       });
   } else {
     console.error('Token no encontrado o perro no seleccionado');
@@ -101,13 +95,10 @@ verificarActividadExistente(token: string) {
         if (data.mensaje === 'Actividad ya en BD') {
           this.actividadExistente = true;
         } else if (data.mensaje === 'No hay actividad guardada en BD') {
-          console.log('La actividad no existe en la BD.');
         }
-        console.log("found: ", this.perro.id_perro, this.selectedActividad.id_actividad);
       },
       (error) => {
         console.error('Error al verificar la actividad', error);
-        // Maneja errores si es necesario
       }
   );
 }
@@ -115,24 +106,18 @@ verificarActividadExistente(token: string) {
 cargarPasos(idActividad: number, token: string) {
   this.td_service.getPasos(idActividad, token).subscribe(
       (data: any) => {
-        this.pasos = data; // Cargar los pasos al abrir el diálogo
+        this.pasos = data;
       },
       (error) => {
         console.error('Error al obtener los pasos de la actividad', error);
-        // Maneja errores si es necesario
       }
   );
 }
 reiniciarValores() {
-  // Reinicia las variables y valores que necesites aquí
-  this.pasoActual = 0; // Reinicia el paso actual u otro valor predeterminado
-  this.pasos = []; // Reinicia los pasos
-  this.displayModal = false; // Cierra el modal
-  this.selectedActividad = null; // Reinicia la actividad seleccionada
-  
-    console.log('El diálogo se ha cerrado');
-    // Lógica para recargar la página    
-  // Otras reinicializaciones según tus necesidades
+  this.pasoActual = 0;
+  this.pasos = [];
+  this.displayModal = false;
+  this.selectedActividad = null;
 }
 
   obtenerActividadesPorCat(idCategoria: number){
@@ -141,12 +126,9 @@ reiniciarValores() {
     this.td_service.getActividadesPorCategoria(idCategoria, token).subscribe(
       (data: any) => {
           this.actividades = data;
-          console.log('Actividades por categoria:', this.actividades);
-          // Aquí puedes asignar los datos a las variables de tu componente
       },
       (error) => {
         console.error('Error al obtener actividades por categoria', error);
-        // Maneja el error de la solicitud
       });
     }else{
       console.error('Token no encontrado');
@@ -176,7 +158,6 @@ reiniciarValores() {
       }
     }
   
-    // Método para cerrar el diálogo
     cerrarModal() {
       this.displayModal = false;
     }
@@ -185,13 +166,10 @@ reiniciarValores() {
     const token = localStorage.getItem('token');
 
     if (token) {
-      // Hacer la solicitud GET utilizando el servicio
       this.td_service.getPasos(idActividad, token).subscribe((data) => {
-        // Asignar la respuesta a la variable actividades
         this.pasos = data;
       });
     } else {
-      // Manejar el caso en que no se encuentra un token en el Local Storage
       console.error('Token no encontrado en el Local Storage');
     } 
   }
@@ -202,20 +180,16 @@ reiniciarValores() {
   obtenerCategorias(){
     const token = localStorage.getItem('token');
 
-    // Verifica que haya un token antes de hacer la llamada al servicio
     if (token) {
       this.td_service.getCategorias(token).subscribe(
         (response: any) => {
-          // Maneja la respuesta exitosa, por ejemplo, asignando las categorías a tu variable
           this.categorias = response;
         },
         (error) => {
-          // Maneja el error, por ejemplo, mostrando un mensaje al usuario
           console.error('Error al obtener categorías:', error);
         }
       );
     } else {
-      // Maneja el caso en que no haya un token disponible
       console.error('Token no disponible. El usuario no está autenticado.');
     }
   } 
@@ -223,7 +197,7 @@ reiniciarValores() {
     const token = localStorage.getItem('token');
 
     if (token) {
-      this.selectedCategoria = null; // Reinicia la categoría seleccionada
+      this.selectedCategoria = null;
       this.td_service.getActividades(token).subscribe(
         (response: any) => {
           this.actividades = response;
@@ -234,31 +208,22 @@ reiniciarValores() {
       );
     }else{
       console.error('Token no disponible. El usuario no está autenticado.');
-
     }
-    // Lógica para obtener todas las actividades
-    
   }
+
   siguiente() {
-    // Verifica si el paso siguiente es válido
     if (this.pasoActual >= 0 && this.pasoActual < this.pasos.length) {
-        console.log(this.pasos[this.pasoActual]);
         this.pasoActual++;
-  
-        // Verifica si hay un perro seleccionado antes de actualizar el contador
+
         if (this.perroSeleccionado) {
             const token = localStorage.getItem('token');
 
-
-  
             if (token) {
                 this.actualizarContador(this.perro?.id_perro, this.selectedActividad.id_actividad, this.pasoActual, token);
             } else {
                 console.error('Token no encontrado en el Local Storage');
             }
         } else {
-            console.log('Advertencia: No hay un perro seleccionado. El contador no se actualizará.');
-            // Puedes realizar alguna acción o mostrar un mensaje de advertencia según tus necesidades.
         }
     } else {
         console.error('No hay más pasos disponibles o el paso actual es undefined.');
@@ -268,12 +233,9 @@ reiniciarValores() {
   anterior() {
     if (this.pasoActual > 0) {
       this.pasoActual--;
-      console.log(this.pasos[this.pasoActual]);
   
       const token = localStorage.getItem('token');
         let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
-  
-        console.log(contadorActual)
   
         if (token) {
           this.actualizarContador(this.perro?.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
@@ -284,7 +246,6 @@ reiniciarValores() {
       } else {
       console.error('El paso actual ya es 0, no se puede decrementar más.');
     }
-    
   }
 
   actualizarContador(idPerro: number, idActividad: number, nuevoContador: number, token: string) {
@@ -294,12 +255,9 @@ reiniciarValores() {
     }
     this.td_service.putContador(idPerro, idActividad, nuevoContador, token).subscribe(
       (data: any) => {
-        console.log('Contador actualizado correctamente', data);
-        // Realiza acciones adicionales después de actualizar el contador
       },
       (error) => {
         console.error('Error al actualizar el contador', error);
-        // Maneja errores si es necesario
       });
   }
 
@@ -310,13 +268,11 @@ reiniciarValores() {
 
       const contadorActual = this.pasoActual;
 
-      const idPerro = this.perro.id_perro; // Usar el ID del perro seleccionado
-      const idActividad = this.selectedActividad.id_actividad; // Reemplaza con el ID de tu actividad
+      const idPerro = this.perro.id_perro;
+      const idActividad = this.selectedActividad.id_actividad;
   
       this.td_service.postActividadPerro(idPerro, idActividad, contadorActual, token).subscribe(
         (data: any) => {
-          console.log('La actividad se ha guardado correctamente', data);
-          // Realiza acciones adicionales después de guardar la actividad
           this.displayModal = false
           Swal.fire({
             title: 'Actividad guardada',
@@ -327,7 +283,6 @@ reiniciarValores() {
         },
         (error) => {
           console.error('Error al guardar la actividad', error);
-          // Maneja errores si es necesario
         });
     } else {
       console.error('Token no encontrado o perro no seleccionado');

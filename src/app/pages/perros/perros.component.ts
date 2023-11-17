@@ -1,7 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -70,17 +69,13 @@ export class PerrosComponent {
   }
 
   obtenerPerros(): void {
-    // Obtener el token del Local Storage
     const token = localStorage.getItem('token');
 
     if (token) {
-      // Hacer la solicitud GET utilizando el servicio
       this.td_service.getPerros(token).subscribe((data) => {
-        // Asignar la respuesta a la variable perros
         this.perros = data;
       });
     } else {
-      // Manejar el caso en que no se encuentra un token en el Local Storage
       console.error('Token no encontrado en el Local Storage');
     }
   }
@@ -93,8 +88,6 @@ export class PerrosComponent {
       
       this.td_service.postPerro(datosRegistro, token).subscribe(
         (data: any) => {
-          console.log('Perro registrado con éxito', data);
-          // Realizar cualquier acción adicional después del registro
           Swal.fire({
             title: '¡Registro completado!',
             text: 'El perro se ha registrado con éxito.',
@@ -102,10 +95,6 @@ export class PerrosComponent {
             confirmButtonText: '¡Entendido!'
           });
           location.reload();
-
-  
-          // Realizar cualquier acción adicional después del registro
-          // Por ejemplo, cerrar el p-dialog
           this.mostrarModal = false;
         },
         (error) => {
@@ -115,15 +104,11 @@ export class PerrosComponent {
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
-  
-          // Realizar cualquier acción adicional después del registro
-          // Por ejemplo, cerrar el p-dialog
           this.mostrarModal = false;
         }
       );
     } else {
       console.error('Token no encontrado en el localStorage');
-      // Manejar la falta de token si es necesario
     }
   }
 
@@ -132,13 +117,10 @@ export class PerrosComponent {
     if (token) {
       this.td_service.getRazas(token).subscribe(
         (data: any[]) => {
-          // Asigna directamente el resultado a la variable razas
           this.razas = data.map(raza => ({ label: raza.nombre, value: raza.id_raza }));
-          console.log('Datos de razas cargados:', this.razas);
         },
         error => {
           console.error('Error al obtener las razas:', error);
-          // Maneja el error según tus necesidades.
         }
       );
     } else {
@@ -147,7 +129,6 @@ export class PerrosComponent {
   }
 
   seleccionarPerro(perroSeleccionado: any) {
-        // Luego, guárdalos en el localStorage
     localStorage.setItem('perroSeleccionado', JSON.stringify(perroSeleccionado));
     this.td_service.actualizarPerroSeleccionado(perroSeleccionado);
     Swal.fire(
