@@ -9,7 +9,7 @@
 
     <div class="text-center justify-content-center align-content-center mt-4 mb-4">
       <p-card styleClass="bg-blue-200">
-        <div class="flex max-w-max">
+        <div class="flex flex-wrap justify-content-center max-w-max">
           <div class="mt-4 mb-4" styleClass="bg-blue-200">
             <div>
               <h2>Crear actividad nueva</h2>
@@ -94,29 +94,31 @@
           </div>
         </div>
         <div class="mt-4 mb-4 ml-4 mr-4">
-          <h2>Pasos de actividad</h2>
-          <div *ngFor="let actividad of actividades_">
-            <div>
-              <h4>{{actividad.nombre}}</h4>
-              
-              <div>
-                <p-button class="ml-4 mr-4" icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
-                <p-button class="ml-4 mr-4" icon="pi pi-trash" severity="danger" (click)="eliminarActividad(actividad.id_actividad)" label="Eliminar Actividad"></p-button>
-  
-                  <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]">
-                    <p-card>
-                      <div class="flex">
-                        <div>
-                          {{paso.titulo}} - {{paso.nombre}} - {{paso.descripcion}}
-                      </div>
-                        <div>
-                          <p-button class="mr-4 ml-4" icon="pi pi-trash" severity="danger" (click)="eliminarPaso(paso.id_paso)" label="Eliminar Paso"></p-button>
+            <h2>Pasos de actividad</h2>
+            <div *ngFor="let actividad of actividades_">
+                <p-card styleClass="bg-indigo-100">
+
+                  <div>
+                    <h4>{{actividad.nombre}}</h4>
+                    <div>
+                      <p-button class="ml-4 mr-4 mt-2 mb-2" icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
+                      <p-button class="ml-4 mr-4" icon="pi pi-trash" severity="danger" (click)="eliminarActividad(actividad.id_actividad)" label="Eliminar Actividad"></p-button>
+        
+                        <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]" class="mt-4 mb-4">
+                          <p-card>
+                            <div class="flex">
+                              <div>
+                                {{paso.titulo}} - {{paso.nombre}} - {{paso.descripcion}}
+                            </div>
+                              <div>
+                                <p-button class="mr-4 ml-4" icon="pi pi-trash" severity="danger" (click)="eliminarPaso(paso.id_paso)" label="Eliminar Paso"></p-button>
+                              </div>
+                            </div>
+                          </p-card>
                         </div>
                       </div>
-                    </p-card>
-                  </div>
-                </div>
-              </div>
+                    </div>
+                </p-card>
             </div>
           </div>
         </div>
@@ -125,7 +127,7 @@
 
     <div class="text-center justify-content-center align-content-center mt-4 mb-4">
       <p-card  styleClass="bg-blue-200">
-        <div class="flex">
+        <div class="flex flex-wrap justify-content-center max-w-max">
           <div class="mt-4 mb-4">
             <div class="mt-4 mb-4 ml-4 mr-4">
               <h2>Crear sugerencia con raza</h2>
@@ -182,7 +184,7 @@
 
       <div class="text-center justify-content-center align-content-center mt-4 mb-4">
         <p-card styleClass="bg-blue-200">
-          <div class="flex flex-wrap">
+          <div class="flex flex-wrap justify-content-center max-w-max">
             <div class="ml-4 mr-4">
               <div>
                 <h2>Crear raza nueva</h2>
@@ -230,7 +232,7 @@
 
       <div class="text-center justify-content-center align-content-center mt-4 mb-4">
         <p-card  styleClass="bg-blue-200">
-          <div class="flex">
+          <div class="flex flex-wrap justify-content-center max-w-max">
             <div class="ml-4 mr-4">
               <div>
                 <h2>Crear nueva categoría</h2>
