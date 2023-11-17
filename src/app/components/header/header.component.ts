@@ -17,12 +17,7 @@ export class HeaderComponent {
   
   ngOnInit() { 
     this.menu = [
-      { 
-        label: 'Perfil', 
-      },
-      { 
-        label: 'Perros', 
-      } 
+      
     ]; 
   } 
 }
