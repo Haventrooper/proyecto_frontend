@@ -1,10 +1,12 @@
-<div class="mt-8 mb-8">
+<div class="mt-7 mb-8">
   
-    <div class="mr-2 ml-2 text-center align-items-center justify-content-center">
-      <div>
-        <h1>Bienvenid@ administrador(a)</h1>
-      </div>
-      <p-button icon="pi pi-iconName" severity="danger" label="Cerrar Sesión" (click)="logoutAdmin()"></p-button>
+    <div class="text-center align-items-center justify-content-center">
+      <p-card styleClass="bg-indigo-100">
+        <div>
+          <h3>Bienvenid@ administrador(a)</h3>
+        </div>
+        <p-button icon="pi pi-iconName" severity="danger" label="Cerrar Sesión" (click)="logoutAdmin()"></p-button>
+      </p-card>
     </div>
 
     <div class="text-center justify-content-center align-content-center mt-4 mb-4">
@@ -49,7 +51,7 @@
         <div class="mt-4 mb-4 ml-4 mr-4" styleClass="bg-blue-200">
           <div>
             <h2>Crear paso nuevo de actividad</h2>
-            <div>
+            <div class="mt-4 mb-4">
               <input id="imagenPaso" style="display: none" type="file" (change)="seleccionarArchivoPaso($event)">
               <p-button label="Subir imagen" (click)="subirImagenPaso()"></p-button>
               <div>{{filePasoName}}</div>
@@ -184,12 +186,12 @@
 
       <div class="text-center justify-content-center align-content-center mt-4 mb-4">
         <p-card styleClass="bg-blue-200">
-          <div class="flex flex-wrap justify-content-center max-w-max">
+          <div class="text-center flex flex-wrap justify-content-center max-w-max">
             <div class="ml-4 mr-4">
               <div>
                 <h2>Crear raza nueva</h2>
               </div>
-              <div >
+              <div class="flex flex-wrap justify-content-center max-w-max">
                 <form [formGroup]="registroRazas">
                   <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
           
@@ -211,7 +213,7 @@
                 <div>
                   <h2>Razas disponibles</h2>
                 </div>
-                <div class="flex flex-wrap">
+                <div class="flex flex-wrap justify-content-center align-items-center max-w-max">
                   <div *ngFor="let raza of razas_">
                     <div class="mt-4 mb-4 ml4 mr-4">
                       <p-card>

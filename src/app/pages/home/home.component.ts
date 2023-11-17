@@ -46,7 +46,6 @@ export class HomeComponent {
     const perroSeleccionado = localStorage.getItem('perroSeleccionado');
     
     if (perroSeleccionado) {
-        // Si hay datos en el localStorage, convierte la cadena JSON a un objeto y selecciona el perro
         this.perroSeleccionado = JSON.parse(perroSeleccionado);
         this.seleccionarPerro(this.perroSeleccionado.id_perro);
     }
@@ -140,7 +139,7 @@ anterior() {
 
     if (this.perroSeleccionado) {
       const token = localStorage.getItem('token');
-      let contadorActual = this.pasoActual; // Asigna el contador después de decrementar
+      let contadorActual = this.pasoActual;
 
       if (token) {
         this.actualizarContador(this.perroSeleccionado.id_perro, this.selectedActividad.id_actividad, contadorActual, token);
@@ -153,8 +152,6 @@ anterior() {
     console.error('El paso actual ya es 0, no se puede decrementar más.');
   }
 }
-
-  
 
   reiniciarValores() {
     this.pasoActual = 0;
