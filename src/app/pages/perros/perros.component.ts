@@ -83,6 +83,9 @@ export class PerrosComponent {
   registrarPerro(){
     const token = localStorage.getItem('token');
 
+    if (this.registro.valid) {
+
+
     if (token) {
       const datosRegistro = this.registro.value;
       
@@ -110,6 +113,13 @@ export class PerrosComponent {
     } else {
       console.error('Token no encontrado en el localStorage');
     }
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Verificar información de perro',
+      text: ''
+      })
+  }
   }
 
   obtenerRazas() {
