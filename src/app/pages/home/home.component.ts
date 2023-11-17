@@ -185,12 +185,7 @@ anterior() {
     this.selectedActividad = null; // Reinicia la actividad seleccionada
     
       console.log('El diálogo se ha cerrado');
-      // Lógica para recargar la página    
-    // Otras reinicializaciones según tus necesidades
   }
-  
-	
-  
 
 logout() {
   // Muestra la alerta antes de eliminar los elementos del localStorage
