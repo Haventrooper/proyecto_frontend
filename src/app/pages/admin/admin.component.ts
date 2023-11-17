@@ -26,8 +26,10 @@ export class AdminComponent {
   actividades_: any;
   pasos: any
   sugerencias: any;
-
-
+  imagenActividad: any
+  fileActividadName: any
+  imagenPaso: any
+  filePasoName: any
 
   constructor( private router: Router,
     private td_service: TdserviceService,
@@ -163,9 +165,69 @@ export class AdminComponent {
       }
     }
 
+  
+  seleccionarArchivo(event: any){
+    let file = event.target.files[0]
+      this.fileActividadName = file.name
+    if(!file){
+      return
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        // Use a regex to remove data url part
+        const base64String = reader.result
+
+        this.imagenActividad = base64String
+
+        // Logs wL2dvYWwgbW9yZ...
+    };
+    reader.readAsDataURL(file);
+    // let file = document.getElementById('subirImagenActividad')
+    // file?.addEventListener('change', (e) => {
+    //   console.log(e?.target)
+    // })
+  }
+
+  subirImagen(){
+    let inputFile = document.getElementById('imagenActividad')
+    inputFile?.click()
+  }
+
+  subirImagenPaso(){
+    let inputFile = document.getElementById('imagenPaso')
+    inputFile?.click()
+  }
+
+  
+
+  seleccionarArchivoPaso(event: any){
+    let file = event.target.files[0]
+      this.filePasoName = file.name
+    if(!file){
+      return
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        // Use a regex to remove data url part
+        const base64String = reader.result
+
+        this.imagenPaso = base64String
+
+        // Logs wL2dvYWwgbW9yZ...
+    };
+    reader.readAsDataURL(file);
+    // let file = document.getElementById('subirImagenActividad')
+    // file?.addEventListener('change', (e) => {
+    //   console.log(e?.target)
+    // })
+  }
+
+
   postActividadNueva(){
+  
     if (this.registroActividad.valid) {
       const datosActividad = this.registroActividad.value;
+      datosActividad["imagen"] = this.imagenActividad
   
       const token = localStorage.getItem('token');
 
@@ -198,6 +260,7 @@ export class AdminComponent {
   postPasoActividad(){
     if (this.registroPasos.valid) {
       const datosPaso = this.registroPasos.value;
+      datosPaso["imagen"] = this.imagenPaso
   
       const token = localStorage.getItem('token');
 

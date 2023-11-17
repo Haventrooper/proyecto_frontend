@@ -31,6 +31,8 @@ import { CategoriasComponent } from './pages/categorias/categorias.component';
 import { PerrosComponent } from './pages/perros/perros.component';
 import { AdminloginComponent } from './pages/adminlogin/adminlogin.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { FileUploadModule } from 'primeng/fileupload';
+
 
 
 
@@ -67,6 +69,7 @@ import { AdminComponent } from './pages/admin/admin.component';
     CalendarModule,
     DropdownModule,
     InputSwitchModule,
+    FileUploadModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -14,6 +14,11 @@
             <div>
               <h2>Crear actividad nueva</h2>
             </div>
+            <div class="mt-4 mb-4">
+              <input id="imagenActividad" style="display: none" type="file" (change)="seleccionarArchivo($event)">
+              <p-button label="Subir imagen" (click)="subirImagen()"></p-button>
+              <div>{{fileActividadName}}</div>
+            </div>
         
             <form [formGroup]="registroActividad">
               <p-dropdown [options]="categorias" formControlName="id_categoria" optionLabel="label" optionValue="value"></p-dropdown>
@@ -44,7 +49,13 @@
         <div class="mt-4 mb-4 ml-4 mr-4" styleClass="bg-blue-200">
           <div>
             <h2>Crear paso nuevo de actividad</h2>
+            <div>
+              <input id="imagenPaso" style="display: none" type="file" (change)="seleccionarArchivoPaso($event)">
+              <p-button label="Subir imagen" (click)="subirImagenPaso()"></p-button>
+              <div>{{filePasoName}}</div>
+            </div>
             <form [formGroup]="registroPasos">
+
               <p-dropdown [options]="actividades" formControlName="id_actividad" optionLabel="label" optionValue="value"></p-dropdown>
     
               <div class="p-2">
