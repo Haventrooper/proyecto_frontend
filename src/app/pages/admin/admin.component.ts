@@ -37,30 +37,30 @@ export class AdminComponent {
 
       this.registroActividad = this.fb.group({
         id_categoria: new FormControl('', [Validators.required]),
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
 
       });
 
       this.registroPasos = this.fb.group({
         id_actividad: new FormControl('', [Validators.required]),
-        titulo: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
+        titulo: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
 
       this.registroSugerencias = this.fb.group({
         id_raza: new FormControl('', [Validators.required]),
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
 
       this.registroRazas = this.fb.group({
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
       });
 
       this.registroCategorias = this.fb.group({
-        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)] ),
+        nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)] ),
         descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
       });
     }
@@ -174,18 +174,10 @@ export class AdminComponent {
     }
     const reader = new FileReader();
     reader.onloadend = () => {
-        // Use a regex to remove data url part
         const base64String = reader.result
-
         this.imagenActividad = base64String
-
-        // Logs wL2dvYWwgbW9yZ...
     };
     reader.readAsDataURL(file);
-    // let file = document.getElementById('subirImagenActividad')
-    // file?.addEventListener('change', (e) => {
-    //   console.log(e?.target)
-    // })
   }
 
   subirImagen(){
