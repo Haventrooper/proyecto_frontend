@@ -81,9 +81,11 @@
       </div>
       <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let actividad of actividades?.slice(0, 4)">
           <p-card class="border-800" styleClass="bg-indigo-200 border-solid cursor-pointer" (click)="abrirDialogo(actividad)">
-            <div>
-              <img [src]="actividad.imagen" alt="actividad" style="width: 130px; height: 130px; border: 2px solid black; border-radius: 10px;">
-            </div>
+              <div class="flex justify-content-center align-items-center">
+                <p-card styleClass="bg-gray-100 w-min">
+                  <img [src]="actividad.imagen" alt="actividad" style="width: 130px; height: 130px;">
+                </p-card>
+              </div>
             <div class="categoria-container">
               <h3>{{ obtenerNombreCategoria(actividad.id_categoria) }}</h3>
             </div>

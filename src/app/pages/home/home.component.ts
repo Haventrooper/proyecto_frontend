@@ -367,6 +367,9 @@ logout() {
           console.log('Información del perro seleccionado:', this.perroSeleccionado);
   
           // Filtra las sugerencias solo si el perro seleccionado tiene una raza específica diferente de "2"
+          if(!this.perroSeleccionado){
+            return
+          }
           if (this.perroSeleccionado.id_raza !== 2) {
             this.sugerencias = this.sugerencias.filter((sugerencia: any) =>
               sugerencia.id_raza === this.perroSeleccionado.id_raza

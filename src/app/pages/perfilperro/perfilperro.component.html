@@ -44,7 +44,11 @@
         <div>
         <p-card styleClass="bg-teal-300	 border-solid" (click)="abrirDialogo(actividad)">
           <div class="flex align-items-center justify-content-center">
-            
+            <div class="flex justify-content-center align-items-center">
+              <p-card styleClass="bg-gray-100 w-min">
+                <img [src]="actividad.imagen" alt="actividad" style="width: 130px; height: 130px;">
+              </p-card>
+            </div>
             <div class="mr-2 ml-2">
               <div class="categoria-container">
                 <h3>{{ obtenerNombreCategoria(actividad.id_categoria) }}</h3>
@@ -77,10 +81,8 @@
                 <div class="flex flex-column align-items-center justify-content-center">
                   <div class="col-8">
                     <p-card styleClass="bg-gray-100">
-                      <span class="material-symbols-outlined" style="font-size: 75px;">
-                        pet_supplies
-                        </span>
-                    </p-card>
+                      <img [src]="pasos[pasoActual].imagen" alt="imagen" style="width: 130px; height: 130px;">
+                  </p-card>
                   </div>
                 </div>
                 <div class="mt-4 mb-4 mr-4 ml-4">
@@ -93,7 +95,7 @@
               <p-button icon="pi pi-iconName" label="Anterior" (click)="anterior()" [disabled]="pasoActual <= 0"></p-button>
             </div>
             <div class="mr-4 ml-4">
-              <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente()" [disabled]="pasoActual >= pasos.length - 1"></p-button>
+              <p-button icon="pi pi-iconName" label="Siguiente" (click)="siguiente()" [disabled]="pasoActual >= pasos?.length - 1"></p-button>
             </div>
           </div>
         </div>
