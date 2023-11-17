@@ -81,7 +81,7 @@
       </div>
       <div class="ml-2 mr-2 mt-4 mb-4" *ngFor="let actividad of actividades?.slice(0, 4)">
           <p-card class="border-800" styleClass="bg-indigo-200 border-solid cursor-pointer" (click)="abrirDialogo(actividad)">
-              <div class="flex justify-content-center align-items-center">
+              <div class="flex flex-wrap justify-content-center align-items-center">
                 <p-card styleClass="bg-gray-100 w-min">
                   <img [src]="actividad.imagen" alt="actividad" style="width: 130px; height: 130px;">
                 </p-card>
