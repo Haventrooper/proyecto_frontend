@@ -26,29 +26,29 @@ export class LoginComponent {
     });
   }
 
-  login(){
-    this.td_service.login(this.form.get('email')?.value,this.form.get('password')?.value).subscribe(response => {
+  login() {
+    this.td_service.login(this.form.get('email')?.value, this.form.get('password')?.value).subscribe(response => {
       let resp: any = response;
-      if( resp===false ){
-        
+      if (resp.success === false) {
         Swal.fire({
           icon: 'error',
-          title: 'Verificar credenciales',
-          text: ''
-        })
+          title: 'Usuario no encontrado',
+          text: 'Verifica las credenciales e intenta nuevamente.'
+        });
       } else {
-        
         localStorage.setItem("token", resp["token"]);
-        Swal.fire(
-          'Se ha iniciado sesión!',
-          '',
-          'success'
-        )
-
-        this.router.navigate(['/home']);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Se ha iniciado sesión!',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          this.router.navigate(['/home']);
+        });
       }
-		})
+    });
   }
+  
 
   paginaRegistro(){
     this.router.navigateByUrl('/signup');
