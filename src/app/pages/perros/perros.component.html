@@ -49,7 +49,7 @@
     <p-card styleClass="bg-yellow-400">
         <div *ngFor="let perro of perros" class="text-center flex flex-column">
             <div *ngIf="perro.deshabilitado === true">
-                <h2>Historial de perros</h2>
+                <h2>Historial de perros deshabilitados</h2>
                 <p-card class="border-800" styleClass="bg-gray-200 border-solid">
                     <div class="flex flex-wrap justify-content-center align-items-center">
                         <div class="mr-4 ml-4 mt-2 mb-2">
@@ -62,8 +62,6 @@
                             <p-button label="Ver perro" [routerLink]="['/perfilperro', perro.id_perro]"></p-button> 
                         </div>
                     </div>
-
-                    
                 </p-card>
             </div>
         </div>
