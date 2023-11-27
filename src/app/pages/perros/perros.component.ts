@@ -50,6 +50,11 @@ export class PerrosComponent {
   ngOnInit(): void {
   }
 
+  todosPerrosDeshabilitados(): boolean {
+    return this.perros && this.perros.every((perro: { deshabilitado: boolean | null }) => (perro.deshabilitado === null || perro.deshabilitado === false));
+  }
+  
+
   edadMinimaValidator(edadMinima: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       if (control.value) {

@@ -194,6 +194,21 @@ export class TdserviceService {
     return this.http.put(`${this.url}/modificarPerro/${idPerro}`, datosActualizados, httpOptions);
   }
 
+  
+  deshabilitarPerro(idPerro: number, deshabilitado: boolean, token: string): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    const body = {
+      id_perro: idPerro,
+      deshabilitado: deshabilitado,
+    };
+    return this.http.put(`${this.url}/deshabilitarPerro/${idPerro}`,body, httpOptions)
+  }
+
   //Delete
 
   deleteUsuario(idUsuario: string, token: string): Observable<any> {

@@ -10,8 +10,44 @@
               </p-card>
             </div>
           </div>
-            <div class="col-8 mt-4 mb-4" *ngFor="let perro of perros">
-                <p-card class="border-800" styleClass="bg-cyan-100 border-solid">
+          <div class="mt-4 mb-4" *ngIf="!todosPerrosDeshabilitados">
+            <div class="flex flex-column align-items-center justify-content-center text-center ml-2 mr-2">
+              <p-card styleClass="bg-pink-100 border-solid border-600">
+                <div>
+                  <h4>Agrega a otro perro...</h4>
+                </div>
+              </p-card>
+            </div>
+          </div>
+
+          <ng-container *ngFor="let perro of perros">
+            <div *ngIf="perro.deshabilitado === null || false" class="col-8 mt-4 mb-4">
+              <p-card class="border-800" styleClass="bg-cyan-100 border-solid">
+                <div class="flex flex-wrap justify-content-center align-items-center">
+                  <div class="mr-4 ml-4 mt-2 mb-2">
+                    <span class="material-symbols-outlined" style="font-size: 75px;">pets</span>
+                  </div>
+                  <div class="mr-4 ml-4 mt-2 mb-2">
+                    <h4>{{perro.nombre}}</h4>
+                  </div>
+                  <div class="mr-4 ml-4 mt-2 mb-2">
+                    <p-button label="Ver perro" [routerLink]="['/perfilperro', perro.id_perro]"></p-button> 
+                  </div>
+                  <div class="mr-4 ml-4 mt-2 mb-2">
+                    <p-button styleClass="bg-yellow-400" label="Seleccionar" (click)="seleccionarPerro(perro)"></p-button>
+                  </div>
+                </div>
+              </p-card>
+            </div>
+          </ng-container>
+          
+    </div>
+
+    <p-card styleClass="bg-yellow-400">
+        <div *ngFor="let perro of perros" class="text-center flex flex-column">
+            <div *ngIf="perro.deshabilitado === true">
+                <h2>Historial de perros</h2>
+                <p-card class="border-800" styleClass="bg-gray-200 border-solid">
                     <div class="flex flex-wrap justify-content-center align-items-center">
                         <div class="mr-4 ml-4 mt-2 mb-2">
                             <span class="material-symbols-outlined" style="font-size: 75px;">pets</span>
@@ -22,16 +58,13 @@
                         <div class="mr-4 ml-4 mt-2 mb-2">
                             <p-button label="Ver perro" [routerLink]="['/perfilperro', perro.id_perro]"></p-button> 
                         </div>
-                        <div class="mr-4 ml-4 mt-2 mb-2">
-                            <p-button styleClass="bg-yellow-400" label="Seleccionar" (click)="seleccionarPerro(perro)"></p-button>
-                        </div>
                     </div>
 
                     
                 </p-card>
-            </div>    
-    </div>
-    
+            </div>
+        </div>
+    </p-card>
 
     <div class="text-center flex flex-column">
         <div>

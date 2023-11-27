@@ -230,6 +230,9 @@ export class PerfilperroComponent implements OnInit {
         this.perro = data;  
 
         const fechaFormateada = new Date(this.perro[0].fecha_nacimiento);
+        console.log('Valor de deshabilitado:', this.perro[0].deshabilitado);
+
+
 
         this.formulario = this.formBuilder.group({
           nombre: new FormControl(this.perro[0].nombre, [Validators.required]),
@@ -241,6 +244,11 @@ export class PerfilperroComponent implements OnInit {
     } else {
       console.error('Token no encontrado en el Local Storage');
     }
+  }
+  
+  tienePerroDeshabilitado(): boolean {
+    const deshabilitado = this.perro && this.perro[0] && this.perro[0].deshabilitado;
+    return deshabilitado === null || deshabilitado === false || deshabilitado === undefined;
   }
   
 
@@ -302,10 +310,54 @@ export class PerfilperroComponent implements OnInit {
 
   //Delete
 
-  perroBloqueado: boolean = false;
-
   deshabilitar(){
-    this.perroBloqueado = true
+    const idPerro = this.perro[0].id_perro;
+    const token = localStorage.getItem('token');
+    const deshabilitar: boolean = true
+
+    if(token) {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Esta acción es irreversible',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.td_service.deshabilitarPerro(idPerro, deshabilitar, token).subscribe(
+          (response) => {
+            Swal.fire({
+              title: 'Éxito',
+              text: 'El perro ha sido guardado en el historial de perros',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            });
+            this.router.navigate(['/perros']);
+          },
+          (error) => {
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema. Por favor, intenta nuevamente.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            console.error(error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          title: 'Cancelado',
+          text: 'La acción ha sido cancelada',
+          icon: 'info',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
+  } else {
+    console.error('Token no disponible. El usuario no está autenticado.');
+  }
+
   }
 
   eliminarPerro() {
