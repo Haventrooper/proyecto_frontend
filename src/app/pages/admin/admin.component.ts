@@ -296,6 +296,8 @@ export class AdminComponent {
       this.td_service.getRazasAdmin(token).subscribe(
         (response: any) => {
           this.razas = response.map((razas: any) => ({ label: razas.nombre, value: razas.id_raza }));
+          this.razas.sort((a: any, b: any) => a.label.localeCompare(b.label));
+
           this.razas_= response
         },
         (error) => {
@@ -318,6 +320,7 @@ export class AdminComponent {
       this.td_service.getCategoriasAdmin(token).subscribe(
         (response: any) => {
           this.categorias = response.map((categorias: any) => ({ label: categorias.nombre, value: categorias.id_categoria }));
+          this.categorias.sort((a: any, b: any) => a.label.localeCompare(b.label));
           this.categorias_= response
         },
         (error) => {
@@ -358,6 +361,7 @@ export class AdminComponent {
       this.td_service.getActividadesAdmin(token).subscribe(
         (response: any) => {
           this.actividades = response.map((actividades: any) => ({ label: actividades.nombre, value: actividades.id_actividad }));
+          this.actividades.sort((a: any, b: any) => a.label.localeCompare(b.label));
           this.actividades_ = response      
         },
         (error) => {

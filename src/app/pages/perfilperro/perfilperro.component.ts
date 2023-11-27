@@ -197,6 +197,7 @@ export class PerfilperroComponent implements OnInit {
       this.td_service.getRazas(token).subscribe(
       (data: any[]) => {
         this.razas = data.map(raza => ({ label: raza.nombre, value: raza.id_raza }));
+        this.razas.sort((a: any, b: any) => a.label.localeCompare(b.label));
       },
       error => {
         console.error('Error al obtener las razas:', error);
