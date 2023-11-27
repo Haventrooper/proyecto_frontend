@@ -53,6 +53,7 @@ export class PerfilperroComponent implements OnInit {
 
       } else {
         console.error('idPerro es undefined');
+
         }
 
         this.router.events.subscribe((event) => {
@@ -226,7 +227,8 @@ export class PerfilperroComponent implements OnInit {
   obtenerDatosDelPerro(idPerro: number) {
     const token = localStorage.getItem('token');
     if (token) {
-      this.td_service.getPerroPorId(idPerro, token).subscribe((data) => {
+      this.td_service.getPerroPorId(idPerro, token).subscribe(
+        (data) => {
         this.perro = data;  
 
         const fechaFormateada = new Date(this.perro[0].fecha_nacimiento);
@@ -240,6 +242,10 @@ export class PerfilperroComponent implements OnInit {
           id_raza: new FormControl(this.perro[0].id_raza, [Validators.required]),
           genero: new FormControl(this.perro[0].genero, [Validators.required])
         });
+      },
+      (error) => {
+        console.error('Error al obtener datos del perro:', error);
+        this.router.navigate(['/home']);
       });
     } else {
       console.error('Token no encontrado en el Local Storage');
@@ -333,7 +339,11 @@ export class PerfilperroComponent implements OnInit {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
-            this.router.navigate(['/perros']);
+            if (localStorage.getItem("perroSeleccionado")) {
+              localStorage.removeItem("perroSeleccionado");
+              this.td_service.actualizarPerroSeleccionado(null);
+              this.router.navigate(['/perros']);
+            }  
           },
           (error) => {
             Swal.fire({
@@ -382,7 +392,7 @@ export class PerfilperroComponent implements OnInit {
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
               });
-              this.router.navigate(['/perros']);
+                  this.router.navigate(['/perros']);
             },
             (error) => {
               Swal.fire({

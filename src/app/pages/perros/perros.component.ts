@@ -51,7 +51,7 @@ export class PerrosComponent {
   }
 
   todosPerrosDeshabilitados(): boolean {
-    return this.perros && this.perros.every((perro: { deshabilitado: boolean | null }) => (perro.deshabilitado === null || perro.deshabilitado === false));
+    return this.perros && this.perros.every((perro: any) => perro.deshabilitado === true);
   }
   
 
