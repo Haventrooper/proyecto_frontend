@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { DatePipe } from '@angular/common';  // Asegúrate de importar DatePipe correctamente
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 
@@ -54,6 +54,12 @@ export class PerfilperroComponent implements OnInit {
       } else {
         console.error('idPerro es undefined');
         }
+
+        this.router.events.subscribe((event) => {
+          if (event instanceof NavigationEnd) {
+            window.scrollTo(0, 0);
+          }
+        });
   });
   
   this.formulario = this.formBuilder.group({
@@ -295,6 +301,12 @@ export class PerfilperroComponent implements OnInit {
   }
 
   //Delete
+
+  perroBloqueado: boolean = false;
+
+  deshabilitar(){
+    this.perroBloqueado = true
+  }
 
   eliminarPerro() {
     const idPerro = this.perro[0].id_perro;

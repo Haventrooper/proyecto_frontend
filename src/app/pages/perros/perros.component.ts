@@ -3,7 +3,7 @@ import { TdserviceService } from 'src/app/services/tdservice.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 
@@ -28,6 +28,12 @@ export class PerrosComponent {
   constructor(private td_service: TdserviceService,
               private fb: FormBuilder,
               private router: Router){
+
+                this.router.events.subscribe((event) => {
+                  if (event instanceof NavigationEnd) {
+                    window.scrollTo(0, 0);
+                  }
+                });
 
     this.registro = this.fb.group({
       id_raza: new FormControl('', [Validators.required]),
