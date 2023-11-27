@@ -95,10 +95,16 @@ export class PerrosComponent {
             title: '¡Registro completado!',
             text: 'El perro se ha registrado con éxito.',
             icon: 'success',
+            timer: 1500,
             confirmButtonText: '¡Entendido!'
           });
-          location.reload();
-          this.mostrarModal = false;
+          this.obtenerPerros()
+          this.registro = this.fb.group({
+            id_raza: new FormControl('', [Validators.required]),
+            nombre: new FormControl('', [Validators.required]),
+            fecha_nacimiento: new FormControl('', [Validators.required, this.edadMinimaValidator(0)]),
+            genero: new FormControl('', [Validators.required]),
+          });
         },
         (error) => {
           Swal.fire({
@@ -107,7 +113,6 @@ export class PerrosComponent {
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
-          this.mostrarModal = false;
         }
       );
     } else {

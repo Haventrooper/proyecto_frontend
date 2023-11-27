@@ -38,13 +38,11 @@
             <h2>Registrar un perro</h2>
         </div>
         <form [formGroup]="registro">
-                    
             <div class="p-2">
                 <p-dropdown [options]="razas" placeholder="Selecciona una raza" formControlName="id_raza"></p-dropdown>
                 <div *ngIf="registro.get('id_raza')?.invalid && (registro.get('id_raza')?.dirty || registro.get('id_raza')?.touched)">
                     <small class="p-error">La raza es obligatoria</small>
                 </div>
-            
             </div>
             <div class="p-2">
                 <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
