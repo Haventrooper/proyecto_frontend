@@ -53,7 +53,9 @@ export class PerrosComponent {
   todosPerrosDeshabilitados(): boolean {
     return this.perros && this.perros.every((perro: any) => perro.deshabilitado === true);
   }
-  
+  todosFalse(): boolean {
+    return this.perros && this.perros.every((perro: any) => (perro.deshabilitado === false) || perro.deshabilitado === null);
+  }
 
   edadMinimaValidator(edadMinima: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {

@@ -160,6 +160,7 @@ export class TdserviceService {
 
 
   //PUT
+
   putContador(idPerro: number, idActividad: number, contador: number, token: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

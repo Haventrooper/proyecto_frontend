@@ -389,14 +389,19 @@ logout() {
         },
         (error) => {
           // Este bloque se ejecutará si al menos una de las solicitudes falla
-          console.error('Error al guardar las actividades en perros', error);
+          Swal.fire({
+            title: 'Actividades ya guardadas',
+            text: 'Las actividades ya están guardadas',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });     
+          this.displayModal = false;   
         }
       );
     } else {
       console.error("No se encontró token");
     }
   }
-  
 
   guardarActividadPerro() {
     const token = localStorage.getItem('token');

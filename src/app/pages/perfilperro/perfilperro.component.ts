@@ -344,6 +344,8 @@ export class PerfilperroComponent implements OnInit {
               this.td_service.actualizarPerroSeleccionado(null);
               this.router.navigate(['/perros']);
             }  
+            this.router.navigate(['/perros']);
+
           },
           (error) => {
             Swal.fire({
