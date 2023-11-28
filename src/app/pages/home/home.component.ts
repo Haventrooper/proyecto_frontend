@@ -326,24 +326,6 @@ logout() {
     }
   }
 
-  verificarActividad(idPerro: number, idActividad: number) {
-
-    const token = localStorage.getItem('token');
-    if(token){
-    this.td_service.getVerificarActividad(idPerro, idActividad, token).subscribe(
-      (data: any) => {
-        if (data.mensaje === 'Actividad ya en BD') {
-        } else if (data.mensaje === 'No hay actividad guardada en BD') {
-        }
-      },
-      (error) => {
-        console.error('Error al verificar la actividad', error);
-      }
-    );
-    }else{
-      console.error('Token no encontrado');
-    }
-  }
 
   seleccionarPerro(perroId: number) {
     this.selectedPerroId = perroId;
@@ -353,6 +335,7 @@ logout() {
     this.router.navigate(['/perfilperro', perroId]);
   }
 
+  
   guardarActividadPerros() {
     const cantidadPerros = this.perros?.length;
     const idActividad = this.selectedActividad?.id_actividad;
@@ -365,6 +348,7 @@ logout() {
   
       for (var i = 0; i < cantidadPerros; i++) {
         console.log(this.perros[i]?.id_perro);
+
   
         const observable = this.td_service.postActividadPerro(this.perros[i]?.id_perro, idActividad, contadorActual, token);
   
@@ -400,6 +384,26 @@ logout() {
       );
     } else {
       console.error("No se encontró token");
+    }
+  }
+
+  verificarActividad(idPerro: number, idActividad: number) {
+
+    const token = localStorage.getItem('token');
+    if(token){
+    this.td_service.getVerificarActividad(idPerro, idActividad, token).subscribe(
+      (data: any) => {
+        if (data.mensaje === 'Actividad ya en BD') {
+        } 
+        else if (data.mensaje === 'No hay actividad guardada en BD') {
+        }
+      },
+      (error) => {
+        console.error('Error al verificar la actividad', error);
+      }
+    );
+    }else{
+      console.error('Token no encontrado');
     }
   }
 
