@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { forkJoin } from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -23,12 +25,14 @@ export class HomeComponent {
   sugerencias: any;
   actividadExistente = false;
   razas: any;
+
     
   selectedPerroId: number | null = null;
   perroSeleccionado: any = null;
 
   constructor(private td_service: TdserviceService,
     private router: Router) {
+
       this.td_service.perroSeleccionado$.subscribe((perro) => {
         this.perroSeleccionado = perro;
       });
@@ -36,12 +40,13 @@ export class HomeComponent {
     }
 
   ngOnInit(): void {
-    this.getNombreUsuario()
+    this.getNombreUsuario();
     this.obtenerPerros();
     this.obtenerActividades();
     this.obtenerCategorias();
     this.obtenerSugerencias();
     this.obtenerRazas();
+
 
     const perroSeleccionado = localStorage.getItem('perroSeleccionado');
     
@@ -49,6 +54,7 @@ export class HomeComponent {
         this.perroSeleccionado = JSON.parse(perroSeleccionado);
         this.seleccionarPerro(this.perroSeleccionado.id_perro);
     }
+
   }
 
   ngOnDestroy() {
@@ -346,6 +352,51 @@ logout() {
   verPerfilDelPerro(perroId: number) {
     this.router.navigate(['/perfilperro', perroId]);
   }
+
+  guardarActividadPerros() {
+    const cantidadPerros = this.perros?.length;
+    const idActividad = this.selectedActividad?.id_actividad;
+    const contadorActual = this.pasoActual;
+  
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      const observables = [];
+  
+      for (var i = 0; i < cantidadPerros; i++) {
+        console.log(this.perros[i]?.id_perro);
+  
+        const observable = this.td_service.postActividadPerro(this.perros[i]?.id_perro, idActividad, contadorActual, token);
+  
+        observables.push(observable);
+      }
+  
+      forkJoin(observables).subscribe(
+        (data: any[]) => {
+          // Este bloque se ejecutará cuando todas las solicitudes se completen con éxito
+          console.log('Todas las solicitudes se completaron con éxito', data);
+  
+          // Muestra el Swal aquí después de que todas las solicitudes se completen
+          Swal.fire({
+            title: 'Actividad guardada en perros exitosamente',
+            text: 'Actividad guardada en perros correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
+  
+          // Oculta el modal después de que todas las solicitudes se completen
+          this.displayModal = false;
+        },
+        (error) => {
+          // Este bloque se ejecutará si al menos una de las solicitudes falla
+          console.error('Error al guardar las actividades en perros', error);
+        }
+      );
+    } else {
+      console.error("No se encontró token");
+    }
+  }
+  
 
   guardarActividadPerro() {
     const token = localStorage.getItem('token');

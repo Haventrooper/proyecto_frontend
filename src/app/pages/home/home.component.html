@@ -121,6 +121,9 @@
           </div>
         </div>
         <div class="flex flex-wrap align-items-center justify-content-center">
+          <div class="mt-4 mb-4 mr-4 ml-4">
+            <p-button styleClass="bg-green-300" icon="pi pi-iconName" label="Guardar para todos" (click)="guardarActividadPerros()"></p-button>
+          </div>
           <div *ngIf="!actividadExistente && perroSeleccionado" class="mt-4 mb-4 mr-4 ml-4">
             <p-button styleClass="bg-yellow-400" [disabled]="!perroSeleccionado" icon="pi pi-iconName" label="Guardar guía" (click)="guardarActividadPerro()"></p-button>
           </div>
