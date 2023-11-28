@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TdserviceService } from 'src/app/services/tdservice.service';
 import Swal from 'sweetalert2';
+import { forkJoin } from 'rxjs';
+
 
 
 @Component({
@@ -18,6 +20,7 @@ export class CategoriasComponent {
   pasos: any;
   pasoActual: number = 0;
   categorias: any[] = [];
+  perros: any;
   perro: any;
   actividadExistente = false;
   perroSeleccionado = localStorage.getItem('perroSeleccionado');
@@ -33,6 +36,8 @@ export class CategoriasComponent {
       this.idCategoria = +params['idCategoria'];
       this.obtenerActividadesPorCat(this.idCategoria)
       this.obtenerCategorias();
+      this.obtenerPerros();
+
 
       const perroSeleccionado = localStorage.getItem('perroSeleccionado');
 
@@ -66,6 +71,59 @@ export class CategoriasComponent {
       this.cargarPasos(actividad.id_actividad, token);
       console.log('ID de perro no disponible. No se verificará la actividad pero si los pasos.');
     }
+}
+guardarActividadPerros() {
+  const cantidadPerros = this.perros?.length;
+  const idActividad = this.selectedActividad?.id_actividad;
+  const contadorActual = this.pasoActual;
+
+  const token = localStorage.getItem('token');
+  
+  if (token) {
+    const observables = [];
+
+    for (var i = 0; i < cantidadPerros; i++) {
+      console.log(this.perros[i]?.id_perro);
+
+      if(this.perros[i]?.deshabilitado!=true){
+        const observable = this.td_service.postActividadPerro(this.perros[i]?.id_perro, idActividad, contadorActual, token);
+        observables.push(observable);
+      }
+      else{
+        continue
+      }
+    }
+
+    forkJoin(observables).subscribe(
+      (data: any[]) => {
+        // Este bloque se ejecutará cuando todas las solicitudes se completen con éxito
+        console.log('Todas las solicitudes se completaron con éxito', data);
+
+        // Muestra el Swal aquí después de que todas las solicitudes se completen
+        Swal.fire({
+          title: 'Actividad guardada en perros exitosamente',
+          text: 'Actividad guardada en perros correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+
+        // Oculta el modal después de que todas las solicitudes se completen
+        this.displayModal = false;
+      },
+      (error) => {
+        // Este bloque se ejecutará si al menos una de las solicitudes falla
+        Swal.fire({
+          title: 'Actividades ya guardadas',
+          text: 'Las actividades ya están guardadas',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });     
+        this.displayModal = false;   
+      }
+    );
+  } else {
+    console.error("No se encontró token");
+  }
 }
 
 guardarActividadPerroReciente() {
@@ -119,6 +177,18 @@ reiniciarValores() {
   this.displayModal = false;
   this.selectedActividad = null;
 }
+
+obtenerPerros(): void {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    this.td_service.getPerros(token).subscribe((data) => {
+      this.perros = data;
+    });
+  } else {
+    console.error('Token no encontrado en el Local Storage');
+  }
+  }
 
   obtenerActividadesPorCat(idCategoria: number){
     const token = localStorage.getItem('token');
