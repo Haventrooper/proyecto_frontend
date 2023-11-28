@@ -349,10 +349,14 @@ logout() {
       for (var i = 0; i < cantidadPerros; i++) {
         console.log(this.perros[i]?.id_perro);
 
+        if(this.perros[i]?.deshabilitado!=true){
+          const observable = this.td_service.postActividadPerro(this.perros[i]?.id_perro, idActividad, contadorActual, token);
+          observables.push(observable);
+        }
+        else{
+          continue
+        }
   
-        const observable = this.td_service.postActividadPerro(this.perros[i]?.id_perro, idActividad, contadorActual, token);
-  
-        observables.push(observable);
       }
   
       forkJoin(observables).subscribe(
