@@ -342,21 +342,35 @@ logout() {
     const contadorActual = this.pasoActual;
   
     const token = localStorage.getItem('token');
-    
+  
     if (token) {
       const observables = [];
   
-      for (var i = 0; i < cantidadPerros; i++) {
+      for (let i = 0; i < cantidadPerros; i++) {
         console.log(this.perros[i]?.id_perro);
-
-        if(this.perros[i]?.deshabilitado!=true){
-          const observable = this.td_service.postActividadPerro(this.perros[i]?.id_perro, idActividad, contadorActual, token);
-          observables.push(observable);
-        }
-        else{
-          continue
-        }
   
+        // Verifica si la actividad no está deshabilitada y el perro no tiene la actividad asignada
+        if (
+          !this.perros[i]?.deshabilitado &&
+          this.perros[i]?.id_actividad !== idActividad
+        ) {
+          const observable = this.td_service.postActividadPerro(
+            this.perros[i]?.id_perro,
+            idActividad,
+            contadorActual,
+            token
+          );
+          observables.push(observable);
+        } else {
+          // Puedes agregar lógica aquí si deseas manejar el caso en que el perro ya tiene la actividad
+          console.log(`El perro ${this.perros[i]?.nombre} ya tiene la actividad`);
+        }
+      }
+  
+      if (observables.length === 0) {
+        // No hay actividades para guardar
+        console.log('No hay nuevas actividades para guardar');
+        return;
       }
   
       forkJoin(observables).subscribe(
@@ -369,7 +383,7 @@ logout() {
             title: 'Actividad guardada en perros exitosamente',
             text: 'Actividad guardada en perros correctamente',
             icon: 'success',
-            confirmButtonText: 'Aceptar'
+            confirmButtonText: 'Aceptar',
           });
   
           // Oculta el modal después de que todas las solicitudes se completen
@@ -381,15 +395,17 @@ logout() {
             title: 'Actividades ya guardadas',
             text: 'Las actividades ya están guardadas',
             icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });     
-          this.displayModal = false;   
+            confirmButtonText: 'Aceptar',
+          });
+          this.displayModal = false;
         }
       );
     } else {
-      console.error("No se encontró token");
+      console.error('No se encontró token');
     }
   }
+  
+  
 
   verificarActividad(idPerro: number, idActividad: number) {
 
