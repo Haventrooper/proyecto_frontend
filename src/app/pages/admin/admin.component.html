@@ -102,15 +102,22 @@
 
                   <div>
                     <h4>{{actividad.nombre}}</h4>
+                    <img [src]="actividad.imagen" alt="actividad" style="width: 70px; height: 70px;">
                     <div>
                       <p-button class="ml-4 mr-4 mt-2 mb-2" icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
                       <p-button class="ml-4 mr-4" icon="pi pi-trash" severity="danger" (click)="eliminarActividad(actividad.id_actividad)" label="Eliminar Actividad"></p-button>
-        
+                      <p-button *ngIf="mostrarPasos==true" class="ml-4 mr-4" icon="pi pi-trash" severity="secondary" (click)="ocultarPasos()" label="Ocultar pasos"></p-button>
+                      
+                      <ng-container  *ngIf="mostrarPasos">
+
                         <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]" class="mt-4 mb-4">
                           <p-card>
-                            <div class="flex">
+                            <div class="flex align-items-center justify-content-center">
                               <div>
                                 {{paso.titulo}} - {{paso.nombre}} - {{paso.descripcion}}
+                            </div>
+                            <div>
+                              <img [src]="paso.imagen" alt="actividad" style="width: 70px; height: 70px;">
                             </div>
                               <div>
                                 <p-button class="mr-4 ml-4" icon="pi pi-trash" severity="danger" (click)="eliminarPaso(paso.id_paso)" label="Eliminar Paso"></p-button>
@@ -118,6 +125,7 @@
                             </div>
                           </p-card>
                         </div>
+                      </ng-container>
                       </div>
                     </div>
                 </p-card>

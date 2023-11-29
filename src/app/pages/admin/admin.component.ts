@@ -30,6 +30,7 @@ export class AdminComponent {
   fileActividadName: any
   imagenPaso: any
   filePasoName: any
+  mostrarPasos: boolean = false;
 
   constructor( private router: Router,
     private td_service: TdserviceService,
@@ -384,6 +385,7 @@ export class AdminComponent {
       this.td_service.getPasosActividadesAdmin(idActividad, token).subscribe(
         (response: any) => {
           this.pasosPorActividad[idActividad] = response;
+          this.mostrarPasos = true; // Muestra los pasos
         },
         (error) => {
             Swal.fire({
@@ -395,6 +397,10 @@ export class AdminComponent {
     } else {
       console.error('Token no disponible. El usuario no está autenticado.');
     }
+  }
+
+  ocultarPasos() {
+    this.mostrarPasos = false;
   }
 
   eliminarActividad(idActividad: number) {
