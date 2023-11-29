@@ -14,6 +14,8 @@ import { DatePipe } from '@angular/common';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+
 
 
 
@@ -69,7 +71,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     CalendarModule,
     DropdownModule,
     InputSwitchModule,
-    FileUploadModule
+    FileUploadModule,
+    InputTextareaModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

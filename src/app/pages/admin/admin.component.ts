@@ -32,6 +32,9 @@ export class AdminComponent {
   filePasoName: any
   mostrarPasos: boolean = false;
 
+  idActividadSeleccionada: number | null = null;
+
+
   constructor( private router: Router,
     private td_service: TdserviceService,
     private fb: FormBuilder){
@@ -39,7 +42,7 @@ export class AdminComponent {
       this.registroActividad = this.fb.group({
         id_categoria: new FormControl('', [Validators.required]),
         nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
-        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
 
       });
 
@@ -47,13 +50,13 @@ export class AdminComponent {
         id_actividad: new FormControl('', [Validators.required]),
         titulo: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
         nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
-        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
       });
 
       this.registroSugerencias = this.fb.group({
         id_raza: new FormControl('', [Validators.required]),
         nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
-        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
       });
 
       this.registroRazas = this.fb.group({
@@ -62,7 +65,7 @@ export class AdminComponent {
 
       this.registroCategorias = this.fb.group({
         nombre: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)] ),
-        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+        descripcion: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
       });
     }
 
@@ -256,6 +259,7 @@ export class AdminComponent {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             });
+            this.obtenerPasosPorActividad(datosPaso.id_actividad)
           },
           (error) => {
             Swal.fire({
@@ -385,6 +389,7 @@ export class AdminComponent {
       this.td_service.getPasosActividadesAdmin(idActividad, token).subscribe(
         (response: any) => {
           this.pasosPorActividad[idActividad] = response;
+          this.idActividadSeleccionada = idActividad;
           this.mostrarPasos = true; // Muestra los pasos
         },
         (error) => {
@@ -399,8 +404,10 @@ export class AdminComponent {
     }
   }
 
+
   ocultarPasos() {
     this.mostrarPasos = false;
+    this.idActividadSeleccionada = null;
   }
 
   eliminarActividad(idActividad: number) {

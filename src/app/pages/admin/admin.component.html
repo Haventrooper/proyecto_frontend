@@ -26,7 +26,7 @@
               <p-dropdown [options]="categorias" formControlName="id_categoria" optionLabel="label" optionValue="value"></p-dropdown>
         
               <div class="p-2">
-                <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
                 <div *ngIf="registroActividad.get('nombre')?.invalid && (registroActividad.get('nombre')?.dirty || registroActividad.get('nombre')?.['touched'])">
                   <small class="p-error" *ngIf="registroActividad.get('nombre')?.errors?.['required']">
                     Nombre de actividad es obligatorio
@@ -35,7 +35,7 @@
               </div>
         
               <div class="p-2">
-                <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+                <textarea placeholder="Descripción" rows="6" cols="50" pInputTextarea formControlName="descripcion"></textarea>
                 <div *ngIf="registroActividad.get('descripcion')?.invalid && (registroActividad.get('descripcion')?.dirty || registroActividad.get('descripcion')?.['touched'])">
                   <small class="p-error" *ngIf="registroActividad.get('descripcion')?.errors?.['required']">
                     Descripcion es obligatorio
@@ -61,7 +61,7 @@
               <p-dropdown [options]="actividades" formControlName="id_actividad" optionLabel="label" optionValue="value"></p-dropdown>
     
               <div class="p-2">
-                <input type="text" placeholder="titulo" pInputText formControlName="titulo" />
+                <input type="text" placeholder="Título" pInputText formControlName="titulo" />
                 <div *ngIf="registroPasos.get('titulo')?.invalid && (registroPasos.get('titulo')?.dirty || registroPasos.get('titulo')?.['touched'])">
                   <small class="p-error" *ngIf="registroPasos.get('titulo')?.errors?.['required']">
                     Titulo del paso es obligatorio
@@ -70,7 +70,7 @@
               </div>
     
               <div class="p-2">
-                <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
                 <div *ngIf="registroPasos.get('nombre')?.invalid && (registroPasos.get('nombre')?.dirty || registroPasos.get('nombre')?.['touched'])">
                   <small class="p-error" *ngIf="registroPasos.get('nombre')?.errors?.['required']">
                     Nombre del paso es obligatorio
@@ -79,7 +79,8 @@
               </div>
     
               <div class="p-2">
-                <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+                  <textarea placeholder="Descripción" rows="6" cols="50" pInputTextarea formControlName="descripcion"></textarea>
+
                 <div *ngIf="registroPasos.get('descripcion')?.invalid && (registroPasos.get('descripcion')?.dirty || registroPasos.get('descripcion')?.['touched'])">
                   <small class="p-error" *ngIf="registroPasos.get('descripcion')?.errors?.['required']">
                     Descripcion del paso es obligatorio
@@ -97,7 +98,7 @@
         </div>
         <div class="mt-4 mb-4 ml-4 mr-4">
             <h2>Pasos de actividad</h2>
-            <div *ngFor="let actividad of actividades_">
+            <div *ngFor="let actividad of actividades_" class="mt-4 mb-4">
                 <p-card styleClass="bg-indigo-100">
 
                   <div>
@@ -106,9 +107,9 @@
                     <div>
                       <p-button class="ml-4 mr-4 mt-2 mb-2" icon="pi pi-iconName" (click)="obtenerPasosPorActividad(actividad.id_actividad)" label="Mostrar Pasos"></p-button>
                       <p-button class="ml-4 mr-4" icon="pi pi-trash" severity="danger" (click)="eliminarActividad(actividad.id_actividad)" label="Eliminar Actividad"></p-button>
-                      <p-button *ngIf="mostrarPasos==true" class="ml-4 mr-4" icon="pi pi-trash" severity="secondary" (click)="ocultarPasos()" label="Ocultar pasos"></p-button>
+                      <p-button *ngIf="mostrarPasos && idActividadSeleccionada === actividad.id_actividad" class="ml-4 mr-4" icon="pi pi-trash" severity="secondary" (click)="ocultarPasos()" label="Ocultar pasos"></p-button>
                       
-                      <ng-container  *ngIf="mostrarPasos">
+                      <ng-container  *ngIf="mostrarPasos && idActividadSeleccionada === actividad.id_actividad">
 
                         <div *ngFor="let paso of pasosPorActividad[actividad.id_actividad]" class="mt-4 mb-4">
                           <p-card>
@@ -148,7 +149,7 @@
                     <p-dropdown [options]="razas" formControlName="id_raza" optionLabel="label" optionValue="value"></p-dropdown>
                 </div>
                 <div class="mt-4 mb-4 mr-4 ml-4">
-                    <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                    <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
                     <div *ngIf="registroSugerencias.get('nombre')?.invalid && (registroSugerencias.get('nombre')?.dirty || registroSugerencias.get('nombre')?.touched)">
                         <small class="p-error" *ngIf="registroSugerencias.get('nombre')?.errors?.['required']">
                           Nombre de la sugerencia es obligatoria
@@ -156,8 +157,8 @@
                       </div>
                 </div>            
                 <div class="mt-4 mb-4 mr-4 ml-4">
-                    <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
-                    <div *ngIf="registroSugerencias.get('descripcion')?.invalid && (registroSugerencias.get('descripcion')?.dirty || registroSugerencias.get('descripcion')?.touched)">
+                  <textarea placeholder="Descripción" rows="6" cols="50" pInputTextarea formControlName="descripcion"></textarea>
+                  <div *ngIf="registroSugerencias.get('descripcion')?.invalid && (registroSugerencias.get('descripcion')?.dirty || registroSugerencias.get('descripcion')?.touched)">
                         <small class="p-error" *ngIf="registroSugerencias.get('descripcion')?.errors?.['required']">
                           Descripcion de la sugerencia es obligatoria
                         </small>
@@ -201,7 +202,7 @@
               </div>
               <div class="flex flex-wrap justify-content-center max-w-max">
                 <form [formGroup]="registroRazas">
-                  <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                  <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
           
                   <div *ngIf="registroRazas.get('nombre')?.invalid && (registroRazas.get('nombre')?.dirty || registroRazas.get('nombre')?.['touched'])">
                     <small class="p-error" *ngIf="registroRazas.get('nombre')?.errors?.['required']">
@@ -249,7 +250,7 @@
               </div>
               <form [formGroup]="registroCategorias">
                   <div class="p-2">
-                  <input type="text" placeholder="nombre" pInputText formControlName="nombre" />
+                  <input type="text" placeholder="Nombre" pInputText formControlName="nombre" />
                   <div *ngIf="registroCategorias.get('nombre')?.invalid && (registroCategorias.get('nombre')?.dirty || registroCategorias.get('nombre')?.['touched'])">
                       <small class="p-error" *ngIf="registroCategorias.get('nombre')?.errors?.['required']">
                           Nombre de la categoría es obligatoria
@@ -258,7 +259,7 @@
                   </div>
                 <div>
                   <div class="p-2">
-                    <input type="text" placeholder="descripcion" pInputText formControlName="descripcion" />
+                    <textarea placeholder="Descripción" rows="6" cols="50" pInputTextarea formControlName="descripcion"></textarea>
                     <div *ngIf="registroCategorias.get('descripcion')?.invalid && (registroCategorias.get('descripcion')?.dirty || registroCategorias.get('descripcion')?.touched)">
                         <small class="p-error" *ngIf="registroCategorias.get('descripcion')?.errors?.['required']">
                             Descripcion de la categoría es obligatoria
